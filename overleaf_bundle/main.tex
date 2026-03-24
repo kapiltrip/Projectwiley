@@ -119,8 +119,8 @@ The rest of this review is structured around that claim. Section 2 defines the r
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig01_corpus_scope.pdf}{Corpus construction and scope of this review. Original synthesis figure showing the fixed fifty-paper corpus, the inclusion logic, and the classification dimensions used in the manuscript.}
-\caption{Corpus construction and scope of this review. Original synthesis figure showing the fixed fifty-paper corpus, the inclusion logic, and the classification dimensions used in the manuscript.}
+\wileyfig{01_overall_ml_timing_closure_process.png}{Timing-closure workflow comparison from \cite{ref28}: conventional multi-corner closure versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
+\caption{Timing-closure workflow comparison from \cite{ref28}: conventional multi-corner closure versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
 \label{fig:wiley-corpus-scope}
 \end{figure}
 
@@ -161,8 +161,8 @@ This paper & Timing closure under intent drift & Yes & Yes & Yes & Yes & Yes \\
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig02_intent_robust_map.pdf}{Intent-robust timing closure map. Original synthesis figure showing design-intent drift, operating-intent drift, silicon-intent drift, and the corresponding roles of ML, statistical timing, reliability-aware timing, and accelerated trusted analysis.}
-\caption{Intent-robust timing closure map. Original synthesis figure showing design-intent drift, operating-intent drift, silicon-intent drift, and the corresponding roles of ML, statistical timing, reliability-aware timing, and accelerated trusted analysis.}
+\wileyfig{02_sta_illustration.jpg}{Static timing analysis illustration from \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
+\caption{Static timing analysis illustration from \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
 \label{fig:wiley-intent-map}
 \end{figure}
 
@@ -237,8 +237,8 @@ Several papers remind us that robust timing is not only about variation. FA-STAC
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig03_preplacement_netlength_timing.pdf}{Preplacement timing through explicit net-length estimation. Redrawn based on the flow in \cite{ref29}.}
-\caption{Preplacement timing through explicit net-length estimation. Redrawn based on the flow in \cite{ref29}.}
+\wileyfig{03_block_vs_path_traversal.jpg}{Path-based versus block-based timing graph traversal from \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
+\caption{Path-based versus block-based timing graph traversal from \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
 \label{fig:wiley-preplacement}
 \end{figure}
 
@@ -253,8 +253,8 @@ Preplacement estimation is harder because geometry has not yet emerged from plac
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig04_placement_guidance.pdf}{Placement-stage action-oriented learning. Redrawn based on the guidance framework in \cite{ref1}.}
-\caption{Placement-stage action-oriented learning. Redrawn based on the guidance framework in \cite{ref1}.}
+\wileyfig{04_placement_guidance_framework.png}{Placement-optimization guidance framework from \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
+\caption{Placement-optimization guidance framework from \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
 \label{fig:wiley-placement-guidance}
 \end{figure}
 
@@ -274,8 +274,8 @@ A large share of the ML work that transfers cleanly into deployment does not att
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig05_preroute_hierarchical.pdf}{Hierarchical pre-route timing prediction. Redrawn based on the two-level framework in \cite{ref17}.}
-\caption{Hierarchical pre-route timing prediction. Redrawn based on the two-level framework in \cite{ref17}.}
+\wileyfig{05_preroute_timing_prediction_flow.jpg}{Pre-route timing prediction and optimization flow from \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
+\caption{Pre-route timing prediction and optimization flow from \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
 \label{fig:wiley-preroute-hierarchical}
 \end{figure}
 
@@ -287,15 +287,15 @@ Pre-route prediction is attractive because routing dominates closure cost, but i
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig06_protime_mismatch.pdf}{Optimization-aware multimodal preroute prediction. Redrawn and simplified from \cite{ref8}.}
-\caption{Optimization-aware multimodal preroute prediction. Redrawn and simplified from \cite{ref8}.}
+\wileyfig{06_protime_endpoint_embedding.png}{Endpoint-wise multimodal embedding framework from \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
+\caption{Endpoint-wise multimodal embedding framework from \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
 \label{fig:wiley-protime}
 \end{figure}
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig07_gr_dr_alignment.pdf}{Global-route to detailed-route timing mismatch and correction. Redrawn based on the stage-alignment analysis in \cite{ref10}.}
-\caption{Global-route to detailed-route timing mismatch and correction. Redrawn based on the stage-alignment analysis in \cite{ref10}.}
+\wileyfig{07_gr_dr_timing_consistency.jpg}{GR-to-DR timing-alignment comparison from \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
+\caption{GR-to-DR timing-alignment comparison from \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
 \label{fig:wiley-gr-dr}
 \end{figure}
 
@@ -315,8 +315,8 @@ Timing prediction is expensive largely because labels are expensive. Transfer le
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig08_bayesian_multicorner.pdf}{Safe multicorner prediction with Bayesian fallback. Redrawn based on the workflow in \cite{ref16}.}
-\caption{Safe multicorner prediction with Bayesian fallback. Redrawn based on the workflow in \cite{ref16}.}
+\wileyfig{08_bayesian_multicorner_workflow.png}{Bayesian multicorner timing-prediction workflow from \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
+\caption{Bayesian multicorner timing-prediction workflow from \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
 \label{fig:wiley-bayesian-fallback}
 \end{figure}
 
@@ -328,8 +328,8 @@ Some of the most convincing deployment papers avoid direct timing prediction as 
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig09_psn_timing_integration.pdf}{Dynamic-supply-noise-aware timing integration inside STA. Redrawn based on the model structure in \cite{ref12}.}
-\caption{Dynamic-supply-noise-aware timing integration inside STA. Redrawn based on the model structure in \cite{ref12}.}
+\wileyfig{09_psn_mlp_architecture.png}{MLP timing-arc architecture from \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
+\caption{MLP timing-arc architecture from \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
 \label{fig:wiley-psn}
 \end{figure}
 
@@ -341,15 +341,15 @@ ML is also being applied below the graph level. Deep-learning cell-delay modelin
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig10_aging_cell_to_path.pdf}{Aging-aware timing from cell-level modeling to path-level prediction. Composite figure to be redrawn from \cite{ref14} and \cite{ref15}.}
-\caption{Aging-aware timing from cell-level modeling to path-level prediction. Composite figure to be redrawn from \cite{ref14} and \cite{ref15}.}
+\wileyfig{10_aging_critical_cell_pipeline.png}{Aging-aware critical-cell selection pipeline from \cite{ref23}, using structure and attribute encoders to classify cells that become critical after aging.}
+\caption{Aging-aware critical-cell selection pipeline from \cite{ref23}, using structure and attribute encoders to classify cells that become critical after aging.}
 \label{fig:wiley-aging-composite}
 \end{figure}
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig11_aging_path_shift.pdf}{Aging changes which paths matter. Redrawn based on the motivating example in \cite{ref23}.}
-\caption{Aging changes which paths matter. Redrawn based on the motivating example in \cite{ref23}.}
+\wileyfig{11_aging_path_shift_example.png}{Aging can reorder critical paths, from \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
+\caption{Aging can reorder critical paths, from \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
 \label{fig:wiley-aging-shift}
 \end{figure}
 
@@ -368,15 +368,15 @@ Several papers embed ML into timing uncertainty itself rather than only into nom
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig12_gpu_sta_taskflow.pdf}{CPU-GPU heterogeneous multicorner STA taskflow. Redrawn based on \cite{ref22}.}
-\caption{CPU-GPU heterogeneous multicorner STA taskflow. Redrawn based on \cite{ref22}.}
+\wileyfig{12_gpu_sta_taskflow.png}{CPU--GPU heterogeneous multicorner STA taskflow from \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
+\caption{CPU--GPU heterogeneous multicorner STA taskflow from \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
 \label{fig:wiley-gpu-sta}
 \end{figure}
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{images/wiley_fig13_gpu_pba_tradeoff.pdf}{Runtime-versus-fidelity tradeoff for path-based analysis. Redrawn based on \cite{ref21}.}
-\caption{Runtime-versus-fidelity tradeoff for path-based analysis. Redrawn based on \cite{ref21}.}
+\wileyfig{13_gpu_pba_preprocess.png}{GPU-accelerated path-based-analysis preprocessing from \cite{ref21}, illustrating path-constraint handling and rank-based graph preparation before parallel PBA kernels.}
+\caption{GPU-accelerated path-based-analysis preprocessing from \cite{ref21}, illustrating path-constraint handling and rank-based graph preparation before parallel PBA kernels.}
 \label{fig:wiley-gpu-pba}
 \end{figure}
 
@@ -458,14 +458,6 @@ Engine acceleration & \cite{ref21}, \cite{ref22} & PBA or multicorner STA kernel
 
 \section{The Integration Blueprint: A Practical Architecture for Intent-Robust Timing Closure}
 
-\begin{figure}[tbp]
-\centering
-\wileyfig{images/wiley_fig14_integrated_closure_stack.pdf}{Integrated closure stack proposed in this review. Original synthesis figure showing the six layers of intent-robust timing closure.}
-\caption{Integrated closure stack proposed in this review. Original synthesis figure showing the six layers of intent-robust timing closure.}
-\label{fig:wiley-closure-stack}
-\end{figure}
-
-
 This section synthesizes the corpus into a single workflow that can organize a conference paper and, more importantly, a timing-closure story that stays connected to signoff. The key idea is not to replace signoff with a universal learned model. It is to align different methods with different closure decisions and to ensure that every layer either preserves trustworthiness or reduces the cost of restoring it.
 
 
@@ -506,14 +498,6 @@ An integrated timing-closure methodology should be evaluated on four axes at onc
 
 \subsection{Representative execution sequence}
 
-\begin{figure}[tbp]
-\centering
-\wileyfig{images/wiley_fig15_execution_sequence.pdf}{Representative execution sequence for an intent-robust closure loop. Original synthesis flowchart based on Section 7.8.}
-\caption{Representative execution sequence for an intent-robust closure loop. Original synthesis flowchart based on Section 7.8.}
-\label{fig:wiley-execution-sequence}
-\end{figure}
-
-
 The blueprint becomes less abstract when written as one representative closure loop:
 
 
@@ -530,14 +514,6 @@ Written this way, the integration blueprint is not merely a taxonomy. It is an e
 
 
 \section{Experimental Methodology, Deployment Lessons, and Open Challenges}
-
-\begin{figure}[tbp]
-\centering
-\wileyfig{images/wiley_fig16_evaluation_matrix.pdf}{Evaluation matrix for intent-robust timing closure. Original synthesis figure covering fidelity, ranking, signoff alignment, missed-violation risk, runtime, and lifetime robustness.}
-\caption{Evaluation matrix for intent-robust timing closure. Original synthesis figure covering fidelity, ranking, signoff alignment, missed-violation risk, runtime, and lifetime robustness.}
-\label{fig:wiley-evaluation-matrix}
-\end{figure}
-
 
 \subsection{Prediction metrics are necessary but insufficient}
 
@@ -609,6 +585,6 @@ Supporting information is pending. The current manuscript package includes a sep
 \printendnotes
 
 
-\bibliography{references}
+\bibliography{sample}
 
 \end{document}
