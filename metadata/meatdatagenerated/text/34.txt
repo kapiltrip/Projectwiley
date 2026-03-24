@@ -1,0 +1,529 @@
+Expert Systems With Applications 149 (2020) 113309
+
+Contents lists available at ScienceDirect
+
+Expert Systems With Applications
+
+journal homepage: www.elsevier.com/locate/eswa
+
+NN-SSTA: A deep neural network approach for statistical static timing analysis
+
+M. Amin Savari, H. Jahanirad ∗
+
+University of Kurdistan, Department of Electrical Engineering, Sanandaj, Kurdistan 90210, Iran
+
+a r t i c l e i n f o
+
+a b s t r a c t
+
+Article history: Received 15 November 2019 Revised 21 January 2020 Accepted 12 February 2020 Available online 17 February 2020
+
+Keywords: Statistical timing analysis Statistical operation Deep neural network Deep learning Critical path Delay
+
+Discrete statistical static timing analysis (SSTA) performs the timing analysis by using statistical maximum and convolution operations. The maximum is basically a non-linear operator and it is not a simple task to capture the skewness introduced by it. On the other hand, the convolution has a potential to “blow-up” the number of discrete samples as we going deep inside the timing graph and hence, results in exponential timing complexity. Therefore, in this paper we present novel deep neural network based operations which can accurately approximate the signal arrival-time’s distributions with linear-time complexity. The various deep neural network (DNN) architectures have been used to implement both the maximum and the convolution operations using proper training dataset. Simulation results on various benchmark circuits (ISCAS 85, ISCAS 89, and ITC 99) show that the proposed method estimate the mean and standard deviation (STD) of critical path delay distribution with an average error of 0.75% and 2.56% as compared to Monte Carlo (MC), respectively. Our SSTA speeds up the traditional discrete approach by a factor of 20.7x on average. Furthermore, the PDF obtained from our method matches the ones obtained from MC with a reasonable error. Furthermore, we have proposed multi-wise maximum operations to reduce the arrival-time computational complexity at multi-inputs gates. Comparing to MC, the proposed method shows 0.97% and 2.58% average error in mean and STD respectively and the speeding up factor reaches 24.4x on average for all benchmarks.
+
+© 2020 Elsevier Ltd. All rights reserved.
+
+1. Introduction
+
+Timing analysis is of a great interest in digital integrated circuits (IC) design and optimization. Wherein the timing tool ensures to meet the timing constraints of the chips. Static timing analysis (STA) has been presented as a versatile method for fast and accurate yield approximation ( Sapatnekar, 2004 ). Although STA has been a mature timing tool for many years, with entering the nanometer regime, the process parameter variations become considerable and choosing the worst-case values for parameters results in very pessimistic delay estimation. To cope with this pessimism, statistical static timing analysis (SSTA) was proposed to take the variations of the parameters into account ( Berkelaar, 1997 ). In SSTA most of the timing parameters are modeled as Random Variables (RVs) with an expected value and a certain amount of deviation from their nominal values. Block-based SSTA is known to be the most popular and efficient method for statistical timing analysis, which involves a PERT-like
+
+traversal of the circuit graph ( Abbaspour, Fatemi & Pedram, 2006 ; Chang & Sapatnekar, 2005 ; Devgan & Kashyap, 2003 ; Kang, Paul & Roy, 2005 ; Visweswariah et al., 2006 ; Zhang, Chen, Hu & Chen, 2006 ). As opposed to this, the path-based SSTA tries to find the most critical path among a set of selected paths ( Amin et al., 2005 ; Mangassarian & Anis, 2005 ). However, the path-based method has exponential runtime in circuits with many critical paths or balanced circuits ( Sapatnekar, 2004 ). In the block-based method, the statistical Addition and Maximum operations are employed to calculate the arrival times (ATs) at every node of the graph. The addition operation is trivial, however the Maximum due to its nonlinear behavior requires much more effort s ( Blaauw, Chopra, Srivastava & Scheffer, 2008 ). Considerable number of SSTA methods in literature use parametric models to approximate the above operations. Initial works on parametric SSTA used first-order canonical form to represent delays and ATs ( Blaauw et al., 2008 ). In the work of Berkelaar (1997) , variations of process parameters modeled as independent Gaussian random variables then delays and ATs are expressed as linear function of Gaussian distributions. The Maximum of two random variables is a nonlinear function and introduces skewness in most cases (i.e. maximization of two Gaussians results in a non-Gaussian random variable) ( Chopra, Zhai, Blaauw & Sylvester, 2006 ). Therefore, moment-matching technique is used
+
+∗Corresponding author. E-mail addresses: ma.savari@eng.uok.ac.ir (M.A. Savari), h.jahanirad@uok.ac.ir (H. Jahanirad).
+
+https://doi.org/10.1016/j.eswa.2020.113309 0957-4174/© 2020 Elsevier Ltd. All rights reserved.
+
+2 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Fig. 1. Incremental update and max operation handling.
+
+in order to reconstruct the ATs into the canonical form for allowing further propagation ( Chang, Zolotov, Narayan & Visweswariah, 2005 ; Clark, 1961 ; Singh & Sapatnekar, 2007 ). Moments are approximated based on the concept of tightness probability proposed by Clark (1961) . Neglecting the skewness due to the Maximum in the first-order canonical model results in serious inaccuracies in estimating timing quantities ( Chopra et al., 2006 ). On the other hand, in emerging VLSI technologies, not all the process variations have a Gaussian distribution. In addition, delays are a complicated non-linear function of parameters variations. Therefore, quadratic canonical models have been deployed to account for both non-Gaussian variations and nonlinearities ( Bhardwaj, Ghanta & Vrudhula, 2006 ; Cheng et al., 2012 ; Chopra et al., 2006 ; Ramprasath, Vijaykumar & Vasudevan, 2016 ). Cheng et al. (2012) used quadratic delay model and develop a methodology to approximate the moments of maximum based on Fourier series. The proposed maximum is capable of handling non-Gaussian variations as well as non-linear dependency. Although accuracy of timing models increases, it is at the cost of additional computational complexity. In order to reduce the complexity of quadratics model Ramprasath et al. (2016) presented skew-normal delay model to handle the skewness of the maximum along with non-Gaussian parameters. At calculation step of arrival times, this method matches the mean, standard deviation and the third moment (skewness) of both statistical operations. Skew-normal models are marginally expensive as compared to linear models, however, like quadratic models, they suffer from handling the difficulties rises from the maximum when parameter’s spatial correlations are taken into the account and, thus, expressing it in canonical form. A Gaussian-mixture model has been proposed in Tsukiyama and Fukui (2011) to approximate the maximum operator distribution and to reduce the error of the Gaussian assumption. A conditional max operation has been proposed by Chung, Xiong, Zolotov and Abraham (2012) to compute the path criticalities, however the approximation error remains considerable. Optimization of digital circuits requires repetitive updates on circuits’ structure (e.g. gate re-sizing, wire re-routing, buffer insertion) hence, incremental SSTA has been proposed ( Visweswariah et al., 2006 ) and ( Huang & Wong, 2015 ; Lee, Jiang, Li, Chiu & Yang, 2015 ; Sinha, Visweswariah, Venkateswaran, Xiong & Zolotov, 2012 ) to allow the designer perform the timing analysis only on the updated portion of the circuit rather than re-simulating the whole circuit. Ignoring the changes due to circuit updates, leads to considerable error if the changes affect a large portion of the circuit ( Huang & Wong, 2015 ). However, with local updating, a very small portion of updated area (e.g. only arrival time of an input of the preceding gate) may change. Therefore, for the sake of the efficiency it is necessary to regard the changes of timing information of that small portion only ( Sinha et al., 2012 ). Sinha et al. (2012) presented a reversible-max operation to avoid redundant pair-wise maximums. The main idea of reversible-max is if we have a random variable Z = max( X 1 , X 2 ,..., X K −1 , X K , ..., X N ) and X k changes to X ∗ k after incremental updating then the updated max will be Z = max ( Z ∗, X ∗ k ) where Z ∗= max( X 1 , X 2 ,..., X K −1 , ..., X N ) which lessens the timing overhead considerably. Fig. 1 shows the above concept. Another SSTA alternative to handle the non-Gaussian distributions is to model gates and interconnections delays and arrival times all as a set of discrete samples representing their PDFs or CDFs ( Agarwal, Blaauw, Zolotov & Vrudhula, 2003 ; Devgan & Kashyap, 2003 ; Liou, Cheng, Kundu & Krstic, 20 01 , 20 02 ; Naidu, 2002 ). The discrete events are obtained by sampling the continuous random variables at specified sampling step. Generally, the discrete SSTA procedure contains two operations; the convolution (sum) of the samples for adding up the samples sets and
+
+the statistical discrete maximum to find the latest arrival time of nodes. In Devgan and Kashyap (2003) , a fast algorithm has been proposed in which gates’ delays are modeled as piece-wise constant PDFs and arrival times as piece-wise linear CDFs using a small number of sample points (maximum of 7 points). However, the arrival times at graph nodes are approximated up to quadratic. Liou et al. (2001) have proposed an accurate technique to determine the probabilistic events of circuit’s delay distribution. The proposed technique employs discrete Addition and Maximum to compute the arrival-times at graph nodes. Naidu (2002) models the delays by a sequence of impulses (train impulse) implying their PDFs to perform SSTA. Although, both previous approaches runtimes grow exponentially with respect to the circuit size, they can accurately predict the delay distribution. Most of the natural phenomena, exhibit a non-linear behavior (e.g. solutions, weather, chaos, etc.) and it is rather hard accurately model these inherent non-linearities in the complex systems. Among all the existing non-linear mathematical models, Deep Neural Networks (DNN) models have been evolved for the past few years and shown to be the most reliable and efficient tool to model or predict many tasks in various fields of research. A considerable amount of works can be found in the literature which employed DNNs. Cincotti, Gallo, Ponta and Raberto (2014) model IPEX’s (Italian Power Exchange) electrical spot-prices by using computational intelligence (CI) approach. The proposed approach was based on a discrete framework of econometric time series, hence, the authors have been implemented a time-delayed DNN to model the time-series. DNN models are also applicable in forecasting prices and trends as Weron (2014) has been reviewed some of the most notable research in electrical price forecasting. In another study, Kamar, Ahmad, Kamsah and Mustafa (2013) used a high accuracy DNN-based model to predict compressor input power, cooling load and the performance coefficients of an air conditioning system. Srinivasan and Saghir (2013) showed that a well-trained DNN model can accurately quantify the thermodynamic attributes of binary metal alloys. Pedro, Nyandoro and John (2009) designed an DNN-based anti-lock braking system and the results show that the DNN model provides a better output in comparison to PIDbased systems. In other research, Mohagheghi, Harley, Habetler and Divan (2009) proposed a monitoring technique based on DNN to determine the effect of parameter variations in electronic power circuits. The field programmable gate array (FPGA) implementation of DNN has been presented by Jahanirad, Farokh and Mohammadi, (2010) for an adaptive frequency domain equalizer in digital mobile communications. Along with the aforementioned applications, the DNNs has been an active research topic in the field of IC design as well ( Avci M, 2008 ; Lin et al., 2020 ; Chen, Wang and Duan, 2019 ; Su, Chen, Cheng & Chiu, 2018 ; Xu et al., 2018 ). Every circuit design requires rigorous testing (i.e. logical, physical, etc.) to en-
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 3
+
+Fig. 2. Discretization process of continuous random variables’s PDF.
+
+2. Preliminary
+
+All the timing information are modeled as random variable in statistical timing analysis. Besides, it is relatively hard to deal with continuous random variables. One way to overcome these difficulties is to use discrete random variables (RVs). The discrete RVs are constructed by discretizing the continuous RVs where each PDF of continuous RV is represented by a set of discrete values (samples). The discretization process explained next.
+
+2.1. Discretization
+
+To produce the discrete PDFs, initial interval is divide into arbitrary number of sub-intervals where each sub-interval has length of  which also called sampling step . In other word, in  amount of time a sample taken from the continuous RV. The smaller  the greater samples produce and hence the more accurate the model will be (i.e. closer to continuous). Therefore,  is considered as a control parameter to adjust the resolution and control the runtime of the algorithm ( Naidu, 2002 ). Fig. 2 demonstrates an example of discretizing a Gaussian RV’s PDF and transforming it into a discrete one with ten samples (  = 1). After discretizing the random variables, they are propagated through the graph using Sum and Maximum operations which are discussed below.
+
+2.2. Sum of random variables (delays)
+
+sure validity. The successful designs then shipped to IC manufacturing companies for fabrication. In Micusik, Stopjakova and Benuskova (2002) a feedforward DNN approach has been used to detect the faults that appear on analog ICs. The proposed approach is aimed to observe the difference in power supply current in faulty and fault-free circuits. Likewise, Lin and Cheng (2017) develop an DNN-based approach to identify the test-scape chips, which are the ones who pass all test stages but fails in real-time applications. They have used an auto-encoder to classify the good and bad chips. The authors demonstrated that the new classification method has a considerable reduction in both CPU runtime and memory usage as compared to SVM-based methods. Other work done by Das, Amrutur, Jamadagni, Arvind and Visvanathan (2011) used an intelligent DNN-based model to predict the delays of IC parameters under PVT (Process, Voltage, and Temperature) variations. The results show approximating the delays coefficients employing DNN models can be efficient and relatively precise compared to expensive SPICE simulations. An efficient auto-encoder based DNN has been proposed in Xiao et al. (2019) to accurately estimate the reliability of combinational logic circuits. Kahraman et al. (2009) presents a technology independent, fast, and accurate DNN approach for modeling the timing characteristics of digital circuit’s gates. A standard logic cell library based on deep neural networks (DNNs) has been developed in Zhang et al. (2019) , wherein the front-end wearout mechanisms (e. g. hot carrier injection) have been modeled for Fin- FET SRAM cells. Akopyan et al. (2015) has developed a low cost neural network chip containing 1 million digital neurons and 256 million synapsis tightly with an efficient routing network. Leakage power is an important feature in nowadays integrated circuits. In Janakiraman, Bharadwaj and Visvanathan (2010) a DNN based framework, has developed to calculate the leakage power of digital ICs which is aware of voltage and temperature uncertainties. Ultimately, a DNN model with suitable training dataset can be a great candid in approximating IC’s non-linearities and forecasting designs’ parameters’ variations. In order to maintain the accuracy a discrete SSTA framework has been developed in this work. The proposed discrete framework employs Deep Neural Network (DNN) to perform statistical SSTA operations. The DNN-based approach allows us to approximate the distributions accurately with linear time complexity. The key contributions of this paper are the followings:
+
+1. We have proposed a smart DNN-based model with linear-time complexity to implement the SSTA operations which can overcome the non-linearity of the operations and estimate the exact output with reasonable error. 2. We have modeled the convolution operation with a Deep Neural Network model which requires deep learning concepts to train the NN model to acquire the best performance. 3. In order to lessens the computational time and prevent multiple pair-wise maximum operations at multi-fanin nodes, a new DNN-based maximum operations have been proposed to calculate the latest arrival time at multi-fanin nodes with only a single maximum operation.
+
+Summation of two discrete RVs is similar to propagating the discrete events using two independent operations: Shift with scaling and Grouping . The shift with scaling operation shifts each cell’s delay event by each individual sample of the input events and scales the cell delay with multiplying the probability of both corresponding events. As shown in Fig. 3 this operation generates 16 samples when both input and cell distribution having four samples. Next the Grouping is performed to add the probabilities of samples with the same arrival-time and generate a single sample at each arrival-time. After Grouping the samples, the final distribution of the arrival-time at the output of the OR gate will have 7 samples ( Fig. 3 ). The summation process described above simply is the convolution of two discrete distributions, hence for random variable Z = X + Y we can summarize the above process with the following equation
+
++ ∞ 
+
+Pr ( Z = k ) =
+
+n = −∞ Pr ( X = n ) Pr ( Y = k −n ) (1)
+
+Where Pr ( Z = k ) is the probability of random variable Z at point k (probability of Z when arrival time is equal to k).
+
+2.3. Maximum of arrival times
+
+The rest of the paper organized as follows. Section 2 explains the underlying concepts and algorithms of discrete SSTA. Section 3 describes the proposed DNN model of the max and convolution and the way they are constructed. In Section 4 , the usage of DNN operations and how to include them into our SSTA flow is presented. Section 5 contains the analysis of timing complexity of the proposed method. Next the results are drawn and discussed in Section 6 . Possible applications of the proposed method are discussed in Section 7 . Finally the paper will be concluded in Section 8 .
+
+The process described in Fig. 3 is the distribution resulted from the transition of one of the OR gate’s input (0 → 1), whereas for
+
+4 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Fig. 5. Sample space cover of the maximum.
+
+F Z ( z ) = Prob [ ( ( Z ≤z ) ∩ A ) ∪ ( ( Z ≤z ) ∩ B ) ∪ ( ( Z ≤z ) ∩ C ) ] (4)
+
+Since ( Z ≤z ) ∩ A , ( Z ≤z ) ∩ B and ( Z ≤z ) ∩ C are mutually exclusive we have
+
+F Z ( z ) = Prob ( Z ≤z, A ) + Prob ( Z ≤z, B ) + Prob ( Z ≤z, C ) (5)
+
+Replacing A, B and C with their values we have
+
+F Z ( z ) = Prob ( X ≤z | X ⟩ Y ) + Prob ( Y ≤z| X < Y )
+
++ Prob ( X = Y = z| X = Y ) (6)
+
+Fig. 3. Summation process of two discretized random variables.
+
+Formula (6) is graphically shown in Fig. 5 . Where each probability is described by hashed areas. According to Fig. 5 the overall sample space covered by maximum is:
+
+F Z ( z ) = P rob ( X ≤Z, Y ≤Z ) −P rob ( X = Y = Z ) (7)
+
+Assuming X and Y are independent:
+
+F Z ( z ) = F X ( z ) F Y ( z ) −F XY ( z ) (8)
+
+Note that the line X = Y = Z depicted in Fig. 5 regarded twice therefore we should subtract one term as written in 7 . To achieve the PDF of Z we take derivative of (8) so:
+
+f Z ( z ) = f X ( z ) F Y ( z ) + F X ( z ) f Y ( z ) −f X ( z ) f Y ( z ) (9)
+
+Fig. 4. Calculating the latest arrival time with maximum operation.
+
+calculating the latest arrival-time distribution all inputs’ transition must be considered. Therefore, as illustrated in Fig. 4 , the same process of shifting with scaling and grouping are performed for the next input and the corresponding arrival-time is generated regarding the second input. Next, Maximum operation is applied to combine the arrival-times to compute the latest arrival time at the gate’s output ( Fig. 4 ). For example, the probability of arrival-time equals 2 is 1(1 + 2) + 2(1) −(2)(1) = 3 or for arrival-time equals 5 we have 4(1 + 2 + 3 + 4 + 3) + 3(1 + 2 + 3 + 4) −(4)(3) = 70 and so forth. The combination of the arrival-time events is calculated as follows. If random variable Z = max (X, Y) where X and Y are the arrival times at the output we have:
+
+Z = Maximum ( X, Y ) =
+
+ X, X > Y Y, X < Y X or Y, X = Y (2)
+
+Where the f Z ( z ), F Z ( z ) are the PDF and CDF of random variable Z respectively. The discrete SSTA framework propagates the discrete events through the timing graph using maximum and convolution to determine the arrival-time discrete distribution at primary outputs. The major drawback of this framework is its extreme samplegrowing behavior. Some sample-reducing techniques proposed by Liou et al. (2001) ; Naidu (2002) but they still have exponential runtime with respect to graph size. On the other hand, overreduction of samples number results in large estimation error. In this paper, we have developed a SSTA-based framework that has linear timing complexity but its accuracy is as well as discrete SSTA. In addition, when adequate number of samples propagates in this analysis, remarkably accurate estimation can be achieved as opposed to parametric SSTA. To develop an accurate method with linear time complexity the DNN can be a promising choice. The trained DNN has great ability to approximate non-linear functions (such as Max and Conv operations) and operates in linear time complexity. Next Section gives a review of Deep Neural Networks and explains our methodology.
+
+If we assign the first case where X > Y to set A second case to set B and final case to set C we have
+
+3. Proposed methods
+
+Z = Maximum ( X, Y ) =
+
+ A B C (2 ′ )
+
+And since the ( A ∪ B ∪ C ) is the whole sample space we can write the following equation for cumulative distribution function of Z.
+
+In this section, the modeling procedure of statistical NN-based operations is presented. First, the DNN architecture and the training methodology will be described. In Section 3.1 , the NN-MAX structure (DNN-based approach for maximum operation) and the related dataset generation will be described. The same explanations will be described in Section 3.2 for NN –CONV (DNN-based approach for convolution operation).
+
+F Z ( z ) = Prob [ ( Z ≤z ) ∩ ( A ∪ B ∪ C ) ] (3)
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 5
+
+Fig. 6. The fully connected feed forward Deep Neural Network (DNN) structure.
+
+3.1. Deep neural network architecture
+
+(11)
+
+serially generate the outputs of the 2, ..,L-1 hidden layers. −→ h 1 = act i v at ion ( −−→ W 12 × −→ X + −→ b 1 ) −→ h 2 = act i v at ion ( −−→ W 23 × −→ h 1 + −→ b 2 ) . . . −→ h L −1 = act i v at ion ( −−−−→ W L −1 ,L × −−→ h L −2 + −→ b L −1 ) −−−−−→ out _ v ec = act i v at ion ( −−−→ W L,out × −−→ h L −1 + −→ b L )
+
+The learning process of DNN is supervised, in which a
+
+set of training, test, and validation data such as { −−→ X(n ) , −−−−−−−−→ T ar _ v ec(n ) } n = 1 ,..., N , are used to determine the values of net-
+
+work’s parameters ( −→ W and −→ b vectors) through training phase. Before training the DNN and determination of parameters, an appropriate loss function should be defined. In this paper, the loss function is defined as (12) , in which the first term indicates the Euclidian norm of the difference between the target and the output of the DNN, and the second term is the matrix L 2 norm which acts as a regularizer to avoid overfitting ( Chong, Han & Park, 2017 ). The Backpropagation based on stochastic gradient descent (SGD) is a popular and efficient methodology for training DNN. The parameters including bias and weights of DNN can be updated (trained) using backward propagation of the gradient of loss function from the output layer to the input layer. The weights between i th and j th layers can be updated according to 13 , in which η and ξ( t ) are learning rate and stochastic term respectively ( Qu, Li, Li, Ma & Wang, 2019 ). The bias values are updated similarly.
+
+Both operators ( maximum and convolution ) of SSTA are nonlinear and complex functions. DNN is a very powerful tool for modeling and approximating such complex functions ( Demuth, Beale, De Jess & Hagan, 2014 ). The DNN processes the input data using a cascade of multiple layers each of layers containing nonlinear processing units. Each unit (neuron) of the i th layer is connected fully/partially to the output of the ( i-1 ) th layer, so the input data will be manipulated and recombined by several levels of nonlinear functions. This results in an efficient framework to model very complex systems ( LeCun, Bengio & Hinton, 2015 ). The DNN architecture, which has been used in this paper, is illustrated in Fig. 6 . The network is fully connected which means a neuron in layer j receives the output of all K neurons of layer j- 1 . According to 10 , the weighted sum of all K inputs is computed then a bias value is added to the result. Finally, the proper activation function converts the preceding result to a restricted value (usually between −1 and 1) based on a nonlinear function (such as sigmoid, tanh or ReLU (rectifier linear unit)). In 10 , y ind (l) is the output of ind th neuron of layer l , W l-1,l (n1,n2) is the weight of connection between neuron n1 of layer l- 1 and neuron n2 of layer l , and b n (l) is the regarding bias of neuron n in layer l . The outputs of the other neurons of layer j would be computed in parallel similarly. Then the outputs of this layer are fully connected to the inputs of all neurons of ( j + 1 ) th layer. The same process would repeat for the other layers till the last layer generates the output values of the DNN.
+
+N 
+
+L 
+
+L = 1
+
+N
+
+
+
+i =1 ∥ −−−−−−−→ out _ v ec ( i ) −−−−−−−−→ T ar _ v ec ( i ) ∥ 2 + λ ×
+
+l=1 ∥ −−−→ W ( l ) ∥ 2 (12)
+
+ K 
+
+(10)
+
+y i ( j) = act i v at ion
+
+w ij ( t + 1 ) = w ij ( t ) + η ∂L
+
+k =1 y k ( j −1) × W j−1 ,j (k, i ) + b i ( j)
+
+∂ w ij + ξ( t ) (13)
+
+Suppose that DNN has L layer, the input data are represented as
+
+vector −→ X , the output vector of the i th layer is −→ h i , the bias vector
+
+of i th layer is −→ b i , and the weight vector of the connections be-
+
+tween i th and j th layers is −→ W ij . Consequently, the values of DNN’s
+
+outputs ( −−−−−→ out _ v ec ) are evaluated using a chain of equations which are presented in 11 . The first equation is regarding the first hidden layer, the last one is related to the output layer and the other ones
+
+Two main approaches are widely used to update the DNN’s parameters: online and batch training. In online training, in each epoch, the input vectors are randomly selected from dataset and the weight updating is applied for each input vector. On the other side, for batch training, in each epoch, the gradient of the weights (last two terms in 13 ) is calculated for all input vectors, then a scaled version of these gradients (i.e. average of them in an epoch) is used for weight updating ( Nakama, 2009 ). In this paper, a hybrid version of online and batch training is used which is called
+
+6 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+For example, the probability of z = 4 is Pr ( z = 4 ) = (4)( 1 + 2 ) + ( 1 + 2 + 3 )(3) + (4)(3) = 42 and for value z = 10 we have Pr ( z = 10 ) = (0)( 1 + 2 + 3 + 4 + 4 + 3 + 2 ) + ( 1 + 2 + 3 + 4 + 4 + 3 + 2 + 1 )( 0 . 5 ) + (0)(1) = 10 . Based on Eq. (14) , to calculate the value of Max function at Z = k , we need probability density function (PDF) values of X = k and Y = k , as well as the cumulative density function (CDF) of X = k and Y = k . Consequently, the related DNN has four inputs and one output with scalar values (formula (16) ).
+
+Pr ( Z = k ) = Pr ( X = k ) Pr ( Y ≤k ) + Pr ( X ≤k ) Pr ( Y = k ) (16)
+
+On the other hand, the DNN model has −−→ X(n ) = [PDF X (n),
+
+CDF X (n), PDF Y (n), CDF Y (n)] and −−−−−−−→ out _ v ec(n ) = [PDF Z (n)]. For instance
+
+Fig. 7. Calculation of maximum distribution samples.
+
+in Fig. 7 , if k = 5 then the input vector is −−→ X(5) = [4, 14, 4, 10] and
+
+mini-batch training ( Srivastava, Hinton, Krizhevsky, Sutskever & Salakhutdinov, 2014 ), in which, in each epoch, a dataset is partitioned into M batch each of them contains T training data. The selection of each mini-batch data, is similar to online approach but weight updating is done based on conventional batch approach.
+
+3.2. Max operation using DNN
+
+Modeling the max operation is a crucial task in block-based statistical timing analysis. Most of the recent methods strive to present a closed-form formula for approximating the Maximum in parametric SSTA which are either computational expensive ( Singh & Sapatnekar, 2007 ) or inaccurate ( Berkelaar, 1997 ). Statistical discrete maximization has been used in discrete SSTA to accurately propagate the timing distributions, but with more timing complexity (i.e. Quadratic) Devgan and Kashyap (2003) . In this section, an accurate and time-efficient DNN-based method is developed in order to compute the maximum. In our SSTA method, we deal with discrete distributions. Therefore, for obtaining the discrete probability distribution for the maximum, we will confront with three independent cases for each sample k of the output distribution. Suppose random variable Z = maximum(X, Y), hence, we have:
+
+Case 1: when X = k and Y < k the probability of Z = k will be Pr ( X = k ) Pr ( Y < k ) . Case 2: X < k and Y = k . Similarly, this happens with probability Pr ( X < k ) Pr ( Y = k ) . Case 3: X = k and Y = k . And the probability of this case happening is Pr( X = k )Pr( Y = k ).
+
+the target vector −−−−−−−−→ T ar _ v ec(5) = [80]. In our DNN-based maximum operator (NN-MAX), the PDF (as well as the CDF) of a node (input or output of a gate) is represented by 100 samples. So to accomplish the maximum operation between two distributions, 100 input vectors are applied to the DNN and 100 output values would be generated. There are various types of distributions which will be experienced by NN-MAX when SSTA traverses throughout the circuit. The dataset for NN-MAX has been prepared according to Fig. 8 . First, an adequate number (e.g. 50 0 0) of Gaussian distribution is created with a mean and standard deviation in the range of [0, 20] and each distribution is expressed by exactly 100 samples in the fixed interval of [ −3 σ . 3 σ ]. The generated data are registered in “Type 0 ” reservoir, which means the corresponding input/output vectors (100 samples) for each randomly generated normal distribution are saved in an appropriate data structure Fig. 9 . Next steps are responsible for generating non-Gaussian distributions, which were called type 1 , type 2 , ..., type n . To generate the N i data for type i reservoir, two sets of size N i are selected randomly from type i-1 ′ s reservoir, then the maximum of the distribution pairs (the distributions with same index from two sets) are calculated using (14) , and the corresponding results are registered in type i reservoir. According to our simulations, 10 types of reservoir is essential to generate different non-Gaussian distributions and more than 10 Max operations will generate similar distribution. The training dataset is constructed by randomly selection of the data from reservoirs ( Fig. 10 ). One needs to cover the entire range of data (all types of distributions) in order to strengthen the ability of the DNN to identify and estimate different types of distributions. The selected data are organized in mini-batches as described in Section 3.1 , and backpropagation method (the stochastic gradient descent approach) is used to update the weights and bias values in NN-MAX.
+
+3.3. Sum operation (Convolution) using DNN
+
+The last case happens only with discrete distributions and becomes zero for their continuous counterpart (since the RVs are transformed into discrete). Therefore, the probability of each sample of the maximum is calculated by:
+
+P D F Z ( Z = k ) = P D F X ( X = k ) CD F Y ( Y = k )
+
+Sum of two random variables is Z = X + Y where each sample of Z is calculated as follows:
+
++ CD F X ( X = k ) P D F Y ( Y = k ) −P D F X ( X = k ) P D F Y ( Y = k ) (14)
+
++ ∞ 
+
+PD F Z ( Z = k ) =
+
+n = −∞ PD F X ( X = n ) PD F Y ( Y = k −n ) (17)
+
+Where Pr ( X = k ) is the probability of random variable X at value k or PDF and Pr( X < k ) is the cumulative probability or CDF of random variable X at the point k −1 which can be interpreted as
+
+k −1 
+
+Pr ( X < k ) =
+
+n = −∞ Pr ( X = n ) (15)
+
+Fig. 7 exemplifies the procedure of obtaining the maximum distribution. Where X and Y are the discrete PDFs of inputs arrival times and the resulting arrival time at the output of the gate is represented by Z distribution.
+
+In other words, probability of each sample of the summation of two discrete random variables is the discrete convolution of the random variables. More specifically, to calculate PDF Z ( Z = k ), we should sum up all the results of 100 multiplications of PDF X and PDF Y samples. In discrete calculation, for two discrete random variables X and Y each having n discrete samples, the random variable Z representing their sum will have 2 × n-1 discrete samples. This fact leads to blow up in convolution sample size as follows: starting from the first level in a graph (the random variable has n samples) the discrete convolution (if n >> 1 then 2n-1 ≈2n) doubles
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 7
+
+Fig. 8. Dataset preparation for a) NN-MAX and b) NN –CONV.
+
+Fig. 9. Data structure to register the inputs and output distributions of maximum operation in type i reservoir.
+
+related DNN’s (NN –CONV), the input vector contains concatenation of 100 sample of X with 100 samples of Y distributions and its output vector contains the 100 samples of Z distribution ( Fig. 11 ). To clarify the superiority of NN –CONV, we have compared the sample size of all nodes in C17 benchmark circuit’s DAG in Fig. 12 . The NN –CONV maintains the delay distributions’ sample size (100 samples) throughout the circuit’s graph (arrival times which are represented in red color) but traditional discrete SSTA grows the sample size through traversing the graph (arrival times which are represented in blue color). For dataset generation for NN –CONV, the reservoirs of NN-MAX are used. In the benchmark circuit, the convolution is applied for the delay’s distribution of gate’s input and delay distribution from that gate’s input to the output. The corresponding gate’s input to the gate’s output has Gaussian distribution, but the gate’s input distribution can be each of the reservoirs’ distributions. For the type i ’s new reservoir according to Fig. 10 b, one distribution (X) from NN-MAX reservoir of type i and a randomly selected distribution from Gaussian distributions (Y) are convolved using (17) and the result down-sampled (uniformly) to 100 samples. The 100 samples of X, Y, and Z are registered in NN –CONV’s new reservoir of type i .
+
+the sample size per level, so in a graph with L g levels the final sample size would become 2 Lg ×n . For example, if L g = 20 then the final sample size will become 10 0 0 0 0 0 times greater than first level sample size. Our proposed method handles this problem by estimating the convolution of two n-sample random distributions (X and Y) with another n-sample random distribution (Z). In the
+
+8 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+To have a DNN-based model for these two MAXs the same procedure of section (3. 2) can be performed here. First, we should extend the formula (14) to triple-wise and quad-wise forms in order to calculate the target values and determine the necessary input samples to obtain the expected value. A simple extension methodology is proposed in the Appendix to express the triple-wise maximum which is also applicable to higher inputs maximum. Similarly, we can use PDFs and CDFs as training datasets to develop our DNN model. According to this, the dataset of Triple-MAX con-
+
+tains the input vector such as −−→ X(n ) = [PDF 1 (n), CDF 1 (n), PDF 2 (n), CDF 2 (n), PDF 3 (n), CDF 3 (n)] where additional columns are the PDF and CDF of the third variable respectively. So, in this case, each target sample is a consequence of 6 samples. With the same reasoning the Quad-MAX’s DNN model requires a training dataset with
+
+Fig. 10. Training Dataset- matrix for NN-MAX.
+
+the input vectors as −−→ X(n ) = [PDF 1 (n), CDF 1 (n), PDF 2 (n), CDF 2 (n), PDF 3 (n), CDF 3 (n), PDF 4 (n), CDF 4 (n)]. Quad-MAX is applied when timing analysis intends to calculate the arrival time at the output of four input gates. Therefore, instead of performing four pair-wise maximums only one quad-wise maximum is performed. The following algorithm summarizes Multi NN-SSTA and how the multiwise operations are performed. Note that with applying DNN-based operations very small probabilities might be generated (e.g. at the order of 1.0 e −10 or less), therefore all the probabilities less than 1.0 e −10 are dropped out of original set of probabilities. Since the discrete probabilities may become less than 100, we have performed intelligent up-sampling on the remainder discrete probabilities to have 100 discrete values and save the consistency.
+
+5. Complexity analysis
+
+After construction of all new reservoirs, the training dataset is selected in such a manner that entire range of distributions would be covered. The mini-batch organization of constructed dataset and training the NN –CONV using the approach that has been described in Section 3.1 , are the next steps.
+
+4. SSTA implementation
+
+Generally, for the proposed fully-connected DNN with n inp sized input vector, n out sized output vector, and L layers each of layers containing n L (i) neurons, the number of multiplications and summations will be (18) and (19) , respectively.
+
+L 
+
+Thus far we have introduced the new discrete statistical operations based on DNN. In this section, the SSTA algorithm using these new operations will be presented.
+
+MU L no = n inp × n L ( 1 ) + n L ( L ) × n out +
+
+l=2 n L ( l −1 ) × n L ( l ) (18)
+
+SU M no = ( n inp × n L ( 1 ) + n L ( 1 ) ) + ( n L ( L ) × n out + n out )
+
+L 
+
++
+
+l=2 ( n L ( l −1 ) × n L ( l ) + n L ( l ) ) (19)
+
+The total number of computations (multiplications and summations) for Dual-MAX and NN –CONV are computed according to (20) and (21) respectively.
+
+comp ( Dual −MAX ) = 100 ∗( MUL no ( Dual −MAX )
+
++ SUM no ( Dual −MAX ) ) (20)
+
+comp ( NN −CONV ) = ( MUL no ( NN −CONV )
+
+Algorithm 1 describes the modified version of the algorithm proposed by Devgan and Kashyap (2003) . The given algorithm named Dual NN-SSTA which reflects the fact of the NN-MAX applied as a pair-wise operator (only takes two inputs at a time). It is worth noting that the output of the NN-MAX and NN –CONV should be normalized to ensure that the sum of 100 samples of the resulted PDF to be 1. Cleary for multi fanin nodes in the graph the NN-MAX or Dual- MAX applied as many times as the number of its inputs, therefore it results in additional computational time. To eliminate these extra computations, we have proposed two new NN-based maximum operators which can compute the arrival time of multi fanin nodes at once ( Algorithm 2 ). Since most of the standard cells library consists of two, three and four inputs gates, the new maximum operators are Triple-MAX or triple-wise maximum and Quad-MAX or quad-wise maximum .
+
++ SUM no ( NN −CONV ) ) (21)
+
+Fig. 11. Dataset matrix for NN –CONV.
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 9
+
+Fig. 12. Samples propagation through the graph and sample space size comparison between discrete SSTA and NN-SSTA.
+
+Algorithm 1 Dual NN-SSTA.
+
+Input: Benchmark circuit (.blif, .bench) and timing quantities Output: Latest arrival time of the benchmark and its distribution
+
+1: Search the dag to extract the re-convergent nodes and store them in a list RN . 2: Assign a dependency-list for each node of RN according to Devgan and Kashyap (2003) . 3: for all nodes n in dag G 4: if ( n exists in RN) then 5: for each source s of re-convergent of node n 6: assign ar of node n to - ∞ then 7: for each parent p of node n, that s covers 8: ar p = ar p – ar s // ar is the arrival time 9: ar n = dual-max(ar n, nn-conv(ar p, delay(p → n))) 10: end for 11: end for 12: end if 13: else 14: for each parent p of n 15: ar n = dual-max(ar n, nn-conv(ar p, delay(p → n))) 16 : end for
+
+Suppose that the DAG (direct acyclic graph) of the circuit (we assume that every gates has two inputs) has E edges and V vertices, then a Dual-MAX’s DNN and a NN –CONV’s DNN are used for each vertex and edge respectively. Consequently, the total number of NN-SSTA’s computations would be calculated using (22) .
+
+comp ( NN −SSTA ) = E × comp ( NN −CONV )
+
++ V × comp ( Dual −MAX ) (22)
+
+As will be explained in the next section, Dual-MAX has 4 inputs, two hidden layers each of them has 6 neurons, and 1 output. Moreover, NN –CONV has 200 inputs, 4 hidden layers each of them has 30 neurons, and 100 outputs. Consequently, using Eqs. (18) to (22) the total computation of NN-SSTA for Fig. 12 ’s DAG will be 23620 ∗12 + 14500 ∗6 = 370440. There is more than 35% reduction in the number of total computations compared to the exact discrete method (for which 576800 total computations is derived from (23) ).
+
+6. Results
+
+On the other hand, using exact discrete method Eqs. (14) and ( (17) ), each maximum operation for two distributions containing N sample is completed by 6 ×N sample multiplications and summations. Moreover, the exact convolution of gate’s input distribution with N sample and gate’s input to output delay distribution containing 100 samples is completed by N sample ×100 multiplications and N sample ×100 summations. In addition, the N sample doubles by traversing each graph level (refer to Section 3.2 ). Ultimately, assuming that the circuit’s DAG has Lev levels and the number of gates in i th level to be G(i), then the total number of multiplications and summations will be calculated according to (23) .
+
+Le v 
+
+comp ( exact _ discrete ) =
+
+ G ( i ) ×  2 l × 100  × ( 6 + 200 )  (23)
+
+l=1
+
+In the following section, we have verified our SSTA method through experimentations. Algorithms and operations have been implemented in C ++ programming language and tested on a PC with 2.2 GHz Core i7 CPU and 8GB of memory. Implementation of the DNN is done by using Tensorflow’s C ++ API and included to the algorithm. We have tested ISCAS 85, ISCAS 89 and ITC99 benchmarks’ circuits to validate our approach. These benchmark circuits have widely used in the field of IC design for validation and comparison ( Bhanja et al. 2003 ; Jahanirad, 2019 ). A wide range of appli-
+
+10 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Algorithm 2 Multi NN-SSTA.
+
+Input: Benchmark circuit (.blif, .bench) and timing quantities Output: Latest arrival time of the benchmark and its distribution
+
+each gate with a vertex and the interconnections by graph’s edges. It is worth noting that the RTL netlists of ISCAS 89 and ITC99 benchmark circuits are sequential (containing loops) but the NN- SSTA method can handle the direct acyclic graphs. So, the sequential RTL netlists of such circuits have been converted to their combinational counterparts. For Sequential to combinational conversion details the reader may refer to the method proposed by (Jahanirad, 2019a) . The benchmarks also have been mapped to TSMC 0.18 um standard cell library with 4-input cells at most. Moreover, we have used this standard cell library to extract the nominal (mean) values of circuits’ components’ delay and randomly define the standard deviation in the interval [0.8, 1.2]. Similar components have the same value of standard deviation. As mentioned in Liou et al. (2001) discretized representation for random variables allows us to model delays and arrival times with an arbitrary type of distribution, nevertheless, in this paper we assume all delays are distributed normally for simplicity. Following sections (A and B) show the results of DNN-based operations and NN-SSTA, respectively.
+
+6.1. DNN-based operations
+
+1: for all nodes n in dag G 2: if n exists in RN then 3: for each source s of re-convergent of node n 4: assign ar of node n to - ∞ then 5: for each parent p of node n , that s covers 6: ar p = ar p – ar s // ar is the arrival time 7: end for 8: if ( s covers two parents of node n ) then 9: apply dual-max ; 10: else if ( s covers three parents of node n ) then 11: apply triple-max ; 12: else if ( s covers four parents of node n ) then 13: apply quad-max ; 14: end for 15: end if 16: else 17: if ( parents n = 2) then 18: apply dual-max to calculate ar n 19: // max(ar1 + d1, ar2 + d2) 20: if ( parents n = 3) then 21: apply triple-max to calculate ar n 22: // max(ar1 + d1, ar2 + d2, ar3 + d3) 23: if ( parents n = 4) then 24: apply quad-max to calculate ar n 25: // max(ar1 + d1, ar2 + d2, ar3 + d3, ar4 + d4) 26: end else 27: end for
+
+In this sub-section the performance of NN-MAX (Dual-MAX, Tripple-MAX, and Quad-MAX) and NN –CONV have been reported through simulations. The proper dataset has been constructed according to the proposed methodology in Sections 3.1 and 3.2 . Then the data set has been splitted into training (70%) and test (30%) subsets. In our study, we have used root mean squared error (RMSE) to evaluate the accuracy of the DNN-based operators which is defined according to (24) . In this equation N is the number of data in the mini-batch, out i and trg i are the DNN output value and the target value for i th datum of mini-batch. In each sub-sections, the derivation of hyper-parameters (number of layers and number of neurons in hidden layers) has been described and the accuracy of the DNN-based operators has been illustrated.
+
+N
+
+
+
+i =1 (ou t i −tr g i ) 2
+
+RMSE =
+
+N (24)
+
+cations are covered by these benchmark circuits: different sized arithmetic logic units (ALU), various adders-multipliers, conventional/very complex central processing units (CPU), and digital signal and image processing modules. To validate and test the performance of NN-SSTA, we have selected 14 circuits from these three benchmark sets (6 circuits from ISCAS 85, 4 circuits from ISCAS 89, and 4 circuits from ITC99). The specifications of the corresponding DAGs for these circuits have been presented in Table 1 . The first, second, third and fourth columns are related to the number of primary inputs (#PIs), the number of primary outputs (#POs), the number of circuit’s gates (nodes), and the number of edges of the graph, respectively. There are a wide range of circuits from 11 to more than 1280 0 0 nodes with various number of PIs and POs. In this paper, to construct the circuit’s DAG for a benchmark circuit, first it has been synthesized to RTL netlist using ABC synthesizer ( Berkeley Logic Synthesis & Verification Group, ABC, 2018 ). The RTL netlist contains the gates and interconnections among them. Then the netlist has been converted to DAG by replacing
+
+6.1.1. NN-based maximums Till now, there is no analytical approach to derive the optimum values of the hyper parameters (number of layers and number of hidden neurons) for a DNN. One common method is trial and error, in which according to the complexity of system which is modeled by DNN, various values for hyper parameters are considered
+
+Table 1 Benchmarks statistics (number of : primary inputs (#PI), primary outputs (#PO), gates (#nodes), and interconnections (#edges) and number of maximum operations (#MAX_Ops) which had used in Dual NN-SSTA and Multi NN-SSTA.
+
+Benchmark Circuit #PI (Primary Inputs) #PO (Primary Inputs) #nodes DAG’s Vertices #edges DAG’s Edges #MAX–Ops
+
+Multi NN-SSTA Dual NN-SSTA
+
+c17 5 2 11 12 7 7 c432 36 7 171 312 107 146 c880 60 26 286 540 209 279 c3540 50 22 765 1583 661 1040 c5315 178 123 1194 2363 899 1168 c6288 32 32 1635 3027 1420 1655 s13207 700 790 3111 4851 1795 2529 s15850 611 684 3511 5972 2449 3144 s38417 1664 1742 9496 16077 6792 8322 s38584 1464 1730 12196 22160 9320 11693 b17 1452 1512 22541 46471 19509 25841 b18 3357 3343 64506 135559 56337 74395 b19 6666 6672 128398 270057 112485 148330 b20 522 512 10189 21034 8940 11326
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 11
+
+Fig. 13. Mean Square Error of NN-MAXs for different number of neurons.
+
+Table 2 Proposed DNNs’ specifications.
+
+NN-Model Neurons [#L 1 #L 2 ... #L n ] Learning rate Optimization algorithm Number of EPOCHs Activation function
+
+Dual-MAX [4 6 6 1] 1.0e-3 Stochastic Gradient Dscent 100 Sigmoid Triple-MAX [6 8 8 1] 1.0e-3 Stochastic Gradient Dscent 110 Sigmoid Quad-MAX [8 10 10 1] 1.0e-3 Stochastic Gradient Dscent 110 Sigmoid NN –CONV [200 30 30 30 30 100] 1.0e-4 Adam 20000 ReLU
+
+Table 3 Accuracy of NN SSTA, Parametric SSTA and Discrete SSTA compared to Monte Carlo with 10 5 Iterations.
+
+Circuits P-SSTA |Error| D-SSTA |Error| Dual NN-SSTA |Error| Multi NN-SSTA |Error|
+
+Mean (%) STD (%) Mean (%) STD (%) Mean (%) STD (%) Mean (%) STD (%)
+
+c17 0.08 2.88 0.05 2.63 0.19 3.75 0.19 3.75 c432 0.62 8.48 0.14 0.91 0.17 1.24 0.29 1.32 c880 1.75 6.26 0.84 0.94 0.33 1.31 0.91 1.52 c3540 0.81 10.03 0.07 0.84 0.67 3.06 0.41 3.27 c5315 0.15 9.01 0.09 3.26 0.7 4.61 0.87 3.84 c6288 2.39 13.3 0.74 3.07 2.19 2.27 2.31 2.14 s13207 0.86 8.25 0.62 2.80 0.68 3.38 1.86 3.37 s15850 2.26 9.16 0.95 1.52 0.62 1.60 0.97 2.03 s38417 1.89 8.39 0.43 0.96 0.14 2.02 0.42 2.05 s38584 1.57 9.19 0.41 0.76 0.87 2.13 0.70 2.23 b17 0.69 12.99 0.30 1.47 1.0 1.83 1.34 1.87 b18 1.35 13.69 0.15 4.27 0.71 4.24 0.78 4.30 b19 1.33 12.85 0.45 1.27 1.27 2.88 1.43 2.90 b20 1.90 9.65 0.36 0.98 0.96 1.53 1.11 1.50 AVG 1.26 9.58 0.40 1.83 0.75 2.56 0.97 2.58
+
+and among them the best one would be selected (Bhardwaj, Tiwari, Bhardwaj & Bhardwaj, 2016 ; Yoo, 2019 ; Zhang et al., 2019, December) . Our effort s to find optimum values for hyper parameters are summarized in Fig. 13 . We have assumed that the hidden neuron distributed uniformly between two hidden layers; on the other hand, if there are N hid hidden neuron in NN-MAX, there are N hid /2 neurons in the first and second hidden layers respectively. According to Figs. 13 , 12 neurons for Dual-MAX (two layers of 6 neurons), 16 neurons for Triple-MAX (two layers of 8 neurons), and 20 neurons for Quad-MAX (two layers of 10 neurons) are resulted in sufficient accuracy. Further increment of the number of neurons gains no accuracy improvement (the RMSE is not decreased). The specifications of the training of the weights and bias values
+
+as well as the best hyper parameters have been represented in Table 2 . Once the NN-MAX’s DNNs have been constructed, we would test the accuracy of them to estimate the maximum of random distributions. As was mentioned in Section 2 , more deviation from Gaussian distribution (by skewness or non-Guassian distributions) causes more difficulty in estimation the MAX operation. A case of non-Gaussian entries is shown in Fig. 14 (a) and clearly, both of which, have a significant skew. The result of Dual-MAX with these inputs is illustrated in Fig. 14 (b) in which the target is the expected distribution and the output (black line) is the Dual-MAX’s output. The performance of the Triple-MAX is shown in Fig. 15 . According to Fig. 15 (b), the output of triple-wise maximum introduces an ex-
+
+12 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Fig. 14. Dual-MAX accuracy (a) non-Gaussian inputs. (b) Results.
+
+tra skewness with respect its inputs distributions. Fig. 16 shows the accuracy of the Quad-MAX when its inputs are of different types ( Fig. 16 (a)). In all three examples, NN-MAX can estimate the target distribution successfully. We have repeated 100 times these experiments with different distributions, the average RMSEs for Dual- MAX, Triple-MAX, and Quad-MAX are 5.3 e −07, 9.6 e −07, and 3.5 e −06, respectively.
+
+among layers the DNN’s architecture of NN –CONV have been constructed. The required dataset has generated using the methodology of Section 3.3 , and the training and test subsets (70% for training and 30% for test) have been selected. Based on the approach described in Section 3.1 , the NN –CONV has been trained and the average RMSE has been illustrated in Fig. 17 . According to this figure the optimum number of neurons is 120 (more neurons cannot improve the accuracy). Finally, the selected hyper parameters in this study would be 4 hidden layers each of them contains 30 neurons. The specifications of the final implemented NN –CONV have been presented in the last row of Table 2 . Relu (Rectified linear unit) activation function is used for our deep NN model. And statistical optimizer the so-called Adam optimizer is employed
+
+6.1.2. NN-based convolution To determine the hyper parameters (number of layers and number of hidden neurons) of NN –CONV, similar approach to NN- MAX has been applied. We have assumed, four equally-sized layers, then by selecting the number of neurons and distributing them
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 13
+
+Fig. 15. Triple-MAX performance (a) non-Gaussian inputs. (b) Results.
+
+to reliably minimize the error, which is somewhat an extension of stochastic gradient descent algorithm Goodfellow, Bengio and Courville (2016) . After construction of NN –CONV, various types of distributions (with skewness or non-Gaussian) have been applied. One example of how good the NN –CONV estimates the convolution of two non-Gaussian distributions is depicted in Fig. 18 . The average RMSE which obtained for 100 such experiments is 8.3 e −06.
+
+6.2. NN-based SSTA results
+
+done using Dual-MAX (even for the gates with more than 2 fanins). The second one is Multi NN-SSTA in which Dual-MAX, Triple- MAX, and Quad-MAX are applied for 2-inputs, 3-inputs, and 4inputs gates respectively. In the last column of Table 1 , the number of maximum operations used in each circuit using two proposed implementations is reported. For example, for benchmark b20 over 20 0 0 maximum operations are saved in Multi NN-SSTA algorithm. For comparison purpose, two methods have been selected: from parametric SSTA category the method which was proposed by Visweswariah et al. (2006) is chosen (P-SSTA), and the statistical timing analysis method proposed by Liou et al. (2001) is selected (D-SSTA) from discrete SSTA category. Finally, as the reference method, Monte Carlo (MC) simulations with 10 5 iterations is used throughout this paper.
+
+In this sub-section the efficiency of our proposed NN-SSTA method is depicted by comparison with the previous SSTA methods. We use two different im plementations of NN-SSTA: first one is Dual NN-SSTA in which all required maximum operations are
+
+14 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Fig. 16. Quad-MAX accuracy (a) non-Gaussian inputs. (b) Results.
+
+For the 14 circuits which were selected from ISCAS 85, ISCAS 89, and ITC99 benchmark circuits, all five methods (Dual NN-SSTA, Multi NN-SSTA, D-SSTA, P-SSTA, and MC) have applied. The error (error in mean (Mean) and standard deviation (STD)) of the first four methods regarding MC (as the reference method) is computed using (25) and the results have been reported in Table 3 .
+
+Er ror % = [ ( M ethod −M onte Carlo ) /Monte Carlo ] ∗100 (25)
+
+and P-SSTA (9.58%, 13.69%). The mean estimation of D-SSTA is the most accurate; Furthermore, Dual NN-SSTA and Multi NN-SSTA are clearly better than P-SSTA. The standard deviation estimation of the critical path distribution (which is a better indicator of real distribution) for Dual NN-SSTA and Multi NN-SSTA is very close to D-SSTA in both average and maximum errors. On the other hand, the error of P-SSTA method is 3 times greater than the proposed methods. Another aspect which should be compared for the five methods is computational complexity. The runtime of five different SSTA methods for 14 benchmark circuits have been reported in Table 4 . The speed up rate of four SSTA methods (Multi NN-SSTA, Dual NN- SSTA, D-SSTA, and P-SSTA) regarding MC ( runtime of MC is divided
+
+From this table, according to the (average, maximum) error of estimated mean of critical path delay the ascending order of methods would be: D-SSTA (0.4%, 0.95%), Dual NN-SSTA (0.75%, 2.19%), Multi NN-SSTA (0.97%, 2.31%), and P-SSTA (1.26%, 2.39%). The standard deviation ascending order is similar: D-SSTA (1.83%, 4.27%), Dual NN-SSTA (2.56%, 4.24%), Multi NN-SSTA (2.58%, 4.30%),
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 15
+
+Fig. 17. NN –Convolution Mean Square Error for various number of hidden nodes in training.
+
+Fig. 18. NN –Convolution accuracy with non-Gaussian inputs of Fig. 14 . (a) Green dashed line is the expected distribution and the solid line is the NN model output. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+Table 4 CPU Runtime of Monte Carlo with 10 5 iterations, Multi NN-SSTA, Dual NN-SSTA, Discrete SSTA and Parametric SSTA.
+
+Circuits MC time (sec) Multi NN-SSTA time (sec) Dual NN-SSTA time (sec) D-SSTA time (sec) P-SSTA time (sec)
+
+c17 59 0.08 0.08 2.12 0 c432 1039 1.4 2.01 39.4 0.07 c880 1889 2.7 3.3 73.7 0.12 c3540 5053 7.4 9.1 185.05 0.35 c5315 7724 11.1 13.5 296.8 0.5 c6288 8907 13.2 16.3 302.6 0.6 s13207 1.82E + 04 23.6 29.1 499.4 1.18 s15850 2.11E + 04 28.4 34.7 665.4 1.35 s38417 5.70E + 04 66.4 78.4 1698.7 3.65 s38584 7.32E + 04 73.6 87.6 1812.6 4.72 b17 1.46E + 05 145.5 176.07 3542.5 9.26 b18 4.15E + 05 434.4 521.3 9703.3 26.53 b19 8.23E + 05 840.7 1025.7 1.92E + 04 53.12 b20 6.41E + 04 64.4 77.9 1603.7 4.1
+
+16 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Fig. 19. Benchmark circuits c432 (a) PDFs comparison. (b) CDFs comparison.
+
+by runtime of the method ) have been reported in the second to fifth columns of Table 5 . Furthermore, the speed up rate of Dual NN- SSTA and Multi NN-SSTA regarding D-SSTA ( runtime of D-SSTA is divided by runtime of the method (Dual NN-SSTA or Multi NN-SSTA) ) have been represented in sixth and seventh columns of Table 5 . On average (refer to the last row of table (5) ), the most speed up rate belongs to P-SSTA. This is due to simple but inaccurate ( Table 3 ) method which is based on closed-form formulas. The speed up rates of the proposed Dual NN-SSTA and Multi NN-SSTA methods are 679 and 817, respectively. The slowest method is D-SSTA with just 33.6 speed up rate regarding MC method. Finally, Dual NN- SSTA and Multi NN-SSTA as our proposed methods gain 20.3 and
+
+24.4 speed up compared to D-SSTA, meanwhile they can achieve the same accuracy as D-SSTA. In summary, our proposed NN-SSTA is more accurate than parametric SSTA methods (which is the dominant approach in statistical timing analysis) by 0.5% in mean and 7% in STD prediction of critical path delay distribution. At the same time, its accuracy is very close to D-SSTA (as a precise method) by 0.3% in mean and 0.7% in STD prediction error. On the other hand, our NN-SSTA timing analyzer is more than 20 times faster than D-SSTA and more than 670 times faster than MC. In order to give more insight about the efficiency of NN-SSTA, we have plotted the PDF and CDF of critical path delay which
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 17
+
+Fig. 20. Benchmark circuits b18 (a) PDFs comparison (b) CDFs comparison.
+
+In addition, it is clear that NN-SSTA is capable of predicting the skewness and non-Gaussian distribution with reasonable error.
+
+7. Applications
+
+have been derived from five SSTA methods ( Fig. 19 for C432 and Fig. 20 for b18). The mean, spread (STD) and tail of PDFs are three main concepts which would be compared. The MC’s PDF of c432 has a squared shape with a mean and a width (as spread or variance). The most similar estimated PDF as expected belongs to D- SSTA. All four SSTA methods can estimate the mean precisely, but the spread estimations of Dual NN-SSTA and Multi NN-SSTA are much better than P-SSTA. The MC’s PDF of b18 ( Fig. 20 ) is more complex; meanwhile the NN-SSTA in both implementations can track the PDFs very closely. For b18, P-SSTA estimations of mean and spread is very erroneous . Ultimately, the NN-SSTA’s arrival time distribution is far more reliable and realistic as compared to P-SSTA.
+
+With the advent of nanometer technology and increasing the uncertainty in VLSI IC fabrication the process of the design becomes extremely challenging. On the other hand, a good predication of the design parameters and their variations in fabrication phase can lead to more reliable designs and hence, increasing the manufacturing yield, remarkably. On the timing sign-off of the ICs, the timing tool has a vital role both in front-end and back-end
+
+18 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Table 5 CPU Runtime comparison of Monte Carlo with 10 5 iterations, Multi NN-SSTA, Dual NN-SSTA, Discrete SSTA and Parametric SSTA.
+
+Circuits Speed-up Ratio (Multi NN-SSTA) Speed-up Ratio (Dual NN-SSTA) Speed-up Ratio (D-SSTA) Speed-up Ratio (P-SSTA) Speed-up Ratio (D-SSTA to Multi NN-SSTA)
+
+Speed-up Ratio (D-SSTA to Dual NN-SSTA)
+
+c17 717.3 717.3 27.8 Inf 25.7 25.7 c432 703.6 515.7 26.3 14842.8 26.6 19.5 c880 675.4 571.4 25.6 15741.6 26.3 22.2 c3540 682.6 554.9 27.3 14437.1 24.9 20.3 c5315 695.6 570.1 26.01 15448 26.7 21.9 c6288 674.2 543.7 29.4 14845 22.9 18.4 s13207 768.3 624.6 36.4 15423.7 21.08 17.1 s15850 741.4 607.7 31.7 15629.6 23.3 19.1 s38417 857.6 726.8 33.5 15616.4 25.5 21.6 s38584 993.2 834.6 40.3 15508.4 24.5 20.6 b17 1003.3 829.1 41.2 15766.7 24.3 20.1 b18 955.2 796.03 42.7 15642.6 22.3 18.6 b19 978.8 802.3 42.8 15493.2 22.8 18.7 b20 994.5 822.6 39.9 15634.1 24.8 20.5 AVG 817.2 679.8 33.6 15386.9 24.4 20.3
+
+timing analyzer, such as spatial correlations, false-paths detection, noise influence, voltage and temperature consideration, etc. exiting SSTA methods need to be realistic as possible. False-paths are the paths that never sensitized (activated) logically, so every timing tool need to be aware of this paths for a reliable approximation. On the other hand in recent ICs voltages and transistors dimensions are shrunk down and almost all of devices and interconnects become noise sensitive which yield to unreliable design if it get ignored. Hence, as a future work, we will focus on False-paths ( Murray, Suardi, Betz & Constantinides, 2018 ; Wang, Tzeng & Li, 2014 ) and noise analysis as well as including the spatial correlation in our proposed method.
+
+Declaration of Competing Interest
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+Credit authorship contribution statement
+
+verification steps. And it get invoked almost after every step of the design process. We believe that with incorporating cross-talks and false-paths in our methodology, NN-SSTA could be a possible choice in these steps as a novel and time-efficient statistical timing tool. Another possible applications of our method can be found in PERT models where critical path computation (CPM) is required. Generally CPM algorithm applied on diagrams (project schedule diagram) with stochastic delays (or uncertain parameters) between each two tasks where the final goal is to find longest timing path in that diagram. These diagrams can represent various subjects including traffic, paths finding in transportation or series of dependent tasks (i.e. one occur after another) to complete a larger task. Such applications are also of a great interest in computer networking and communications where the concept of critical path is invincible. Civil or rural routing can be placed on the CPM category as well. As mentioned in last sections our SSTA is block-based which is based on PERT algorithm, thus the essence of NN-SSTA is applicable to any of aforementioned applications. Furthermore, our approach is capable of handling incremental analysis as well by using the techniques suggested by Huang and Wong (2015) ; Sinha et al. (2012) .
+
+8. Conclusion
+
+M. Amin Savari: Methodology, Data curation, Writing - original draft, Visualization, Software, Validation. H. Jahanirad: Supervision, Conceptualization, Methodology, Writing - review & editing, Software.
+
+Acknowledgments
+
+The authors would thank the anonymous reviewers for their time and constructive comments.
+
+Supplementary materials
+
+Supplementary material associated with this article can be found, in the online version, at doi: 10.1016/j.eswa.2020.113309 .
+
+Appendix: Extended Maximum
+
+In this paper we have proposed a Deep Neural Network model to approximate both statistical SUM and MAX operations. Our main motivation for this was that the MAX operation is inherently a non-linear function which creates a non-Gaussian distribution as the output. Therefore, we chose DNN model as it is well known to handle and approximate non-linear functions. We have shown that using DNN models lessens the number multiplications and hence reduce computational time. Accordingly, we have modeled the convolution with DNN in order to have linear operator. Moreover, based on the same reasoning we have proposed triple-wise and quad-wise maximum operators to achieve the minimum runtime. With experimentation, we have verified that the fitting accuracy of the proposed SSTA as compared to other SSTA methods and results show that our method has a reasonable pessimism at predicting the mean of arrival times. However, as a comparison to parametric SSTA the NN-SSTA results in more accurate distribution. Due to DNNs input size limitation, the proposed method only functions with trained input size otherwise one should adjust the input sample size (either up or down sampling) to predefined size. The accuracy of NN-SSTA can be improved by increasing the training input size, however it is at cost of additional timing complexity. Since there are many issues to address to build a versatile
+
+A simple truth table analogy can be developed for multi-input Maximum operation. Table 6 shows a straightforward extraction of the necessary summand to be used in calculating the samples of three-input Maximum . Where RV and RV ′ in the third column is the same as Pr ( RV = k ) and Pr( RV ≤k ) respectively. Therefore, the final equation will be generated by using the SOP (Sum Of Products) representation for the given truth table except the last row with gray background in Table 6 , where it should added with mines
+
+M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309 19
+
+Table 6 Truth table creation for multi -input maximum operator.
+
+sign. The number of summands needed for multi-input Maximum is 2 n −1 where n is the number of inputs or RVs. According to Table 6 seven summands are required to compute the probability of three-input Maximum. Hence for random variable W = Maximum ( X , Y , Z ), the discrete probabilities can be determined as follows:
+
+Pr ( W = k ) = Pr ( X ≤k ) Pr ( Y ≤k ) Pr ( Z = k )
+
++ Pr ( X ≤k ) Pr ( Y = k ) Pr ( Z ≤k )
+
++ Pr ( X ≤k ) Pr ( Y = k ) Pr ( Z = k )
+
++ Pr ( X = k ) Pr ( Y ≤k ) Pr ( Z ≤k )
+
++ Pr ( X = k ) Pr ( Y ≤k ) Pr ( Z = k )
+
++ Pr ( X = k ) Pr ( Y = k ) Pr ( Z ≤k )
+
+−Pr ( X = k ) Pr ( Y = k ) Pr ( Z = k ) (26)
+
+Table (6) can be easily extended for higher inputs maximum operation.
+
+References
+
+Chen, T. , Wang, L. , & Duan, S. (2019). Implementation of circuit for reconfigurable memristive chaotic neural network and its application in associative memory. Neurocomputing . Cheng, L. , Gong, F. , Xu, W. , Xiong, J. , He, L. , & Sarrafzadeh, M. (2012). Fourier series approximation for max operation in non-Gaussian and quadratic statistical static timing analysis. IEEE Transactions on very Large Scale Integration (VLSI) Systems , 20 (8), 1383–1391 . Chong, E. , Han, C. , & Park, F. C. (2017). Deep learning networks for stock market analysis and prediction: Methodology, data representations, and case studies. Expert Systems with Applications , 83 , 187–205 . Chopra, K. , Zhai, B. , Blaauw, D. , & Sylvester, D. (2006, November). A new statistical max operation for propagating skewness in statistical timing analysis. In Proceedings of the 2006 IEEE/ACM international conference on Computer-aided design (pp. 237–243). ACM . Chung, J. , Xiong, J. , Zolotov, V. , & Abraham, J. A. (2012). Path criticality computation in parameterized statistical timing analysis using a novel operator. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 31 (4), 497–508 . Cincotti, S. , Gallo, G. , Ponta, L. , & Raberto, M. (2014). Modeling and forecasting of electricity spot-prices: Computational intelligence vs classical econometrics. AI Communications , 27 (3), 301–314 . Clark, C. E. (1961). The greatest of a finite set of random variables. Operations Research, 9 (2), 145–162 . Das, B. P. , Amrutur, B. , Jamadagni, H. S. , Arvind, N. V. , & Visvanathan, V. (2011). Voltage and temperature-aware SSTA using neural network delay model. IEEE Transactions on Semiconductor Manufacturing , 24 (4), 533–544 . Demuth, H. B. , Beale, M. H. , De Jess, O. , & Hagan, M. T. (2014). Neural network design . Martin Hagan . Devgan, A. , & Kashyap, C. (2003, November). Block-based static timing analysis with uncertainty. In Proceedings of the 2003 IEEE/ACM international conference on Computer-aided design (p. 607). IEEE Computer Society . Goodfellow, I. , Bengio, Y. , & Courville, A. (2016). Deep learning . MIT press . Huang, T. W. , & Wong, M. D. (2015, November). OpenTimer: A high-performance timing analysis tool. In Proceedings of the IEEE/ACM International Conference on Computer-Aided Design (pp. 895–902). IEEE Press . Jahanirad, H. (2019a). Efficient reliability evaluation of combinational and sequential logic circuits. Journal of Computational Electronics, 18 (1), 343–355 . Jahanirad, H. (2019b). CC-SPRA: Correlation coefficients approach for signal probability-based reliability analysis. IEEE Transactions on very Large Scale Integration (VLSI) Systems , 27 (4), 927–939 . Jahanirad, H. , Farokh, A. , & Mohammadi, K. (2010, September). Frequency domain equalization using EHW based neural network. In Proceedings of the 13th ISCEE (pp. 111–118) . Janakiraman, V. , Bharadwaj, A. , & Visvanathan, V. (2010). Voltage and temperature aware statistical leakage analysis framework using artificial neural networks. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 29 (7), 1056–1069 . Kahraman, N. , & Yildirim, T. (2009). Technology independent circuit sizing for standard cell based design using neural networks. Digital Signal Processing, 19 (4), 708–714 . Kamar, H. M. , Ahmad, R. , Kamsah, N. B. , & Mustafa, A. F. M. (2013). Artificial neural networks for automotive air-conditioning systems performance prediction. Applied Thermal Engineering, 50 (1), 63–70 . Kang, K. , Paul, B. C. , & Roy, K. (2005, March). Statistical timing analysis using levelized covariance propagation. Design, Automation and Test in Europe , 764–769 IEEE . LeCun, Y. , Bengio, Y. , & Hinton, G. (2015). Deep learning. Nature , 521 (7553), 436–4 4 4 . Lee, P. Y. , Jiang, I. H. R. , Li, C. R. , Chiu, W. L. , & Yang, Y. M. (2015, November). iTimerC 2.0: Fast incremental timing and CPPR analysis. In 2015 IEEE/ACM International Conference on Computer-Aided Design (ICCAD) (pp. 890–894). IEEE . Lin, F. , & Cheng, K. T. (2017, January). An artificial neural network approach for screening test escapes. In 2017 22nd Asia and South Pacific Design Automation Conference (ASP-DAC) (pp. 414–419). IEEE . Lin, J. , & Yuan, J. S. (2020). A scalable and reconfigurable in-memory architecture for ternary deep spiking neural network with ReRAM based neurons. Neurocomputing , 375 , 102–112 . Liou, J. J. , Cheng, K. T. , Kundu, S. , & Krstic, A. (2001, June). Fast statistical timing analysis by probabilistic event propagation. In Proceedings of the 38th annual Design Automation Conference (pp. 661–666). ACM . Liou, J. J. , Krstic, A. , Wang, L. C. , & Cheng, K. T. (2002, June). False-path-aware statistical timing analysis and efficient path selection for delay testing and timing validation. In Proceedings 2002 Design Automation Conference (IEEE Cat. No. 02CH37324) (pp. 566–569). IEEE . Mangassarian, H. , & Anis, M. (2005, March). On statistical timing analysis with inter-and intra-die variations. In Proceedings of the conference on Design, Automation and Test in Europe: 1 (pp. 132–137). IEEE Computer Society . Micusik, D. , Stopjakova, V. , & Benuskova, L. (2002). Application of feed-forward artificial neural networks to the identification of defective analog integrated circuits. Neural Computing & Applications, 11 (1), 71–79 . Mohagheghi, S. , Harley, R. G. , Habetler, T. G. , & Divan, D. (2009). Condition monitoring of power electronic circuits using artificial neural networks. IEEE Transactions on Power Electronics , 24 (10), 2363–2367 . Murray, K. E. , Suardi, A. , Betz, V. , & Constantinides, G. (2018). Calculated risks: Quantifying timing error probability with extended static timing analysis. IEEE
+
+Abbaspour, S. , Fatemi, H. , & Pedram, M. (2006, January). Parameterized block-based non-Gaussian statistical gate timing analysis. In Proceedings of the 2006 Asia and South Pacific Design Automation Conference (pp. 947–952). IEEE Press . Agarwal, A. , Blaauw, D. , Zolotov, V. , & Vrudhula, S. (2003, June). Computation and refinement of statistical bounds on circuit delay. In Proceedings of the 40th annual Design Automation Conference (pp. 348–353). ACM . Akopyan, F. , Sawada, J. , Cassidy, A. , Alvarez-Icaza, R. , Arthur, J. , & Merolla, P. (2015). Truenorth: Design and tool flow of a 65 mw 1 million neuron programmable neurosynaptic chip. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems , 34 (10), 1537–1557 . Amin, C. S. , Menezes, N. , Killpack, K. , Dartu, F. , Choudhury, U. , & Hakim, N., &. Ismail. Y. I. (2005, June). Statistical static timing analysis: How simple can we get? In Proceedings of the 42nd annual Design Automation Conference (pp. 652–657). ACM . Avci, M. (2008). Neural network-based design approach for submicron MOS integrated circuits. Mathematics and Computers in Simulation , 79 (4), 1126–1136 . Berkelaar, M. R. C. M. (1997, December). Statistical delay calculation, a linear time method. In Proceedings of TAU: 97 (pp. 15–24) . Berkeley Logic Synthesis and Verification Group. (2018). ABC: A system for sequential synthesis and verification. Release , 3 , 26. http://www.eecs.berkeley. edu/ ∼alanmi/abc . Bhanja, S. , & Ranganathan, N. (2003). Switching activity estimation of VLSI circuits using bayesian networks. IEEE Transactions on very Large Scale Integration (VLSI) Systems , 11 (4), 558–567 . Bhardwaj, A. , Tiwari, A. , Bhardwaj, H. , & Bhardwaj, A. (2016). A genetically optimized neural network model for multi-class classification. Expert Systems with Applications, 60 , 211–221 . Bhardwaj, S. , Ghanta, P. , & Vrudhula, S. (2006, November). A framework for statistical timing analysis using non-linear delay and slew models. In Proceedings of the 2006 IEEE/ACM international conference on Computer-aided design (pp. 225–230). ACM . Blaauw, D. , Chopra, K. , Srivastava, A. , & Scheffer, L. (2008). Statistical timing analysis: From basic principles to state of the art. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems , 27 (4), 589–607 . Chang, H. , & Sapatnekar, S. S. (2005). Statistical timing analysis under spatial correlations. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 24 (9), 1467–1482 . Chang, H. , Zolotov, V. , Narayan, S. , & Visweswariah, C. (2005, June). Parameterized block-based statistical timing analysis with non-gaussian parameters, nonlinear delay functions. In Proceedings of the 42nd annual Design Automation Conference (pp. 71–76). ACM .
+
+20 M.A. Savari and H. Jahanirad / Expert Systems With Applications 149 (2020) 113309
+
+Visweswariah, C. , Ravindran, K. , Kalafala, K. , Walker, S. G. , Narayan, S. , & Beece, D. K. , & Hemmett, J. G. (2006). First-order incremental block-based statistical timing analysis. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 25 (10), 2170–2180 . Wang, S. J. , Tzeng, T. H. , & Li, K. S. M. (2014, June). Fast and accurate statistical static timing analysis. In 2014 IEEE International Symposium on Circuits and Systems (ISCAS) (pp. 2555–2558). IEEE . Weron, R. (2014). Electricity price forecasting: A review of the state-of-the-art with a look into the future. International Journal of Forecasting , 30 (4), 1030–1081 . Xiao, J. , Ma, W. , Lou, J. , Jiang, J. , Huang, Y. , & Shi, Z. (2019). Circuit reliability prediction based on deep autoencoder network. Neurocomputing , 370 , 140–154 . Xu, L. , Cao, M. , Song, B. , Zhang, J. , Liu, Y. , & Alsaadi, F. E. (2018). Open-circuit fault diagnosis of power rectifier using sparse autoencoder based deep neural network. Neurocomputing , 311 , 1–10 . Yoo, Y. (2019). Hyperparameter optimization of deep neural network using univariate dynamic encoding algorithm for searches. Knowledge-Based Systems, 178 , 74–83 . Zhang, L. , Chen, W. , Hu, Y. , & Chen, C. C. P. (2006). Statistical static timing analysis with conditional linear MAX/MIN approximation and extended canonical timing model. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems , 25 (6), 1183–1191 . Zhang, R. , Liu, Z. , Yang, K. , Liu, T. , Cai, W. , & Milor, L. (2019). A library based on deep neural networks for modeling the degradation of FinFET SRAM performance metrics due to aging. Microelectronics Reliability , 100 , 113486 . Zhang, X. , Chen, X. , Yao, L. , Ge, C. , & Dong, M. (2019, December). Deep neural network hyperparameter optimization with orthogonal array tuning. In International Conference on Neural Information Processing (pp. 287–295). Springer, Cham .
+
+M. Amin Savari received the M.S degree in electrical Engineering, University of Kurdistan, Sanandaj, Iran. Savari’s research interests include VLSI design and optimization and CAD for analog and mixed signal circuits.
+
+Transactions on Computer-Aided Design of Integrated Circuits and Systems , 38 (4), 719–732 . Naidu, S. R. (2002, January). Timing yield calculation using an impulse-train approach. In Proceedings of the 2002 Asia and South Pacific Design Automation Conference (p. 219). IEEE Computer Society . Nakama, T. (2009). Theoretical analysis of batch and on-line training for gradient descent learning in neural networks. Neurocomputing , 73 (1–3), 151–159 . Pedro, J. O. , Nyandoro, O. C. , & John, S. (2009, August). Neural network based feedback linearisation slip control of an anti-lock braking system. In 2009 7th Asian Control Conference (pp. 1251–1257). IEEE . Qu, L. , Li, W. , Li, W. , Ma, D. , & Wang, Y. (2019). Daily long-term traffic flow forecasting based on a deep neural network. Expert Systems with Applications, 121 , 304–312 . Ramprasath, S. , Vijaykumar, M. , & Vasudevan, V. (2016). A skew-normal canonical model for statistical static timing analysis. IEEE Transactions on very Large Scale Integration (VLSI) Systems , 24 (6), 2359–2368 . Sapatnekar, S. (2004). Timing . Springer Science & Business Media . Singh, J. , & Sapatnekar, S. S. (2007). A scalable statistical static timing analyzer incorporating correlated non-Gaussian and gaussian parameter variations. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 27 (1), 160–173 . Sinha, D. , Visweswariah, C. , Venkateswaran, N. , Xiong, J. , & Zolotov, V. (2012, June). Reversible statistical max/min operation: Concept and applications to timing. In DAC Design Automation Conference 2012 (pp. 1067–1073). IEEE . Srinivasan, S. , & Saghir, M. Z. (2013). Modeling of thermotransport phenomenon in metal alloys using artificial neural networks. Applied Mathematical Modelling, 37 (5), 2850–2869 . Srivastava, N. , Hinton, G. , Krizhevsky, A. , Sutskever, I. , & Salakhutdinov, R. (2014). Dropout: A simple way to prevent neural networks from overfitting. The Journal of Machine Learning Research , 15 (1), 1929–1958 . Su, T. J. , Chen, Y. F. , Cheng, J. C. , & Chiu, C. L. (2018). An artificial neural network approach for wafer dicing saw quality prediction. Microelectronics Reliability, 91 , 257–261 . Tsukiyama, S. , & Fukui, M. (2011, March). An algorithm to improve accuracy of criticality in statistical static timing analysis. In 2011 Design, Automation & Test in Europe (pp. 1–4). IEEE .
+
+H. Jahanirad received the Ph.D. degree in electrical engineering from the Iran University of Science and Technology, Tehran, Iran. He is currently an Assistant Professor with the Department of Electrical Engineering, University of Kurdistan, Sanandaj, Iran. His current research interests include VLSI design, fault tolerant systems, digital circuit testing and reliability analysis of logic circuits.

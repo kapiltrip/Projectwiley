@@ -1,0 +1,57 @@
+{
+  "source_filename": "11.pdf",
+  "source_path": "papers50/11.pdf",
+  "title": "Accurate Interpolation of Library Timing Parameters Through Recurrent Convolutional Neural Network",
+  "authors": "Daijoon Hyun , Member, IEEE, Younggwang Jung , Graduate Student Member, IEEE, and Youngsoo Shin , Fellow, IEEE",
+  "authors_guess": "Daijoon Hyun , Member, IEEE, Younggwang Jung , Graduate Student Member, IEEE, and Youngsoo Shin , Fellow, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2024",
+  "doi": "10.1109/TCAD.2023.3316991",
+  "page_count": 5,
+  "word_count": 4090,
+  "abstract": "Interpolation is used to approximate the timing parameters of logic cells not specified in timing tables. Bilinear interpolation has been taken for granted in the industry, but the error increases as the nonlinearity of the timing parameters increases. In this article, we propose machine learning (ML)-based interpolation to obtain more accurate timing parameters. Recurrent convolutional neural network (R-CNN) is employed and various ranges of table entries form a sequence of input data, in which the recurrent network allows them to influence the interpolation. In addition, variational autoencoder (VAE) is used to capture the distribution feature of the table. ML interpolation is parallelized in GPU to minimize the runtime overhead from numerous arithmetic operations. Experimental results demonstrate that ML interpolation reduces timing parameter error by 19.7% and path delay error by 3.4% compared to bilinear interpolation at the cost of 13% runtime overhead.",
+  "keywords": [
+    "Interpolation",
+    "recurrent convolutional neural network (R-CNN)",
+    "timing analysis",
+    "timing library",
+    "variational autoencoder (VAE)"
+  ],
+  "section_headings": [
+    "I. INTRODUCTION",
+    "II. ML INTERPOLATION",
+    "III. EXPERIMENTAL RESULTS",
+    "IV. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. Three input maps extracted from a timing table: timing parameter map, row-index map, and column-index map.",
+    "Fig. 2. Structure of VAE, which is used to extract the distribution vectors (μ and σ) of latent space from a timing table.",
+    "Fig. 3. (a) R-CNN model with four RCLs. (b) Structure of an RCL.",
+    "Fig. 4. Runtime of parallelized ML interpolation, normalized to that of bilinear interpolation, according to the transfer unit of interpolation (N).",
+    "Fig. 5. Correlation between the interpolation error (y-axis) and the normalized product of the maximum row-index and the maximum column-index (x-axis).",
+    "Fig. 6. Comparison of cell delay errors (a) for various interpolation methods and R-CNN variants and (b) for different numbers of GCLs.",
+    "Fig. 7. Runtime increase (\u0003Time) for STA according to the bilinear interpolation runtime divided by the average number of fanouts."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Accurate Interpolation of Library Timing Parameters Through Recurrent Convolutional Neural Network",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2024;43;1;10.1109/TCAD.2023.3316991",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20231214143600+05'30'",
+    "modDate": "D:20231221223650-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-12-14",
+    "modified_date": "2023-12-21"
+  },
+  "text_path": "metadata/meatdatagenerated/text/11.txt",
+  "json_path": "metadata/meatdatagenerated/json/11.json",
+  "html_path": "html/11.html",
+  "citation": "Daijoon Hyun , Member, IEEE, Younggwang Jung , Graduate Student Member, IEEE, and Youngsoo Shin , Fellow, IEEE (2024). Accurate Interpolation of Library Timing Parameters Through Recurrent Convolutional Neural Network. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2023.3316991"
+}

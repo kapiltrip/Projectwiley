@@ -1,0 +1,73 @@
+{
+  "source_filename": "1-s2.0-S1434841125002110-main.pdf",
+  "source_path": "papers50/1-s2.0-S1434841125002110-main.pdf",
+  "title": "TimeBoost: Accelerating timing analysis engines using XGBoost",
+  "authors": "Anastasis Vagenas",
+  "authors_guess": "Anastasis Vagenas",
+  "journal": "AEUE - International Journal of Electronics and Communications",
+  "year": "2025",
+  "doi": "10.1016/j.aeue.2025.155870",
+  "page_count": 9,
+  "word_count": 8533,
+  "abstract": "Timing analysis is an essential verification method for the design and optimization of integrated circuits, while it also constitutes the cornerstone of the final signoff. However, the increasing complexity of modern designs, driven by aggressive technology scaling, necessitates more efficient timing engines. In this article, we introduce TimeBoost, a novel learning-based approach for performance optimization of gate-level timing analysis. TimeBoost employs GPU-accelerated XGBoost classifiers to evaluate stage complexity and select the optimal timing analysis method, exploiting the available runtime and accuracy trade-off. Unlike prior works that predict timing directly, our approach ensures reliable and accurate timing estimation by leveraging timing analysis methods as prediction targets. Moreover, our models utilize representative electrical, topological, and gate features for each stage, which can be extracted with minimal effort. We assess several Machine Learning (ML) models, including XGBoost, Artificial Neural Networks, and K-Nearest Neighbors, and explore their different hyperparameters. Experimental evaluation on one million stages demonstrates that our MLbased approach achieves a runtime improvement of up to 3.86× over our best available method, imposing only a 3%–4% overhead to timing analysis while maintaining high accuracy. Thus, the proposed models can be integrated into signoff tools or timing-driven iterative optimization flows to expedite timing closure.",
+  "keywords": [
+    "Static timing analysis",
+    "Timing optimization",
+    "Gate models",
+    "Effective capacitance",
+    "Interconnect",
+    "Machine learning",
+    "Classification",
+    "XGBoost",
+    "Graphics processing unit"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Background",
+    "2.1. Gate timing",
+    "2.1.1. Modeling the RC interconnect load",
+    "2.2. Interconnect timing",
+    "2.3. Stage timing analysis",
+    "1. Driver output waveform estimation: Given the driver out-",
+    "3.1. Input features",
+    "3. Proposed approach",
+    "3.2. Model evaluation",
+    "4. Experimental evaluation",
+    "5. Conclusions"
+  ],
+  "figure_captions": [
+    "Fig. 1. A gate-level stage with multiple fanout receivers.",
+    "Fig. 1 illustrates a gate-level stage composed of a driver gate, a distributed RC interconnect, and multiple receiver gates. Each node i of the RC-tree interconnect has a capacitance to ground Ci, a downstream capacitance Ctoti (i.e., the sum of all the capacitances of the subtree starting at node i), a slew value Si, and is connected to each fanout node j via a resistance Ri→j. The sum of all interconnect Ri→j values is denoted as Rtotal.",
+    "Fig. 2. NLDM and CCS driver and receiver models.",
+    "Fig. 3. Proposed ML-driven methodology for optimal stage timing estimation.",
+    "Fig. 4. Accuracy (F1 score), inference and training times, and memory requirements of all the evaluated ML models.",
+    "Fig. 5. Feature gain and confusion matrices of XGB models under different thresholds E."
+  ],
+  "table_captions": [
+    "Table 1 The output classes of our proposed ML models. Method Gate timing Interconnect timing M1 CCS and 3 Ceff Ceff-Elmore and 3 slew values [4] M2 NLDM and Ceff Ceff-Elmore and single slew value [9] M3 NLDM and Ctotal Elmore delay and slew [15] M4 NLDM and Ceff Elmore delay and slew [15] M5 NLDM and Ceff D2M and S2M [16]",
+    "Table 2 The input features of our proposed ML models. Feature Size Description Driver cell 1 The type of the driver cell Driver input slew 1 The input slew of the driver cell Driver output transition 1 The type of transition at the driver cell output (rise or fall) Min/Max/Mean capacitance 3 Minimum/Maximum/Mean Ci values in the RC graph Min/Max/Mean resistance 3 Minimum/Maximum/Mean Ri→j values in the RC graph Total capacitance and resistance 2 Ctotal and Rtotal of the RC graph Capacitance and resistance variance 2 Standard deviation of Ci and Ri→j values in the RC graph Path downstream capacitance 10 First 10 Ctoti values of the path to the target receiver Path resistance 10 First 10 Ri→j values of the path to the target receiver Path RC product 10 First 10 Ri→j× Ctoti values of the path to the target receiver Target receiver D2M 1 D2M delay value of the target receiver Fanout 1 Number of receiver cells",
+    "Table 3 presents the mean stage delay and slew RE against SPICE, the runtime, and the speedup over the most accurate method (M1) achieved by each approach. Firstly, it is evident that accuracy decreases as we transition from the most complex multiple Ceff-based (M1) to the simplest Ctotal-based (M3) method. Secondly, moment-based methods (M3-M5) generally exhibit lower accuracy, with M4-M5 being rarely selected by the ML models, as depicted in the confusion matrices of Fig. 5. In contrast, our ML approaches achieve accuracy in line with their respective thresholds and our available methods. ML1 closely follows the best available method (M1), exhibiting stage delay and slew RE of 2.51% and 2.85%, respectively. Moreover, ML2 effectively maintains errors well below the target 4% threshold, achieving 3.39% and 3.87% stage delay and slew RE. Note that ML1 and ML2 achieve the same accuracy when utilizing CPU or GPU acceleration, as it does not affect accuracy, but only runtime performance.",
+    "Table 3 Accuracy and runtime results of our ML-driven approach against different stage timing analysis methodologies. Method Mean RE against SPICE Runtime Stage delay Stage slew Time (s) Speed-up M1 2.25% 2.77% 12.5 1× M2 4.43% 4.57% 3.09 4.05× M3 9.15% 9.58% 0.55 22.73× M4 5.9% 6.82% 3.76 3.33× M5 5.73% 6.64% 3.85 3.25× ML1 CPU 2.51% 2.85% 5.45 2.29× GPU 2.51% 2.85% 4.78 2.62× ML2 CPU 3.39% 3.87% 3.81 3.28× GPU 3.39% 3.87% 3.24 3.86×"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "TimeBoost: Accelerating timing analysis engines using XGBoost",
+    "author": "Anastasis Vagenas",
+    "subject": "AEUE - International Journal of Electronics and Communications, 200 (2025) 155870. doi:10.1016/j.aeue.2025.155870",
+    "keywords": "Static timing analysis,Timing optimization,Gate models,Effective capacitance,Interconnect,Machine learning,Classification,XGBoost,Graphics processing unit",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 8.1.0 (Windows)",
+    "creationDate": "D:20250805111517Z",
+    "modDate": "D:20250805112748Z",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-08-05",
+    "modified_date": "2025-08-05"
+  },
+  "text_path": "metadata/meatdatagenerated/text/1-s2.0-S1434841125002110-main.txt",
+  "json_path": "metadata/meatdatagenerated/json/1-s2.0-S1434841125002110-main.json",
+  "html_path": "html/1-s2.0-S1434841125002110-main.html",
+  "citation": "Anastasis Vagenas (2025). TimeBoost: Accelerating timing analysis engines using XGBoost. AEUE - International Journal of Electronics and Communications. https://doi.org/10.1016/j.aeue.2025.155870"
+}

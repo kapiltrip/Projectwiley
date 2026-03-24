@@ -1,0 +1,68 @@
+{
+  "source_filename": "15.pdf",
+  "source_path": "papers50/15.pdf",
+  "title": "Multi-View Graph Learning for Path-Level Aging-Aware Timing Prediction",
+  "authors": "Aiguo Bu, Xiang Li, Zeyu Li and Yizhen Chen",
+  "authors_guess": "Aiguo Bu, Xiang Li, Zeyu Li and Yizhen Chen",
+  "journal": "As CMOS technology continues to scale down",
+  "year": "2024",
+  "doi": "10.3390/electronics13173479",
+  "page_count": 15,
+  "word_count": 8274,
+  "abstract": "As CMOS technology continues to scale down, the aging effect—known as negative bias temperature instability (NBTI)—has become increasingly prominent, gradually emerging as a key factor affecting device reliability. Accurate aging-aware static timing analysis (STA) at the early design phase is critical for establishing appropriate timing margins to ensure circuit reliability throughout the chip lifecycle. However, traditional aging-aware timing analysis methods, typically based on Simulation Program with Integrated Circuit Emphasis (SPICE) simulations or aging-aware timing libraries, struggle to balance prediction accuracy with computational cost. In this paper, we propose a multi-view graph learning framework for path-level aging-aware timing prediction, which combines the strengths of the spatial–temporal Transformer network (STTN) and graph attention network (GAT) models to extract the aging timing features of paths from both timing-sensitive and workloadsensitive perspectives. Experimental results demonstrate that our proposed framework achieves an average MAPE score of 3.96% and reduces the average MAPE by 5.8 times compared to FFNN and 2.2 times compared to PNA, while maintaining acceptable increases in processing time.",
+  "keywords": [
+    "aging",
+    "NBTI",
+    "static timing analysis",
+    "graph learning",
+    "transformer"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Related Works",
+    "2.1.2. Aging-Aware STA",
+    "2.2. Frontier Machine Learning Techniques for Timing Prediction",
+    "3.2. Graph Neural Networks",
+    "3.3. Transformer Network",
+    "4.3.2. Graph Attention Model",
+    "5.2.2. Comparison with Existing Models",
+    "6. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. Example of ranking changes in timing paths after aging.",
+    "Figure 2 shows the implementation process of the aging-aware path timing prediction model based on multi-scale graph learning. Firstly, considering that the fan-in and fan-out gates on the path affect its timing degradation, the static path 1-hop subgraph of the path is constructed, allowing the graph learning process to indirectly encode the features of the target node’s neighbors. Furthermore, considering the continuous workload sequences loaded onto the netlist, the signal probability of all ports in the netlist will also change over time. Therefore, the static path 1-hop subgraph of the path needs to be extended along the time axis into a dynamic path 1-hop subgraph G1 to capture the aging and timing correlations between logic gates in both the temporal and spatial dimensions. For the dynamic path 1-hop subgraph, this paper adopts STTN to process the topological structure information and workload sequence information, capturing the attention coefficients between different nodes and time steps through the spatial–temporal self-attention mechanism to achieve effective graph representation. Additionally, the critical path is directly abstracted as a static path 1-hop subgraph G2, and GAT is used to capture the topological connections between logic gates on the critical path as well as timing features such as transition time and delay, supplementing the pre-aging timing information for the STTN model. Finally, the path timing information encoded by the STTN model and the GAT model is fused through a gated fusion network, which uses two learnable matrices as weights for the outputs of the two models, enabling the accurate prediction of the timing path delay changes in circuits under the NBTI effect.",
+    "Figure 2. The overall process of the aging-aware timing prediction model.",
+    "Figure 3. Diagram illustrating the implementation of a graph attention layer. (a) Attention Coefficient Calculation. (b) Feature Weighted Aggregation.",
+    "Figure 4. General flow for graph dataset generation.",
+    "Figure 5. Timing prediction errors comparison among FFNN, PNA and our work.",
+    "Figure 6 presents a comparison of runtime for different models on the known and unknown circuit set. The runtime of the proposed prediction framework does not differ by more than an order of magnitude compared to the PNA-based method, indicating that the proposed model achieves better prediction accuracy while having a slightly longer runtime than existing methods.",
+    "Figure 6. Runtime comparison between PNA and our work."
+  ],
+  "table_captions": [
+    "Table 1. Original features for dynamic path 1-hop subgraph.",
+    "Table 2. Original features for dynamic path 1-hop subgraph.",
+    "Table 3. Testing circuit case statistical information description.",
+    "Table 4. Comparison of prediction errors for each sub-model."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Multi-View Graph Learning for Path-Level Aging-Aware Timing Prediction",
+    "author": "Aiguo Bu, Xiang Li, Zeyu Li and Yizhen Chen",
+    "subject": "As CMOS technology continues to scale down, the aging effect—known as negative bias temperature instability (NBTI)—has become increasingly prominent, gradually emerging as a key factor affecting device reliability. Accurate aging-aware static timing analysis (STA) at the early design phase is critical for establishing appropriate timing margins to ensure circuit reliability throughout the chip lifecycle. However, traditional aging-aware timing analysis methods, typically based on Simulation Program with Integrated Circuit Emphasis (SPICE) simulations or aging-aware timing libraries, struggle to balance prediction accuracy with computational cost. In this paper, we propose a multi-view graph learning framework for path-level aging-aware timing prediction, which combines the strengths of the spatial–temporal Transformer network (STTN) and graph attention network (GAT) models to extract the aging timing features of paths from both timing-sensitive and workload-sensitive perspectives. Experimental results demonstrate that our proposed framework achieves an average MAPE score of 3.96% and reduces the average MAPE by 5.8 times compared to FFNN and 2.2 times compared to PNA, while maintaining acceptable increases in processing time. ",
+    "keywords": "aging; NBTI; static timing analysis; graph learning; transformer",
+    "creator": "LaTeX with hyperref",
+    "producer": "pdfTeX-1.40.25",
+    "creationDate": "D:20240902165852+08'00'",
+    "modDate": "D:20240902110019+02'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-09-02",
+    "modified_date": "2024-09-02"
+  },
+  "text_path": "metadata/meatdatagenerated/text/15.txt",
+  "json_path": "metadata/meatdatagenerated/json/15.json",
+  "html_path": "html/15.html",
+  "citation": "Aiguo Bu, Xiang Li, Zeyu Li and Yizhen Chen (2024). Multi-View Graph Learning for Path-Level Aging-Aware Timing Prediction. As CMOS technology continues to scale down. https://doi.org/10.3390/electronics13173479"
+}

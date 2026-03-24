@@ -1,0 +1,75 @@
+{
+  "source_filename": "18.pdf",
+  "source_path": "papers50/18.pdf",
+  "title": "Statistical static timing analysis via modern optimization lens: I. Histogram-based approach",
+  "authors": "Adam Bosák",
+  "authors_guess": "Adam Bosák",
+  "journal": "Optimization and Engineering",
+  "year": "2024",
+  "doi": "10.1007/s11081-023-09847-3",
+  "page_count": 25,
+  "word_count": 10569,
+  "abstract": null,
+  "keywords": [
+    "Binary–Integer Programming",
+    "Geometric Programming",
+    "Statistical Static Timing Analysis"
+  ],
+  "section_headings": [
+    "1 Introduction",
+    "1 Technical University of Denmark, Kongens Lyngby, Denmark",
+    "2 University College Dublin, Belfield, Ireland",
+    "3 Czech Technical University in Prague, Prague, Czech Republic",
+    "2 Background and related work",
+    "2.1 Mathematical preliminaries",
+    "2.2 Definitions",
+    "2.3 Related work",
+    "3 Statistical static timing analysis: setting up the problem",
+    "3.1 Maximum operation",
+    "3.2 Convolution operation",
+    "3.3 Convolution with shifting a histogram",
+    "4.1 Statement of the problem",
+    "4.2 Atomic operations on histograms in unary representation",
+    "4.2.1 Multiplication",
+    "4.2.2 Forming a histogram in the unary encoding",
+    "4.2.3 Problem tightening",
+    "4.3 Implementation and validation",
+    "5 SSTA via geometric programming",
+    "5.1 Statement of the problem",
+    "5.2 Reformulation and relaxation",
+    "5.3 Implementation and validation",
+    "6 Discussion and conclusions"
+  ],
+  "figure_captions": [
+    "Fig. 1 Sketch demonstrating integration over the fitted function (13) (yellow surface) and the exact integration (14) (orange shaded area to the left). Blue function represents the fitted PDF. (Color figure online)",
+    "Fig. 2 Comparison of three BIP formulations for the SSTA. The methods are tested on a “ladder” of maxima with n = 12 bins, each bins’ count bounded from above by m = 12. The blue line indicates a method with only (19) constraints (ORIG), the orange line indicates a method with the symmetry–breaking constraints (SBC) (22) and the green line indicates a method with the symmetry–breaking constraints and a 3−term multiplication model (SBC+TTM) (23). In the first figure, the orange line overlaps the green line. In the second figure, the blue line overlaps the orange line",
+    "Fig. 3 Scalability of the model with the first relaxation (SBC) (22) tested on a “ladder” of maxima with n = 25 bins, m = 20 unary variables, and no time limit. The subplots show: a, the growth in the number of non-zeros (blue line), variables (orange line), and constraints (green line). b, MIP gap at a root node in percentage, MIP gap tolerance is set to 1%; c, time in seconds; d, relative error of the standard deviation (orange line) and mean (blue line) compared to Monte Carlo. (Color figure online)",
+    "Fig. 4 Scalability of the GP (26) on a “ladder” of maxima with n = 60 bins and a varying number of gates, N. The subplots show: a, the growth in the number of cones (blue line), variables (orange line), and constraints (green line overlapped the blue line) as the number of gates, N, increases; b, time in seconds; c, relative error of the standard deviation (orange line) and mean (blue line) compared to Monte Carlo as the number of gates, N, increases. (Color figure online)",
+    "Fig. 5 Scalability of the reformulated GP (26) tested on a “ladder” of maxima with fixed N = 4 gates and varying numbers of bins, n, per gate. The subplots show: a, the growth in the number of cones (blue line), variables (orange line), and constraints (green line overlapping the blue line) as the number of bins, n, increases; b, time in seconds as the number of bins increases; c, relative error of the standard deviation (orange line) and mean (blue line) compared to Monte Carlo, as the number of bins, n, increases. (Color figure online)",
+    "Fig. 6 An example histogram with n = 5 bins; width of the bin is 1"
+  ],
+  "table_captions": [
+    "Table 1 An overview of the approaches that approximate probability distributions with various parametric classes of distributions, with references to their uses in replacements of Monte Carlo in simulation, and our suggestions as to the classes of optimization problems obtained using the technique of Sect.4"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Statistical static timing analysis via modern optimization lens: I. Histogram-based approach",
+    "author": "Adam Bosák ",
+    "subject": "Optimization and Engineering, https://doi.org/10.1007/s11081-023-09847-3",
+    "keywords": "Binary–Integer Programming; Geometric Programming; Statistical Static Timing Analysis",
+    "creator": "Springer",
+    "producer": "Acrobat Distiller 10.1.8 (Windows)",
+    "creationDate": "D:20230922083458+05'30'",
+    "modDate": "D:20240829172540+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-09-22",
+    "modified_date": "2024-08-29"
+  },
+  "text_path": "metadata/meatdatagenerated/text/18.txt",
+  "json_path": "metadata/meatdatagenerated/json/18.json",
+  "html_path": "html/18.html",
+  "citation": "Adam Bosák (2024). Statistical static timing analysis via modern optimization lens: I. Histogram-based approach. Optimization and Engineering. https://doi.org/10.1007/s11081-023-09847-3"
+}

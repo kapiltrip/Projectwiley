@@ -1,0 +1,56 @@
+{
+  "source_filename": "43.pdf",
+  "source_path": "papers50/43.pdf",
+  "title": "On Timing Model Extraction and Hierarchical Statistical Timing Analysis",
+  "authors": "Bing Li, Ning Chen, Yang Xu, and Ulf Schlichtmann, Member, IEEE",
+  "authors_guess": "Bing Li, Ning Chen, Yang Xu, and Ulf Schlichtmann, Member, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2013",
+  "doi": "10.1109/TCAD.2012.2228305",
+  "page_count": 14,
+  "word_count": 14867,
+  "abstract": "In this paper, we investigate the challenges of applying statistical static timing analysis in hierarchical design flow, where modules supplied by IP vendors are used to hide design details for IP protection and to reduce the complexity of design and verification. For the three basic circuit types, combinational, flip-flop-based, and latch-controlled, we propose methods for extracting timing models that contain interfacing and compressed internal constraints. Using these compact timing models, the runtime of full-chip timing analysis can be reduced, while circuit details from IP vendors are not exposed. We also propose a method for reconstructing correlation between modules during full-chip timing analysis. This correlation cannot be incorporated into timing models because it depends on the layout of the corresponding modules in the chip. In addition, we investigate how to apply the extracted timing models with the reconstructed correlation to evaluate the performance of the complete design. Experiments demonstrate that using the extracted timing models and reconstructed correlation full-chip timing analysis can be several times faster than applying the flattened circuit directly, while the accuracy of statistical timing analysis is still well maintained.",
+  "keywords": [
+    "Correlation reconstruction",
+    "hierarchical design",
+    "statistical analysis",
+    "timing models"
+  ],
+  "section_headings": [],
+  "figure_captions": [
+    "Fig. 1. Die partition modeling local variations.",
+    "Fig. 2. Types of timing constraints.",
+    "Fig. 3. Concept of noncritical delay removal. (a) Original timing graph. (b) Timing model.",
+    "Fig. 4. Basic graph transformations. (a) Serial. (b) Parallel.",
+    "Fig. 5. Clock phases.",
+    "Fig. 6. Latch graph.",
+    "Fig. 7. Grid partition of the chip.",
+    "Fig. 8. Hierarchical timing constraints with latch transparency.",
+    "Fig. 11. Circuit construction for sequential modules.",
+    "Fig. 9. Correlation curves.",
+    "Fig. 10. Criticality distribution.",
+    "Fig. 12. Accuracy without considering spatial correlation. (a) Mean. (b) Standard deviation (SD)."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "On Timing Model Extraction and Hierarchical Statistical Timing Analysis",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2013;32;3;10.1109/TCAD.2012.2228305",
+    "keywords": "",
+    "creator": "DVIPSONE 2.2.2  http://www.YandY.com",
+    "producer": "Acrobat Distiller 8.1.0 (Windows); modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20130206115752Z",
+    "modDate": "D:20181205002240-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2013-02-06",
+    "modified_date": "2018-12-05"
+  },
+  "text_path": "metadata/meatdatagenerated/text/43.txt",
+  "json_path": "metadata/meatdatagenerated/json/43.json",
+  "html_path": "html/43.html",
+  "citation": "Bing Li, Ning Chen, Yang Xu, and Ulf Schlichtmann, Member, IEEE (2013). On Timing Model Extraction and Hierarchical Statistical Timing Analysis. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2012.2228305"
+}

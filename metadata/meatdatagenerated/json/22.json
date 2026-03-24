@@ -1,0 +1,64 @@
+{
+  "source_filename": "22.pdf",
+  "source_path": "papers50/22.pdf",
+  "title": "Accelerating Static Timing Analysis Using CPU&#x2013;GPU Heterogeneous Parallelism",
+  "authors": "Zizheng Guo , Tsung-Wei Huang , Member, IEEE, and Yibo Lin , Member, IEEE",
+  "authors_guess": "Zizheng Guo , Tsung-Wei Huang , Member, IEEE, and Yibo Lin , Member, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2023",
+  "doi": "10.1109/TCAD.2023.3286261",
+  "page_count": 12,
+  "word_count": 9495,
+  "abstract": "Static timing analysis (STA) is an essential yet time-consuming task during the circuit design flow to ensure the correctness and performance of the design. Thanks to the advancement of general-purpose computing on graphics processing units (GPUs), new possibilities and challenges have arisen for boosting the performance of STA. In this work, we present an efficient and holistic GPU-accelerated STA engine. We accelerate major STA tasks, including levelization, delay computation, graph propagation, and multicorner analysis, by developing high-performance GPU kernels and data structures. By dividing the STA workloads into CPU–GPU concurrent tasks with managed dependencies, our acceleration framework supports versatile incremental updates. Furthermore, we have extended our approach to multicorner analysis by exploring a large amount of corner-level data parallelism using GPU computing. Our implementation based on the open-source STA engine OpenTimer has achieved up to 4.07× speed-up on single corner analysis, and up to 25.67× speed-up on multicorner analysis on TAU 2015 contest designs and a 14-nm technology.",
+  "keywords": [
+    "Heterogeneous parallelism",
+    "static timing analysis (STA)"
+  ],
+  "section_headings": [
+    "II. STATIC TIMING ANALYSIS",
+    "III. ALGORITHM",
+    "8 Kernel Function advanceFrontier:",
+    "1 Function interpolate(x1, x2, y1, y2, x):",
+    "IV. EXPERIMENTAL RESULTS",
+    "V. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. STA graph of a circuit design. The blue nodes indicate pins of components like gates and I/O ports. The arrows indicate pin-to-pin connections. Delay values are quantified using best (min) and worst (max) scenarios.",
+    "Fig. 3. PVT corners are combinations of PVT parameters. They can be visualized as points in a 3-D cube.",
+    "Fig. 2. OpenTimer runtime decomposition (40 CPU cores) inside one full timing process on a million-sized design.",
+    "Fig. 5. Example of a net RC tree model with parasitics. (a) Edge resistance and node capacitance on parasitic RC tree. (b) BFS order of nodes is represented as a 1-D flattened array with a list of parent indices.",
+    "Fig. 4. Overall taskflow of our GPU-accelerated multicorner STA engine. The green frame captures the tasks running in parallel for a batch of corners.",
+    "Fig. 6. Two different DP directions. (a) Upward recursive update, where the value of children needs to be computed before the value of parents. (b) Downward recursive update, where the parent values are computed before children.",
+    "Fig. 7. Memory arrangement for Early/Late and Rise/Fall cases. (a) Independent access. (b) Interleaved access. (c) Interleaved access with multicorner optimization.",
+    "Fig. 8. Resulting level list for the circuit graph in Fig. 1, as well as the levelization process on GPU. Node names in bold indicate frontiers at the current iteration.",
+    "Fig. 9. Example of 1-D LUT query. This 1-D LUT is essentially a piecewise linear function with three segments s1, s2, and s3. There are two queries q1 (that hits s1) and q2 (that hits s3). We get the result by evaluating the queried x-value on the specific segment, regardless of interpolation (like q2) or extrapolation (like q1).",
+    "Fig. 10. Runtime breakdown of the circuit leon2 (21M nodes).",
+    "Fig. 11. Runtime values at different numbers of CPUs. Our runtime under 2 CPUs and 1 GPU is faster than OpenTimer of 16–40 CPUs.",
+    "Fig. 12. Runtime values at different problem sizes. Beyond about 60K propagation candidates, our runtime is always faster than OpenTimer at any CPU numbers.",
+    "Fig. 13. Runtime values at different net counts. Beyond about 40K nets, our GPU-accelerated RC computation is always faster than OpenTimer, regardless of CPU numbers.",
+    "Fig. 15. Runtime values at different corner batch sizes (BC) for analyzing 128 corners. The data point at BC = 1 comes from our GPU-accelerated single-corner STA engine, which is our conference version [28]. Other data points are collected using our multicorner STA engine.",
+    "Fig. 14. Runtime values at different numbers of gates (∼LUT numbers). Beyond about 45K gates, our GPU-accelerated LUT interpolation becomes faster than OpenTimer."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Accelerating Static Timing Analysis Using CPU&#x2013;GPU Heterogeneous Parallelism",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2023;42;12;10.1109/TCAD.2023.3286261",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20231107182519+05'30'",
+    "modDate": "D:20231120194115-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-11-07",
+    "modified_date": "2023-11-20"
+  },
+  "text_path": "metadata/meatdatagenerated/text/22.txt",
+  "json_path": "metadata/meatdatagenerated/json/22.json",
+  "html_path": "html/22.html",
+  "citation": "Zizheng Guo , Tsung-Wei Huang , Member, IEEE, and Yibo Lin , Member, IEEE (2023). Accelerating Static Timing Analysis Using CPU&#x2013;GPU Heterogeneous Parallelism. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2023.3286261"
+}

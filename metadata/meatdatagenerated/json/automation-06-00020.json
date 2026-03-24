@@ -1,0 +1,72 @@
+{
+  "source_filename": "automation-06-00020.pdf",
+  "source_path": "papers50/automation-06-00020.pdf",
+  "title": "Pre-Routing Slack Prediction Based on Graph Attention Network",
+  "authors": "Jinke Li, Jiahui Hu, Yue Wu and Xiaoyan Yang",
+  "authors_guess": "Jinke Li, Jiahui Hu, Yue Wu and Xiaoyan Yang",
+  "journal": "Static Timing Analysis (STA) plays a crucial role in realizing timing convergence of integrated circuits. In recent years",
+  "year": "2025",
+  "doi": "10.3390/automation6020020",
+  "page_count": 15,
+  "word_count": 7350,
+  "abstract": "Static Timing Analysis (STA) plays a crucial role in realizing timing convergence of integrated circuits. In recent years, there has been growing research on pre-routing timing prediction using Graph Neural Networks (GNNs). However, existing approaches struggle with scalability on large graphs and lack generalizability to new designs, limiting their applicability to large-scale, complex circuit problems. To address this issue, this paper proposes a timing engine based on Graph Attention Network (GAT) to predict the slack of timing endpoints. Firstly, our model computes net embeddings for each node prior to training using a gated self-attention module. Subsequently, inspired by the Nonlinear Delay Model (NLDM), the node embeddings are propagated through multiple levels by alternately applying net propagation layers and cell propagation layers. Evaluated on 21 real circuits, the framework achieved a 16.62% improvement in average R2 score for slack prediction and a 15.55% reduction in runtime compared to the state-of-the-art (SOTA) method.",
+  "keywords": [
+    "Static Timing Analysis",
+    "pre-routing delay estimation",
+    "machine learning"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Literature Survey",
+    "2.1. Graph Attention Network Applied to Electronic Design Automation",
+    "2.2. Machine Learning Applied to Static Timing Analysis",
+    "3. Proposed Methods",
+    "3.1. Overall Flow",
+    "3.2. Net Embedding Model",
+    "3.3. Delay Propagation Model",
+    "4. Results",
+    "4.1. Experimental Setup",
+    "4.2. Timing Prediction Results",
+    "5. Discussion",
+    "6. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. The difference of STA in the placement and routing phases.",
+    "Figure 2. Conversion of placed circuit to heterogeneous graph, net embedding, and delay propagation process, where the dotted boxes indicate the topological levels of the graph.",
+    "Figure 3. Net embedding model.",
+    "Figure 4. Delay propagation model.",
+    "Figure 5. The slew prediction results of our method and Ref. [7] in the benchmark jpeg_encoder. (a) The prediction result of Ref. [7]. (b) The prediction result of our method.",
+    "Figure 6. The prediction results of our method and the method of Ref. [7] in setup slack and hold slack in the benchmark jpeg_encoder. (a) The prediction result of the method of Ref. [7]. (b) The prediction result of our method.",
+    "Figure 7. The prediction results of our method and the method of Ref. [7] in setup slack and hold slack in the benchmark aes192 . (a) The prediction result of the method of Ref. [7]. (b) The prediction result of our method.",
+    "Figure 8. The runtime of the proposed method is compared with that of Ref. [7] on benchmarks jpeg_encoder and aes192."
+  ],
+  "table_captions": [
+    "Table 1. Benchmark statistics.",
+    "Table 2. Comparison with Ref. [7] on the test set, including net delay and cell delay.",
+    "Table 3. Comparison results with Ref. [7] on slack and runtime.",
+    "Table 4. We use the MSE measure to compare our approach with Ref. [7] on the prediction of net delay, cell delay, and slack.",
+    "Table 5. Hyperparameter study, including the number of network convolutional layers and attention heads.",
+    "Table 6. Ablation studies. We added one module at a time and recorded the R2 score of the slack prediction."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Pre-Routing Slack Prediction Based on Graph Attention Network",
+    "author": "Jinke Li, Jiahui Hu, Yue Wu and Xiaoyan Yang",
+    "subject": "Static Timing Analysis (STA) plays a crucial role in realizing timing convergence of integrated circuits. In recent years, there has been growing research on pre-routing timing prediction using Graph Neural Networks (GNNs). However, existing approaches struggle with scalability on large graphs and lack generalizability to new designs, limiting their applicability to large-scale, complex circuit problems. To address this issue, this paper proposes a timing engine based on Graph Attention Network (GAT) to predict the slack of timing endpoints. Firstly, our model computes net embeddings for each node prior to training using a gated self-attention module. Subsequently, inspired by the Nonlinear Delay Model (NLDM), the node embeddings are propagated through multiple levels by alternately applying net propagation layers and cell propagation layers. Evaluated on 21 real circuits, the framework achieved a 16.62% improvement in average R2 score for slack prediction and a 15.55% reduction in runtime compared to the state-of-the-art (SOTA) method.",
+    "keywords": "Static Timing Analysis; pre-routing delay estimation; machine learning",
+    "creator": "LaTeX with hyperref",
+    "producer": "pdfTeX-1.40.25",
+    "creationDate": "D:20250506180403+08'00'",
+    "modDate": "D:20250506120713+02'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-05-06",
+    "modified_date": "2025-05-06"
+  },
+  "text_path": "metadata/meatdatagenerated/text/automation-06-00020.txt",
+  "json_path": "metadata/meatdatagenerated/json/automation-06-00020.json",
+  "html_path": "html/automation-06-00020.html",
+  "citation": "Jinke Li, Jiahui Hu, Yue Wu and Xiaoyan Yang (2025). Pre-Routing Slack Prediction Based on Graph Attention Network. Static Timing Analysis (STA) plays a crucial role in realizing timing convergence of integrated circuits. In recent years. https://doi.org/10.3390/automation6020020"
+}

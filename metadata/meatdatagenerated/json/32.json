@@ -1,0 +1,76 @@
+{
+  "source_filename": "32.pdf",
+  "source_path": "papers50/32.pdf",
+  "title": "Statistical gate-delay modeling with copulas",
+  "authors": "Walter Schneider",
+  "authors_guess": "Walter Schneider",
+  "journal": "Microelectronics Journal",
+  "year": "2020",
+  "doi": "10.1016/j.mejo.2020.104938",
+  "page_count": 10,
+  "word_count": 6662,
+  "abstract": "The growing impact of process variations on circuit performance has become a major concern for deep-submicron integrated circuit design, resulting in numerous SSTA-algorithms. The acceptance of such algorithms in industry however will be dependent on modeling the real silicon behavior in SSTA. This includes that the statistical gate-delay models must consider arbitrary process variations and dependencies. In this paper, we introduce the innovative concept of Copulas to handle this topic. A complete Matlab based framework starting from process parameter statistics up to the computation of the statistical gate-delay distribution is presented. Experimental results demonstrate the importance of accounting realistic process variations.",
+  "keywords": [
+    "Statistical gate-delay Process variations Copulas The growing impact of process variations on circuit performance has become a major concern for deep-submicron integrated circuit design",
+    "resulting in numerous SSTA-algorithms. The acceptance of such algorithms in industry however will be dependent on modeling the real silicon behavior in SSTA. This includes that the statistical gate-delay models must consider arbitrary process variations and dependencies. In this paper",
+    "we introduce the innovative concept of Copulas to handle this topic. A complete Matlab based framework starting from process parameter statistics up to the computation of the statistical gate-delay distribution is presented. Experimental results demonstrate the importance of accounting realistic process variations"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Process variations",
+    "2.2. Statistics of process variations",
+    "2.1. Sources of process variations",
+    "3. Overview on gate-delay modeling",
+    "3.1. Nominal gate-delay characterization",
+    "4. Dependency modeling using copulas",
+    "3.2. Statistical gate-delay characterization",
+    "4.1. Example of copulas",
+    "5. Procedure of statistical gate-delay modeling",
+    "4.2. Simulation of copulas",
+    "6. Experimental results",
+    "6.1. Quality of the nominal PDM",
+    "6.2. Delay distribution with different parameter statistics",
+    "6.3. Application on inverter-chain",
+    "7. Conclusion"
+  ],
+  "figure_captions": [
+    "Fig. 2. Histograms of channel dopants Na and threshold voltage Vth with Poisson and Weibull Distribution fit.",
+    "Fig. 1. Behavior of channel dopants and threshold voltage variation with shrinking technologies [9].",
+    "Fig. 5. Example of a lookup-table.",
+    "Fig. 3. Different dependencies of two identical distributed RVs with the same linear correlation coefficient.",
+    "Fig. 4. Inverter-delay for a rising input ramp.",
+    "Fig. 6. Histogram of inverter-delay and corresponding CDFs for two different dependencies between L and Vth.",
+    "Fig. 7. Simulated data pairs (x, y) with normally distributed RVs X, Y and different copulas.",
+    "Fig. 8. General flow of the derivation of the cumulative distribution function (CDF) of a gate-delay td.",
+    "Fig. 9. Comparison between different PDM models.",
+    "Fig. 10. Results for statistical inverter-delay td in case of multi normally distributed parameters (a. Parameter Statistics, b. CDF of td, c. Comparison of td vs. normal-distribution, d. 0.99∕0.95-quantiles compared to worst-case corner delay).",
+    "Fig. 11. Effect of Archimedian Copulas on inverter-delay distribution (a. Parameter Statistics with CCl (Clayton) and CGu (Gumbel), b. CDF of inverter-delay td).",
+    "Fig. 10 illustrates the multinormally distributed parameters with ρ= 0.8, σ",
+    "Fig. 12. Histograms and Dependencies of normal and non-normal (nN) distributed parameters with Gauss-Copula CGa and ρ= 0.8.",
+    "Fig. 13. Effect of different inverter delay distributions on the path delay distribution of an inverter chain."
+  ],
+  "table_captions": [
+    "Table 1 0.99-quantiles of computed td (q99) with different dependency structures and parameter settings compared to the 0.99-quantiles of a normal fit td (q99n)."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Statistical gate-delay modeling with copulas",
+    "author": "Walter Schneider",
+    "subject": "Microelectronics Journal, (2020) 104938. doi:10.1016/j.mejo.2020.104938",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 7.0.5 pour Macintosh",
+    "creationDate": "D:20240412112235+05'30'",
+    "modDate": "D:20240702214141+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-04-12",
+    "modified_date": "2024-07-02"
+  },
+  "text_path": "metadata/meatdatagenerated/text/32.txt",
+  "json_path": "metadata/meatdatagenerated/json/32.json",
+  "html_path": "html/32.html",
+  "citation": "Walter Schneider (2020). Statistical gate-delay modeling with copulas. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2020.104938"
+}

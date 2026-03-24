@@ -1,0 +1,60 @@
+{
+  "source_filename": "Prerouting_Timing_Prediction_Across_Different_Technology_Nodes.pdf",
+  "source_path": "papers50/Prerouting_Timing_Prediction_Across_Different_Technology_Nodes.pdf",
+  "title": "Prerouting Timing Prediction Across Different Technology Nodes",
+  "authors": "Xinyun Zhang , Binwu Zhu , Fangzhou Liu, Jiaxi Jiang, Ziyi Wang , Peng Xu , Hong Xu , Senior Member, IEEE, and Bei Yu , Senior Member, IEEE",
+  "authors_guess": "Xinyun Zhang , Binwu Zhu , Fangzhou Liu, Jiaxi Jiang, Ziyi Wang , Peng Xu , Hong Xu , Senior Member, IEEE, and Bei Yu , Senior Member, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2025",
+  "doi": "10.1109/TCAD.2024.3523426",
+  "page_count": 14,
+  "word_count": 11884,
+  "abstract": "In the domain of very-large-scale integration (VLSI) design, the accuracy of prerouting timing prediction is of paramount importance for ensuring the performance and reliability of integrated circuits. Traditional methods based on machine learning necessitate the availability of extensive and high-quality datasets. However, this requirement poses significant challenges for advanced technology nodes due to the laborious and time-intensive nature of data preparation. To address this critical issue, we introduce a novel transfer learning framework that leverages data from preceding technology nodes to facilitate learning and prediction on the target node. Our methodology commences with the disentanglement and alignment of timing path features across different nodes, ensuring the preservation and effective translation of intrinsic timing path properties. Subsequently, we employ a Bayesian-based model to predict the arrival times of individual timing paths. This model is particularly adept at managing the high-variability inherent in arrival times and exhibits strong generalization capabilities to novel design scenarios. Moreover, we propose a new algorithm to reweight the preceding node data during training by estimating their transferability through the cell type distribution. We validate the efficacy of our proposed framework through comprehensive experimental evaluations, demonstrating successful transfer learning from 130 or 45 to 7-nm technology nodes. The results underscore the potential of our approach to significantly mitigate the dependency on extensive data preparation while maintaining high accuracy in timing prediction for cutting-edge VLSI designs.",
+  "keywords": [
+    "Pre-routing timing prediction",
+    "technology node",
+    "transfer learning"
+  ],
+  "section_headings": [
+    "II. PRELIMINARIES",
+    "III. OVERVIEW",
+    "IV. FEATURE DISENTANGLEMENT AND ALIGNMENT",
+    "V. BAYESIAN-BASED TIMING PREDICTION",
+    "VI. TRANSFERABILITY-BASED REWEIGHTING",
+    "VII. EXPERIMENTAL RESULTS",
+    "VIII. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. (a) Trained on limited 7-nm netlist data. (b) Trained on both limited 7-nm netlist data and 130-nm netlist data.",
+    "Fig. 2. Overview of the method. Timing path feature alignment and the reweighting are only computed during the training stage.",
+    "Fig. 3. Timing path feature extractor.",
+    "Fig. 4. Netlist can be characterized by two parts of information: The functionality and the standard cell information.",
+    "Fig. 5. Timing path feature alignment.",
+    "Fig. 6. Kernel density estimation of the different designs’ arrival time distribution. (a) smallboom (7nm); (b) arm9 (7nm); (c) chacha (7nm); (d) hwacha (7nm); (e) or1200 (7nm); (f) sha3 (7nm); (g) jpeg (130nm); (h) spiMaster (130nm); (i) usbf_device (130nm); (j) jpeg (45nm); (k) spiMaster (45nm); (l) usbf_device (45nm).",
+    "Fig. 7. Bayesian ML-based timing prediction.",
+    "Fig. 8. Example of cell type distribution construction.",
+    "Fig. 9. Ablation study on the effectiveness of each module."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Prerouting Timing Prediction Across Different Technology Nodes",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2025;44;7;10.1109/TCAD.2024.3523426",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20250606184046+05'30'",
+    "modDate": "D:20250618172725-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-06-06",
+    "modified_date": "2025-06-18"
+  },
+  "text_path": "metadata/meatdatagenerated/text/Prerouting_Timing_Prediction_Across_Different_Technology_Nodes.txt",
+  "json_path": "metadata/meatdatagenerated/json/Prerouting_Timing_Prediction_Across_Different_Technology_Nodes.json",
+  "html_path": "html/Prerouting_Timing_Prediction_Across_Different_Technology_Nodes.html",
+  "citation": "Xinyun Zhang , Binwu Zhu , Fangzhou Liu, Jiaxi Jiang, Ziyi Wang , Peng Xu , Hong Xu , Senior Member, IEEE, and Bei Yu , Senior Member, IEEE (2025). Prerouting Timing Prediction Across Different Technology Nodes. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2024.3523426"
+}

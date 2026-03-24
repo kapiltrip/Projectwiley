@@ -1,0 +1,70 @@
+{
+  "source_filename": "41.pdf",
+  "source_path": "papers50/41.pdf",
+  "title": "Stochastic logical effort as a variation aware delay model to estimate timing yield",
+  "authors": "Alp Arslan Bayrakci",
+  "authors_guess": "Alp Arslan Bayrakci",
+  "journal": "Integration",
+  "year": "2014",
+  "doi": "10.1016/j.vlsi.2014.07.003",
+  "page_count": 8,
+  "word_count": 7488,
+  "abstract": "Article history: Received 18 July 2013 Received in revised form 27 July 2014 Accepted 29 July 2014 Available online 8 August 2014 Considerable effort has been expended in the EDA community during the past decade in trying to cope with the so-called statistical timing problem. In this paper, we not only present a fast and approximate gate delay model called stochastic logical effort (SLE) to capture the effect of statistical parameter variations on the delay but also combine this model with a previously proposed transistor level smart Monte Carlo method to construct ISLE timing yield estimator. The results demonstrate that our approximate SLE model can capture the delay variations and ISLE achieves the same accuracy as the standard Monte Carlo estimator with a cost reduction of about 180 \u0001 on the average for ISCAS’85 benchmark circuits and in the existence of both inter- and intra-die variations. & 2014 Elsevier B.V. All rights reserved.",
+  "keywords": [
+    "Logical effort",
+    "Timing yield estimation",
+    "Statistical timing analysis",
+    "Monte Carlo"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Variation aware gate delay model: stochastic logical effort (SLE)",
+    "2.1. Logical effort",
+    "2.3. Extraction of SLE model parameters",
+    "2.2. From logical effort (LE) to stochastic logical effort (SLE)",
+    "2.4. Characterization of a cell library",
+    "2.5. Detection of the SLE parameters for any sample point X",
+    "3. Timing yield estimation based on SLE gate delay model and importance sampling",
+    "3.1. Preliminaries and previous work",
+    "3.3. Quantifying variance reduction due to ISLE",
+    "3.2. Importance sampling with stochastic logical effort (ISLE)",
+    "4.2. Empirical accuracy of SLE gate delay model",
+    "4. Results",
+    "4.1. Experimental setup",
+    "4.3. Empirical accuracy of ISLE loss estimation",
+    "5. Conclusion",
+    "4.4. Analysis of computational cost"
+  ],
+  "figure_captions": [
+    "Fig. 1. Reference circuit for τðXÞ computation.",
+    "Fig. 2. Actual actual fanout vs. delay plot of the inverter for a sample point X.",
+    "Fig. 3. The random parameter space divided by equal intervals and the detection of a closest point for a given X. μ is the mean and σ is the standard deviation.",
+    "Fig. 4. Scatter plot for test circuit c1355 (the plots are similar for all benchmark circuits).",
+    "Fig. 5. The 250 independent loss estimates computed by STD-MC and ISLE based on SLE.d2 for Test Circuit c1908. Both estimators use the same number of TL simulations for each estimate."
+  ],
+  "table_captions": [
+    "Table 1 The accuracy of SLE.d1 and SLE.d2.",
+    "Table 2 The resultant Speedup over STD-MC when SLE.d1 or SLE.d2 based ISLE estimator is used for loss estimation."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Stochastic logical effort as a variation aware delay model to estimate timing yield",
+    "author": "Alp Arslan Bayrakci",
+    "subject": "Integration, the VLSI Journal, 48 + (2014) 101-108. doi:10.1016/j.vlsi.2014.07.003",
+    "keywords": "Logical effort; Timing yield estimation; Statistical timing analysis; Monte Carlo",
+    "creator": "Elsevier",
+    "producer": "",
+    "creationDate": "D:20141021235326+05'30'",
+    "modDate": "D:20141021235326+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2014-10-21",
+    "modified_date": "2014-10-21"
+  },
+  "text_path": "metadata/meatdatagenerated/text/41.txt",
+  "json_path": "metadata/meatdatagenerated/json/41.json",
+  "html_path": "html/41.html",
+  "citation": "Alp Arslan Bayrakci (2014). Stochastic logical effort as a variation aware delay model to estimate timing yield. Integration. https://doi.org/10.1016/j.vlsi.2014.07.003"
+}

@@ -1,0 +1,78 @@
+{
+  "source_filename": "electronics-14-00329-v2.pdf",
+  "source_path": "papers50/electronics-14-00329-v2.pdf",
+  "title": "A GNN-Based Placement Optimization Guidance Framework by Physical and Timing Prediction",
+  "authors": "Peng Cao,Zhi Li and Wenjie Ding",
+  "authors_guess": "Peng Cao,Zhi Li and Wenjie Ding",
+  "journal": "Placement is crucial in physical design flow with significant impact on later routability and ultimate manufacturability in terms of performance",
+  "year": "2024",
+  "doi": "10.3390/electronics14020329",
+  "page_count": 12,
+  "word_count": 6985,
+  "abstract": "Placement is crucial in physical design flow with significant impact on later routability and ultimate manufacturability in terms of performance, power, and area (PPA), which may deviate from finding the optimal solution and/or lead to unnecessary iterations suffering from interleaved optimization steps and inaccurate PPA estimation. To solve this issue, we propose a physical- and timing-related placement optimization guidance framework which provides candidate gate sizing and buffer insertion solutions as well as a path group for potential violated paths based on graph neural networks (GNNs) to improve placement quality significantly and efficiently. Experimental results on the OpenCores benchmarks with 22 nm technology demonstrate that the proposed placement optimization guidance framework achieves up to 35.66% and 43.51% worst negative slack (WNS) and total negative slack (TNS) improvement and 52.17% reduction in the number of violating paths (NVP), which is beneficial to later routing stages with 2.33% wirelength decrease.",
+  "keywords": [
+    "placement optimization",
+    "buffer insertion",
+    "gate sizing",
+    "timing closure",
+    "graph neural networks"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Related Work and Motivations",
+    "2.1. Learning-Based Physical Prediction",
+    "2.2. Learning-Based Timing Prediction",
+    "2.3. Graph Neural Network",
+    "2.4. Motivations",
+    "3. Proposed Placement Optimization Framework",
+    "3.1. Overview",
+    "3.2. Node Representation",
+    "3.3. Loss Function",
+    "3.3.1. Physical Classification Loss",
+    "3.3.2. Timing Prediction Loss",
+    "3.4. Physical Prediction",
+    "3.4.1. Gate Sizing Prediction Model",
+    "3.4.2. Buffer Insertion Prediction Model",
+    "3.5. Timing Prediction",
+    "3.6. Optimization Guidance with Physical and Timing Prediction",
+    "4. Experiment Results",
+    "4.1. Experiment Setup",
+    "4.2. Physical and Timing Prediction Evaluation",
+    "4.3. Physical- and Timing-Related Optimization Evaluation",
+    "5. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. Example of circuit design before and after placement optimization with (a) logical, (b) physical, and (c) timing view.",
+    "Figure 2. Overview of optimization guidance framework based on physical and timing prediction to improve placement quality.",
+    "Figure 3. Illustration of buffer insertion solution represented by (a) buffer tree in the circuit netlist and (b) buffer matrix in the graph representation.",
+    "Figure 4. Path classification flow using embedding fusion technique.",
+    "Figure 5. Illustration of runtime comparsion."
+  ],
+  "table_captions": [
+    "Table 1. Initial node features for feature matrix construction.",
+    "Table 2. Benchmark statistics and prediction accuracy comparison.",
+    "Table 3. Placement optimization quality comparison. The unit for WNS and TNS is in ns, for runtime in s and for area in μm2. The best results are marked in bold.",
+    "Table 4. Detailed comparison after routing. The unit for WL is in m. The best results are marked in bold."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "A GNN-Based Placement Optimization Guidance Framework by Physical and Timing Prediction",
+    "author": "Peng Cao,Zhi Li and Wenjie Ding",
+    "subject": "Placement is crucial in physical design flow with significant impact on later routability and ultimate manufacturability in terms of performance, power, and area (PPA), which may deviate from finding the optimal solution and/or lead to unnecessary iterations suffering from interleaved optimization steps and inaccurate PPA estimation. To solve this issue, we propose a physical- and timing-related placement optimization guidance framework which provides candidate gate sizing and buffer insertion solutions as well as a path group for potential violated paths based on graph neural networks (GNNs) to improve placement quality significantly and efficiently. Experimental results on the OpenCores benchmarks with 22 nm technology demonstrate that the proposed placement optimization guidance framework achieves up to 35.66% and 43.51% worst negative slack (WNS) and total negative slack (TNS) improvement and 52.17% reduction in the number of violating paths (NVP), which is beneficial to later routing stages with 2.33% wirelength decrease. ",
+    "keywords": "placement optimization; buffer insertion; gate sizing; timing closure; graph neural networks",
+    "creator": "LaTeX with hyperref",
+    "producer": "pdfTeX-1.40.25",
+    "creationDate": "D:20250116173744+08'00'",
+    "modDate": "D:20250116104152+01'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-01-16",
+    "modified_date": "2025-01-16"
+  },
+  "text_path": "metadata/meatdatagenerated/text/electronics-14-00329-v2.txt",
+  "json_path": "metadata/meatdatagenerated/json/electronics-14-00329-v2.json",
+  "html_path": "html/electronics-14-00329-v2.html",
+  "citation": "Peng Cao,Zhi Li and Wenjie Ding (2024). A GNN-Based Placement Optimization Guidance Framework by Physical and Timing Prediction. Placement is crucial in physical design flow with significant impact on later routability and ultimate manufacturability in terms of performance. https://doi.org/10.3390/electronics14020329"
+}

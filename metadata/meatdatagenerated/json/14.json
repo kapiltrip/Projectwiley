@@ -1,0 +1,51 @@
+{
+  "source_filename": "14.pdf",
+  "source_path": "papers50/14.pdf",
+  "title": "Fast and Accurate Aging-Aware Cell Timing Model via Graph Learning",
+  "authors": "Yuyang Ye , Tinghuan Chen, Zicheng Wang , Hao Yan , Bei Yu , Senior Member, IEEE, and Longxing Shi",
+  "authors_guess": "Yuyang Ye , Tinghuan Chen, Zicheng Wang , Hao Yan , Bei Yu , Senior Member, IEEE, and Longxing Shi",
+  "journal": "IEEE Transactions on Circuits and Systems II: Express Briefs",
+  "year": "2024",
+  "doi": "10.1109/TCSII.2023.3298917",
+  "page_count": 5,
+  "word_count": 4311,
+  "abstract": "With transistors scaling down, aging effects become increasingly significant in circuit design. Thus, the aging-aware cell timing model is necessary for evaluating the aging-induced delay degradation and their impact on circuit performance. However, the tradeoff between accuracy and efficiency becomes a bottleneck in traditional methods. In this brief, we propose a fast and accurate aging-aware cell timing model via graph learning. The information of multi-typed devices on different arcs can be embedded by heterogeneous graph attention networks (H-GAT) and the embedded results help improve the accuracy of our aging-aware timing model. The experimental results indicate the proposed timing model can achieve high accuracy efficiently.",
+  "keywords": [
+    "Timing analysis",
+    "graph learning",
+    "design for reliability"
+  ],
+  "section_headings": [
+    "II. PRELIMINARIES",
+    "III. PROPOSED METHOD",
+    "IV. EXPERIMENTAL RESULTS",
+    "V. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. The examples of cell paths and cell path-based neighbors in NAND2 are shown in (a), (b) and (c). (d) is the heterogeneous graph representation for a NAND2 circuit with multi-typed nodes (devices), edges (connections) and an example of cell path P1 (a timing arc).",
+    "Fig. 2. The flow of generating node representations for multi-typed devices based on aggregating information from cell path-based neighbors and cell paths.",
+    "Fig. 3. Average training RE (Tri. RE) and average validation RE (Val. RE) under different ratios of training samples ranging from 20% to 65%."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Fast and Accurate Aging-Aware Cell Timing Model via Graph Learning",
+    "author": "",
+    "subject": "IEEE Transactions on Circuits and Systems II: Express Briefs;2024;71;1;10.1109/TCSII.2023.3298917",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20240104141917+05'30'",
+    "modDate": "D:20240108143452-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-01-04",
+    "modified_date": "2024-01-08"
+  },
+  "text_path": "metadata/meatdatagenerated/text/14.txt",
+  "json_path": "metadata/meatdatagenerated/json/14.json",
+  "html_path": "html/14.html",
+  "citation": "Yuyang Ye , Tinghuan Chen, Zicheng Wang , Hao Yan , Bei Yu , Senior Member, IEEE, and Longxing Shi (2024). Fast and Accurate Aging-Aware Cell Timing Model via Graph Learning. IEEE Transactions on Circuits and Systems II: Express Briefs. https://doi.org/10.1109/TCSII.2023.3298917"
+}

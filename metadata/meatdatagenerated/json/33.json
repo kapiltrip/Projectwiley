@@ -1,0 +1,66 @@
+{
+  "source_filename": "33.pdf",
+  "source_path": "papers50/33.pdf",
+  "title": "electronics Article Novel Prediction Framework for Path Delay Variation Based on Learning Method Jingjing Guo , Peng Cao , Zhaohao Sun, Bingqian Xu, Zhiyuan Liu and Jun Yang *",
+  "authors": null,
+  "authors_guess": null,
+  "journal": null,
+  "year": "2019",
+  "doi": "10.3390/electronics9010157",
+  "page_count": 11,
+  "word_count": 5999,
+  "abstract": "Path delay variation becomes a serious concern in advanced technology, especially for multi-corner conditions. Plenty of timing analysis methods have been proposed to solve the issue of path delay variation, but they mainly focus on every single corner and are based on a characterized timing library, which neglects the correlation among multiple corners, resulting in a high characterization effort for all required corners. Here, a novel prediction framework is proposed for path delay variation by employing a learning-based method using back propagation (BP) regression. It can be used to solve the issue of path delay variation prediction under a single corner. Moreover, for multi-corner conditions, the proposed framework can be further expanded to predict corners that are not included in the training set. Experimental results show that the proposed model outperforms the traditional Advanced On-Chip Variation (AOCV) method with 1.4X improvement for the prediction of path delay variation for single corners. Additionally, while predicting new corners, the maximum error is 4.59%, which is less than current state-of-the-art works.",
+  "keywords": [
+    "path delay variation",
+    "learning-based",
+    "multi-corner conditions"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Proposed Prediction Framework for Path Delay Variation-Based Learning Method",
+    "2.1. Data Preparation",
+    "2.2. Feature Selection",
+    "2.3. Network and Configuration",
+    "3. Experimental Results and Discussions",
+    "3.1. Path Delay Variation Prediction at a Single Corner",
+    "3.1.1. The Selection of Sample Number",
+    "3.1.2. Path Delay Variation Prediction at Single Corner",
+    "3.2. Path Delay Variation Prediction at Multi-Corner",
+    "4. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. The flowchart of the prediction framework for path delay variation based on ML algorithm.",
+    "Figure 2. The architecture of the BP model.",
+    "Figure 3. The trade-offof sample number and accuracy at different conditions. (a) 0.6 V 25 ◦C, (b) 0.6 V 75 ◦C, (c) 0.8 V 25 ◦C, (d) 0.8 V 75 ◦C.",
+    "Figure 4. Path variation delay training error at td−xσ at a single corner. (a) train error; (b) test error.",
+    "Figure 5. Path variation delay predicted error at td+xσ at a single corner. (a) train error; (b)test error.",
+    "Figure 6. Path variation delay mean error prediction of stage 5 and 10 at multi-corner conditions. (a) td−xσ; (b) td+xσ."
+  ],
+  "table_captions": [
+    "Table 1. Feature selection and notation.",
+    "Table 2. Input and Output function of every layer.",
+    "Table 3. Training and predicted corners.",
+    "Table 4. Comparison with previous works."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "",
+    "author": "",
+    "subject": "",
+    "keywords": "",
+    "creator": "",
+    "producer": "iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20200122180705+08'00'",
+    "modDate": "D:20200122180705+08'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2020-01-22",
+    "modified_date": "2020-01-22"
+  },
+  "text_path": "metadata/meatdatagenerated/text/33.txt",
+  "json_path": "metadata/meatdatagenerated/json/33.json",
+  "html_path": "html/33.html",
+  "citation": "(2019). electronics Article Novel Prediction Framework for Path Delay Variation Based on Learning Method Jingjing Guo , Peng Cao , Zhaohao Sun, Bingqian Xu, Zhiyuan Liu and Jun Yang *. https://doi.org/10.3390/electronics9010157"
+}

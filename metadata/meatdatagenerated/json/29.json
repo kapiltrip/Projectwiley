@@ -1,0 +1,54 @@
+{
+  "source_filename": "29.pdf",
+  "source_path": "papers50/29.pdf",
+  "title": "Preplacement Net Length and Timing Estimation by Customized Graph Neural Network",
+  "authors": "Zhiyao Xie , Rongjian Liang , Xiaoqing Xu, Member, IEEE, Jiang Hu, Fellow, IEEE, Chen-Chia Chang, Jingyu Pan , Graduate Student Member, IEEE, and Yiran Chen , Fellow, IEEE",
+  "authors_guess": "Zhiyao Xie , Rongjian Liang , Xiaoqing Xu, Member, IEEE, Jiang Hu, Fellow, IEEE, Chen-Chia Chang, Jingyu Pan , Graduate Student Member, IEEE, and Yiran Chen , Fellow, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2022",
+  "doi": "10.1109/TCAD.2022.3149977",
+  "page_count": 14,
+  "word_count": 12787,
+  "abstract": "Net length is a key proxy metric for optimizing timing and power across various stages of a standard digital design flow. However, the bulk of net length information is not available until cell placement, and hence, it is a significant challenge to explicitly consider net length optimization in design stages prior to placement, such as logic synthesis. In addition, the absence of net length information makes accurate preplacement timing estimation extremely difficult. Poor predictability on the timing not only affects timing optimizations but also hampers the accurate evaluation of synthesis solutions. This work addresses these challenges by a preplacement prediction flow with estimators on both net length and timing. We propose a graph attention network (GAT) method with customization, called Net2, to estimate individual net length before cell placement. Its accuracy-oriented version Net2a achieves about 15% better accuracy than several previous works in identifying both long nets and long critical paths. Its fast version Net2f is more than 1000× faster than placement while still outperforms previous works and other neural network techniques in terms of various accuracy metrics. Based on net size estimations, we propose the first machine learning-based preplacement timing estimator. Compared with the preplacement timing report from commercial tools, it improves the correlation coefficient in arc delays by 0.08, and reduces the mean absolute error in slack, worst negative slack, and total negative slack estimations by more than 50%.",
+  "keywords": [
+    "Graph neural network",
+    "physical-aware synthesis",
+    "timing",
+    "VLSI design",
+    "wirelength"
+  ],
+  "section_headings": [],
+  "figure_captions": [
+    "Fig. 1. (a) Part of a netlist. (b) Corresponding graph.",
+    "Fig. 3. Net size and timing prediction flow.",
+    "Fig. 2. (a) Typical local topology. (b) Predictions on nets with similar local topology information.",
+    "Fig. 4. Define edge features by partition results.",
+    "Fig. 5. Example to illustrate timing prediction algorithm.",
+    "Fig. 6. Correlation coefficient R between net length prediction and label. Averaged over designs in each benchmark. (a) 20 bins generated according to labels. (b) 20 bins generated according to predictions.",
+    "Fig. 7. Examples on preplacement slack prediction.",
+    "Fig. 9. WNS (left) and TNS (right) on only large designs.",
+    "Fig. 8. WNS (left) and TNS (right) of all designs."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Preplacement Net Length and Timing Estimation by Customized Graph Neural Network",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2022;41;11;10.1109/TCAD.2022.3149977",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 22.0 (Windows); modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20221020175740+05'30'",
+    "modDate": "D:20221024153030-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2022-10-20",
+    "modified_date": "2022-10-24"
+  },
+  "text_path": "metadata/meatdatagenerated/text/29.txt",
+  "json_path": "metadata/meatdatagenerated/json/29.json",
+  "html_path": "html/29.html",
+  "citation": "Zhiyao Xie , Rongjian Liang , Xiaoqing Xu, Member, IEEE, Jiang Hu, Fellow, IEEE, Chen-Chia Chang, Jingyu Pan , Graduate Student Member, IEEE, and Yiran Chen , Fellow, IEEE (2022). Preplacement Net Length and Timing Estimation by Customized Graph Neural Network. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2022.3149977"
+}

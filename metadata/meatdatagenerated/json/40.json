@@ -1,0 +1,52 @@
+{
+  "source_filename": "40.pdf",
+  "source_path": "papers50/40.pdf",
+  "title": "untitled",
+  "authors": null,
+  "authors_guess": null,
+  "journal": "2668 IEEE TRANSACTIONS ON VERY LARGE SCALE INTEGRATION (VLSI) SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2017",
+  "year": "2017",
+  "doi": null,
+  "page_count": 5,
+  "word_count": 5270,
+  "abstract": "In this brief, we propose an effective adaptation of viability analysis in statistical static timing analysis. The adaption benefits well from a dynamic programming implementation of the viability function. For a rapid identification of statistical longest true paths, the technique makes use of a fast preprocessing step identifying the gates with a small probability of being viable in the circuit, and a number of simple optimization techniques. This makes the approach fast without lowering its accuracy. The efficacy of the proposed statistical timing analysis is assessed using ISCAS benchmark circuits and carry skip adders. The results show that the proposed technique leads to, on average, 18× higher speed compared to those of the state-of-the-art technique. This improvement is achieved at the cost of −1.7% precision lost compared to that of the Monte-Carlo method.",
+  "keywords": [
+    "Process variation",
+    "statistical static timing analysis (SSTA)",
+    "true critical path",
+    "viability analysis"
+  ],
+  "section_headings": [
+    "I. INTRODUCTION",
+    "II. VIABILITY",
+    "III. VIABILITY ANALYSIS CONSIDERING PROCESS VARIATION",
+    "IV. PROPOSED IMPROVEMENT TECHNIQUES",
+    "V. RESULTS AND DISCUSSION",
+    "VI. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. (a) Example gate with value and the corresponding mean and standard deviation of the AT for each input. (b) Circuit example for illustrating the relation between viability and delay distributions of the longest viable path."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "untitled",
+    "author": "",
+    "subject": "",
+    "keywords": "",
+    "creator": "",
+    "producer": "Acrobat Distiller 10.1.16 (Windows)",
+    "creationDate": "D:20170812143116+05'30'",
+    "modDate": "D:20170823071322-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2017-08-12",
+    "modified_date": "2017-08-23"
+  },
+  "text_path": "metadata/meatdatagenerated/text/40.txt",
+  "json_path": "metadata/meatdatagenerated/json/40.json",
+  "html_path": "html/40.html",
+  "citation": "(2017). untitled. 2668 IEEE TRANSACTIONS ON VERY LARGE SCALE INTEGRATION (VLSI) SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2017."
+}

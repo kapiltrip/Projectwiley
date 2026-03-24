@@ -1,0 +1,65 @@
+{
+  "source_filename": "19.pdf",
+  "source_path": "papers50/19.pdf",
+  "title": "TSTL-GNN: Graph-Based Two-Stage Transfer Learning for Timing Engineering Change Order Analysis Acceleration",
+  "authors": "Wencheng Jiang, Zhenyu Zhao, Zhiyuan Luo, Jie Zhou, Shuzheng Zhang, Bo Hu and Peiyun Bian",
+  "authors_guess": "Wencheng Jiang, Zhenyu Zhao, Zhiyuan Luo, Jie Zhou, Shuzheng Zhang, Bo Hu and Peiyun Bian",
+  "journal": "Timing Engineering Change Order (ECO) is time-consuming in IC design",
+  "year": "2024",
+  "doi": "10.3390/electronics13152897",
+  "page_count": 13,
+  "word_count": 7285,
+  "abstract": "Timing Engineering Change Order (ECO) is time-consuming in IC design, requiring multiple rounds of timing analysis. Compared to traditional methods for accelerating timing analysis, which focus on a specific design, timing ECO requires higher accuracy and generalization because the design changes considerably after ECO. Additionally, there are challenges with slow acquisition of data for large designs and insufficient data for small designs. To solve these problems, we propose TSTL-GNN, a novel approach using two-stage transfer learning based on graph structures. Significantly, considering that delay calculation relies on transition time, we divide our model into two stages: the first stage predicts transition time, and the second stage predicts delay. Moreover, we employ transfer learning to transfer the model’s parameters and features from the first stage to the second due to the similar calculation formula for delay and transition time. Experiments show that our method has good accuracy on open-source and industrial applications with an average R2score/MAE of 0.9952/13.36, and performs well with data-deficient designs. Compared to previous work, our model reduce prediction errors by 37.1 ps on the modified paths, which are changed by 24.27% on average after ECO. The stable R2 score also confirms the generalization of our model. In terms of time cost, our model achieved results for path delays consuming up to 80 times less time compared to open-source tool. Citation: Jiang, W.; Zhao, Z.; Luo, Z.; Zhou, J.; Zhang, S.; Hu, B.; Bian. P.",
+  "keywords": [
+    "graph neural networks",
+    "transfer learning",
+    "engineering change order",
+    "static timing analysis"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Related Work",
+    "3.2.2. Feature Extraction on Standard Cell Library",
+    "3.3. The Framework of TSTL-GNN",
+    "4.1.2. Evaluation Metrics",
+    "4.2. Path Delay Prediction Performance under Self-Referencing Scenario",
+    "4500 Ideal Performance Prediction",
+    "4.3. Path Delay Prediction Performance with Limited Data",
+    "4.4. Path Delay Prediction for ECO in Typical Engineering Scenarios",
+    "4.5. Time Overhead of Path Delay Prediction",
+    "5. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. The ECO process for critical paths.",
+    "Figure 2. Framework of TSTL-GNN model.",
+    "Figure 3. In the TSTL-GNN model training results, each scattered point depicts a path, the horizontal axis shows the ground-truth delay, the vertical axis displays the predicted delay, and the straight line represents the ideal result.",
+    "Figure 4. MAE comparison between non-transfer learning model and TSTL-GNN model"
+  ],
+  "table_captions": [
+    "Table 1. Node features used in our model.",
+    "Table 2. Benchmark statistics.",
+    "Table 3. The accuracy of post-ECO netlist path delay prediction under various models (R2",
+    "Table 4. Run Time."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "TSTL-GNN: Graph-Based Two-Stage Transfer Learning for Timing Engineering Change Order Analysis Acceleration",
+    "author": "Wencheng Jiang, Zhenyu Zhao, Zhiyuan Luo, Jie Zhou, Shuzheng Zhang, Bo Hu and Peiyun Bian",
+    "subject": "Timing Engineering Change Order (ECO) is time-consuming in IC design, requiring multiple rounds of timing analysis. Compared to traditional methods for accelerating timing analysis, which focus on a specific design, timing ECO requires higher accuracy and generalization because the design changes considerably after ECO. Additionally, there are challenges with slow acquisition of data for large designs and insufficient data for small designs. To solve these problems, we propose TSTL-GNN, a novel approach using two-stage transfer learning based on graph structures. Significantly, considering that delay calculation relies on transition time, we divide our model into two stages: the first stage predicts transition time, and the second stage predicts delay. Moreover, we employ transfer learning to transfer the model's parameters and features from the first stage to the second due to the similar calculation formula for delay and transition time. Experiments show that our method has good accuracy on open-source and industrial applications with an average R2 score/MAE of 0.9952/13.36, and performs well with data-deficient designs. Compared to previous work, our model reduce prediction errors by 37.1 ps on the modified paths, which are changed by 24.27% on average after ECO. The stable R2 score also confirms the generalization of our model. In terms of time cost, our model achieved results for path delays consuming up to 80 times less time compared to open-source tool.",
+    "keywords": "graph neural networks; transfer learning; engineering change order; static timing analysis",
+    "creator": "LaTeX with hyperref",
+    "producer": "pdfTeX-1.40.25",
+    "creationDate": "D:20240723185352+08'00'",
+    "modDate": "D:20240723125612+02'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-07-23",
+    "modified_date": "2024-07-23"
+  },
+  "text_path": "metadata/meatdatagenerated/text/19.txt",
+  "json_path": "metadata/meatdatagenerated/json/19.json",
+  "html_path": "html/19.html",
+  "citation": "Wencheng Jiang, Zhenyu Zhao, Zhiyuan Luo, Jie Zhou, Shuzheng Zhang, Bo Hu and Peiyun Bian (2024). TSTL-GNN: Graph-Based Two-Stage Transfer Learning for Timing Engineering Change Order Analysis Acceleration. Timing Engineering Change Order (ECO) is time-consuming in IC design. https://doi.org/10.3390/electronics13152897"
+}

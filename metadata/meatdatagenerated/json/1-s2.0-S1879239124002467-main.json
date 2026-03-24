@@ -1,0 +1,83 @@
+{
+  "source_filename": "1-s2.0-S1879239124002467-main.pdf",
+  "source_path": "papers50/1-s2.0-S1879239124002467-main.pdf",
+  "title": "Knowledge transferring framework for cell library characterization",
+  "authors": "Zhengguang Tang",
+  "authors_guess": "Zhengguang Tang",
+  "journal": "Microelectronics Journal",
+  "year": "2025",
+  "doi": "10.1016/j.mejo.2024.106542",
+  "page_count": 8,
+  "word_count": 6872,
+  "abstract": "To evaluate digital circuit performance across PVT (process, voltage, and temperature) corners, standard cell library characterization requires costly simulations. Leveraging machine learning (ML) can improve the efficiency of this process. However, existing ML-based methods for cell library characterization often neglect the knowledge embedded across different timing arcs, leading to the need for extensive training data. In this paper, we propose a transfer learning (TL) framework to enhance timing characterization across multiple timing arcs. By quantifying the similarity among training tasks in the cell library using a fine-grained metric, our method enables rapid and accurate cell delay predictions through pre-training knowledge. Compared to conventional ML approaches, our TL framework improves both prediction accuracy and efficiency. Experimental results on 45 nm MOSFET and 14 nm FINFET technologies show significant error reductions of up to 80% and 67%, respectively.",
+  "keywords": [
+    "Standard cell library",
+    "Delay model",
+    "Machine Learning",
+    "Transfer Learning"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Background and related work",
+    "2.1. ML-based cell library characterization",
+    "3. Proposed framework",
+    "3.1. Data domains sampling",
+    "2.2. Transfer learning (TL)",
+    "3.2. Ensemble baseline model training",
+    "3.2.1. Baseline model construction",
+    "3.2.2. Underlying ML model implementation",
+    "3.3. Knowledge TL among similar tasks",
+    "3.3.1. Similarity quantification",
+    "4. Experiment and evaluation results",
+    "4.1. Experimental setup",
+    "3.3.2. Feature-based TL algorithm",
+    "4.2.2. Impact of similarity metrics",
+    "4.2. Delay prediction accuracy comparisons",
+    "4.2.1. Transfer across timing arcs",
+    "4.2.3. Performance and generalization evaluation",
+    "4.2.4. Efficiency comparisons",
+    "4.3. Model inference for STA",
+    "5. Conclusion"
+  ],
+  "figure_captions": [
+    "Fig. 2. Feature-based transfer learning for library cells: Feature augmentation and training.",
+    "Fig. 1. Traditional flow of ML-based cell library characterization involves characterizing delay samples through SPICE simulations for each timing arc. Subsequently, prediction models are trained independently.",
+    "Fig. 3. Proposed knowledge transferring framework for cell library characterization.",
+    "Fig. 6. Pearson correlation coefficient between Wasserstein distances vector and RMSE results vector.",
+    "Fig. 4. Average RMSE differences with standard deviation across various underlying models for timing arcs within the (a) Nangate 45 nm and (b) Nangate 14 nm libraries.",
+    "Fig. 7. Comparison of testing RMSEs between the distance metrics in [15] and the Wasserstein distance metric introduced in this work.",
+    "Fig. 5. Average RMSEs across various underlying models for timing arcs within (a) Nangate 45 nm and (b) Nangate 14 nm libraries.",
+    "Fig. 9. Average RMSE across various datasizes for timing arcs within (a) Nangate 45 nm and (b) Nangate 14 nm libraries.",
+    "Fig. 8. Testing RMSEs comparison for unseen PVT corners within (a) Nangate 45 nm and (b) Nangate 14 nm libraries.",
+    "Fig. 10. Relative errors of critical path delays across various training strategies for circuits."
+  ],
+  "table_captions": [
+    "Table 1 Parameters of Nangate 45 nm and 14 nm technology process corners.",
+    "Table 2 Candidate hyperparameters for underlying models.",
+    "Table 3 Tested cells from Nangate 14 nm and 45 nm libraries.",
+    "Table 4 Testing RMSEs comparison between single training techniques and the full version.",
+    "Table 5 Runtime comparison between our model and the non-transfer learning strategy.",
+    "Table 6 The gates of critical paths and average absolute relative error for tested PVT corners."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Knowledge transferring framework for cell library characterization",
+    "author": "Zhengguang Tang",
+    "subject": "Microelectronics Journal, 156 (2025) 106542. doi:10.1016/j.mejo.2024.106542",
+    "keywords": "Standard cell library,Delay model,Machine Learning,Transfer Learning",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 8.1.0 (Windows)",
+    "creationDate": "D:20250121054442Z",
+    "modDate": "D:20250121120246Z",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-01-21",
+    "modified_date": "2025-01-21"
+  },
+  "text_path": "metadata/meatdatagenerated/text/1-s2.0-S1879239124002467-main.txt",
+  "json_path": "metadata/meatdatagenerated/json/1-s2.0-S1879239124002467-main.json",
+  "html_path": "html/1-s2.0-S1879239124002467-main.html",
+  "citation": "Zhengguang Tang (2025). Knowledge transferring framework for cell library characterization. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2024.106542"
+}

@@ -1,0 +1,69 @@
+{
+  "source_filename": "24.pdf",
+  "source_path": "papers50/24.pdf",
+  "title": "Deep-learning cell-delay modeling for static timing analysis",
+  "authors": "Waseem Raslan",
+  "authors_guess": "Waseem Raslan",
+  "journal": "Ain Shams Engineering Journal",
+  "year": "2023",
+  "doi": "10.1016/j.asej.2022.101828",
+  "page_count": 8,
+  "word_count": 6823,
+  "abstract": "Delay and transition timetables plus voltage waveforms are used to characterize standard cell delays. More accurate models explode cell library size and degrades design flow performance. Our proposed deep learning non-linear delay model, DL-NLDM, technique outperformed 7\u00017 NLDM-LUT in average percentage errors with up to 1.4% error compared to SPICE and outperformed the non-standard 100\u0001100 NLDM- LUT in maximum percentage errors. The proposed DL Autoencoder-based waveform compression outperformed singular value decomposition by 1.79\u0001. Additionally, a novel DL waveform-delay model, DL- WFDM, models cell delays using encoded waveforms instead of delay and transition time. DL-WFDM outperformed DL-NLDM in maximum delay percentage errors. \u0001 2022 The Authors. Published by Elsevier B.V. on behalf of Faculty of Engineering, Ain Shams University This is an open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-ncnd/4.0/).",
+  "keywords": [
+    "Electronic Design Automation Machine Learning Deep Learning Autoencoders Cell Characterization Effective Current Source Model"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Cell-delay modeling background",
+    "2.1. NLDM cell driver model",
+    "2.2. ECSM cell driver model",
+    "4.1. Generation and pre-processing of training data",
+    "3. Deep learning Autoencoders background",
+    "4. Deep learning cell delay modeling",
+    "4.2. Deep learning NLDM cell delay modeling",
+    "4.3. ECSM voltage waveform deep learning Autoencoder-based compression",
+    "4.4. Deep learning Waveform-Delay Model, DL-WFDM",
+    "5. Conclusions and future work"
+  ],
+  "figure_captions": [
+    "Fig. 1. Training phase and Encode/Decoder Models of DL Autoencoder.",
+    "Fig. 2. Cell Characterization Transistor Level Simulation Setup.",
+    "Fig. 3. Varying Time, 50, 100, 150 Sampling Points.",
+    "Fig. 4. Falling and rising decoded waveforms against Spice waveforms.",
+    "Fig. 5. Training DL Cell model with encoded input/output waveform parameter."
+  ],
+  "table_captions": [
+    "Table 1 Deep Learning Model Structure.",
+    "Table 2 DL-NLDM best trained NOR models Mean/Max Percentage Error rates versus different LUT sizes.",
+    "Table 3 DL-NLDM best trained INV models Mean/Max Percentage Error rates versus different LUT sizes.",
+    "Table 4 DL-NLDM best trained NAND models Mean/Max Percentage Error rates versus different LUT sizes.",
+    "Table 5 Autoencoder Models for Parameter P = 16,8,4,2,1.",
+    "Table 6 Best Autoencoding 1000-points ECSM Waveform Results Against bz2, gzip and SVD techniques.",
+    "Table 8 shows that the proposed DL-WFDM model results. Using 1000-points sampled encoded waveforms to train the new model resulted in up to 1.14% average percentage error, and up to 18.13% maximum percentage errors, for key waveform points compared with SPICE simulation. Using 150-points sampled encoded waveforms, DL-WFDM model gives up to 1.33% average percentage error, and up to 20.57% maximum percentage errors. Comparing the delay time errors in Tables 2, 3. 4 with the 50% VDD crossings in Tables 8 & 9 shows that DL-WFDM gives slightly more average percentage errors, but better maximum percentage",
+    "Table 7 Best Autoencoding 150-points ECSM Waveform Results Against bz2, gzip and SVD techniques.",
+    "Table 8 DL-WFDM Model Training Results using 1000-points Sampled Waveforms.",
+    "Table 9 DL-WFDM Model Training Results using 150-points Sampled Waveforms."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Deep-learning cell-delay modeling for static timing analysis",
+    "author": "Waseem Raslan",
+    "subject": "Ain Shams Engineering Journal, 14 (2023) 101828. doi:10.1016/j.asej.2022.101828",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 8.0.0 (Windows)",
+    "creationDate": "D:20230118102101+05'30'",
+    "modDate": "D:20230118102223+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-01-18",
+    "modified_date": "2023-01-18"
+  },
+  "text_path": "metadata/meatdatagenerated/text/24.txt",
+  "json_path": "metadata/meatdatagenerated/json/24.json",
+  "html_path": "html/24.html",
+  "citation": "Waseem Raslan (2023). Deep-learning cell-delay modeling for static timing analysis. Ain Shams Engineering Journal. https://doi.org/10.1016/j.asej.2022.101828"
+}

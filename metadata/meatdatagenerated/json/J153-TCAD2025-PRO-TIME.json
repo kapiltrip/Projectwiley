@@ -1,0 +1,65 @@
+{
+  "source_filename": "J153-TCAD2025-PRO-TIME.pdf",
+  "source_path": "papers50/J153-TCAD2025-PRO-TIME.pdf",
+  "title": "PRO-TIME: Prerouting Optimization-Aware Timing Prediction via Multimodal Learning",
+  "authors": "Ziyi Wang , Siting Liu , Yuan Pu , Song Chen , Member, IEEE, Tsung-Yi Ho , Fellow, IEEE, and Bei Yu , Senior Member, IEEE",
+  "authors_guess": "Ziyi Wang , Siting Liu , Yuan Pu , Song Chen , Member, IEEE, Tsung-Yi Ho , Fellow, IEEE, and Bei Yu , Senior Member, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2025",
+  "doi": "10.1109/TCAD.2025.3569488",
+  "page_count": 14,
+  "word_count": 10991,
+  "abstract": "Fast and accurate prerouting timing prediction is crucial in the very-large-scale integration (VLSI) design flow. Existing machine learning (ML)-assisted prerouting timing evaluators neglect the impact of timing optimization, which may render their approaches impractical in real circuit design flows. To address the challenges posed by timing optimization, we propose PRO-TIME, a prerouting optimization-aware timing prediction framework that is driven by multimodal learning. Specifically, we propose a novel endpoint embedding framework that integrates both netlist and layout information. A customized graph neural network (GNN) model is used for extracting endpoint-wise netlist information, which is motivated by the delay propagation process. Meanwhile, we apply the U-net model with a masking strategy to extract endpoint-wise layout information. Furthermore, we propose an adaptive layout mask adjustment scheme to boost performance by leveraging the layout information more effectively. Comprehensive experiments on large-scale RISC-V designs with advanced 7-nm technology node demonstrate the superiority of our model compared to the stateof-the-art prerouting timing evaluators.",
+  "keywords": [
+    "Convolutional neural networks",
+    "deep learning",
+    "design automation",
+    "graph neural networks",
+    "physical design",
+    "timing"
+  ],
+  "section_headings": [
+    "II. PRELIMINARIES AND PROBLEM DEFINITION",
+    "III. FLOW OVERVIEW",
+    "IV. NETLIST INFORMATION EXTRACTION",
+    "V. LAYOUT INFORMATION EXTRACTION",
+    "VI. ADAPTIVE LAYOUT MASK ADJUSTMENT",
+    "VII. EXPERIMENTS",
+    "VIII. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. Example of feature mismatching caused by timing optimization, where the subnetlist within the dotted box is replaced to improve timing. This leads to a mismatch between input features used for prediction, e.g., information about C1–C4, and ground-truth features, e.g., information about C5–C9. (a) Input netlist. (b) Optimized netlist.",
+    "Fig. 2. Overview of our proposed end-to-end endpoint embedding framework PRO-TIME, which generates endpoint-wise embeddings and conducts prediction based on the embeddings. We apply a customized GNN model to extract information from netlists and a U-net model with a novel masking technique to extract information from layouts. The extracted information is then fused to generate the final embedding for each timing endpoint.",
+    "Fig. 3. Message-passing scheme of our customized GNN, where the black dotted boxes show the graph’s topological levels. Li represents the ith topological level, hv represents the embedding of node v, hiv denotes the initial cell features of node v, hiu,v represents the initial net features along the edge (u, v), and αu,v gives the attention coefficient. The information flows in the topological order, aggregated at the endpoints to generate endpoint-wise netlist embeddings.",
+    "Fig. 4. Our endpoint-wise layout embedding generation flow with a U-net model and a novel endpoint-wise masking technique. Our proposed masking technique generates a unique layout embedding for each timing endpoint by capturing the endpoint’s individual layout impact.",
+    "Fig. 6. Example of our proposed masking technique applied to an endpoint e, where purple, blue, and gray represent the endpoint, net nodes, and cell nodes, respectively. The number next to each node in (b) indicates its topological level, and the purple lines depict the longest path Pe for e. The dotted boxes illustrate the critical region Re, which consists of edge bounding boxes along Pe. (a) Input graph. (b) Finding path. (c) Generating mask.",
+    "Fig. 5. Layout feature maps: cell density, RUDY, and macro cells region (from left to right). (a) Or1200. (b) Rocket.",
+    "Fig. 7. Example to illustrate the drawback of layout masking without adaptive adjustment. Suppose the endpoint e1 is critical while e2 is noncritical. Since their layout mask covers a similar region, their masked layout embeddings are similar, which contradicts to their criticality.",
+    "Fig. 8. Flow of our adaptive mask adjustment process. The color saturation of the mask reflects their timing criticality; the higher, the more critical. The timing model f t and the mask adaptor f m are parameterized by Wt and Wm, respectively. × represents the multiplication operator, and we use the gray color to denote whether the learnable parameters Wt/Wm are frozen or not.",
+    "Fig. 9. Visualization of the coefficients between the predicted and ground-truth arrival time, where the x-axis is for the predicted values and the y-axis is for the ground-truth values. From left to right, the figures show the results for arm9, chacha, hwacha, or1200, and sha3. (a) Results of DAC 2023 [47]. (b) Results of the proposed PRO-TIME.",
+    "Fig. 10. Results of the ablation study. Here, g represents our customized GNN without attention, a represents our customized GNN with attention, c represents a typical CNN model, u denotes the U-net model, and m denotes our adaptive mask adjustment scheme.",
+    "Fig. 11. Comparison between model without refinement (f au), model with our adaptive mask adjustment (f aum), and model that directly uses the estimated slack as an additional feature (f aus)."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "PRO-TIME: Prerouting Optimization-Aware Timing Prediction via Multimodal Learning",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2025;44;12;10.1109/TCAD.2025.3569488",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 25.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20251111150828+05'30'",
+    "modDate": "D:20251120172523-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-11-11",
+    "modified_date": "2025-11-20"
+  },
+  "text_path": "metadata/meatdatagenerated/text/J153-TCAD2025-PRO-TIME.txt",
+  "json_path": "metadata/meatdatagenerated/json/J153-TCAD2025-PRO-TIME.json",
+  "html_path": "html/J153-TCAD2025-PRO-TIME.html",
+  "citation": "Ziyi Wang , Siting Liu , Yuan Pu , Song Chen , Member, IEEE, Tsung-Yi Ho , Fellow, IEEE, and Bei Yu , Senior Member, IEEE (2025). PRO-TIME: Prerouting Optimization-Aware Timing Prediction via Multimodal Learning. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2025.3569488"
+}

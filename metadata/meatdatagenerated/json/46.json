@@ -1,0 +1,80 @@
+{
+  "source_filename": "46.pdf",
+  "source_path": "papers50/46.pdf",
+  "title": "Utilizing interdependent timing constraints to enhance robustness in synchronous circuits",
+  "authors": "E. Salman",
+  "authors_guess": "E. Salman",
+  "journal": "Microelectronics Journal",
+  "year": "2011",
+  "doi": "10.1016/j.mejo.2011.11.005",
+  "page_count": 9,
+  "word_count": 7779,
+  "abstract": "Article history: Received 24 July 2011 Received in revised form 15 November 2011 Accepted 16 November 2011 Available online 3 December 2011 Interdependent setup-hold times are exploited during the design process to improve the robustness of a circuit. Considering this interdependence only during static timing analysis (STA), as demonstrated in the previous work, is insufficient to fully exploit the capabilities offered by interdependence. This result is due to the strong dependence of STA results on the specific circuit, cell library, and operating frequency. Interdependence is evaluated in this paper for several technologies to determine the overall reduction in delay uncertainty rather than improvements in STA. Reducing delay uncertainty produces a more robust synchronous circuit. The increasing efficacy of interdependence in deeply scaled technologies is also demonstrated by investigating the effect of technology scaling on interdependent timing constraints. & 2011 Elsevier Ltd. All rights reserved.",
+  "keywords": [
+    "Delay uncertainty Variations Setup-hold time interdependence Constraint characterization"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Background",
+    "2.2. Interdependent setup-hold times",
+    "2.1. Timing characteristics of synchronous circuits",
+    "4. Reducing delay uncertainty",
+    "3. Problem formulation",
+    "4.1. Obtaining linear setup-hold relationship",
+    "4.2. Procedure to reduce delay uncertainty",
+    "4.3. Setup-hold time characterization under variations",
+    "4.4. Amount of compensation",
+    "5. Case study",
+    "4.5. Permissible range and interdependence",
+    "5.1. Interdependent TS vs TH relationship",
+    "5.2. Delay variation due to power noise and threshold voltage variations",
+    "5.3. Compensation of delay variations",
+    "6. Conclusions"
+  ],
+  "figure_captions": [
+    "Fig. 1. Simple synchronous circuit consisting of a combinational logic and two registers.",
+    "Fig. 2. Interdependent setup-hold time characterization: (a) clock-to-Q delay surface as a function of independently varying setup skew and hold skew and (b) the contour at 10% degraded clock-to-Q delay.",
+    "Fig. 3. Linear approximation of the contour curve using two pairs: (TS,min, TH,max) and (TS,max, TH,min).",
+    "Fig. 4. Efficiently obtaining the critical setup-hold pairs of a register without generating a three-dimensional clock-to-Q delay surface: (a) TS,min, (b) TH,max, (c) TH,min, (d) TS,max.",
+    "Fig. 5. Flow diagram to reduce delay uncertainty by exploiting interdependent setup-hold times.",
+    "Fig. 6. Variation of interdependent setup-hold characteristics as a function of the power supply voltage for a 90 nm CMOS technology.",
+    "Fig. 7. A data path designed at the pair ðTS,mid,TH,midÞ achieves the highest tolerance to variations.",
+    "Fig. 8. Exploiting interdependent setup and hold times within a permissible range of the clock skew. A shift in the permissible range is achieved. This shift is dependent upon the specific (setup, hold) pair, providing additional flexibility to tolerate variations, thereby enhancing robustness.",
+    "Fig. 9. Target clock frequency for each technology node. Higher frequencies represent the upper bound of the frequency while the lower frequencies represent the lower bound of the frequency.",
+    "Fig. 10. Interdependent setup-hold time characteristics for four technologies.",
+    "Fig. 11. Ratio of the range of valid setup times TS,r to the clock period TCP.",
+    "Fig. 12. Comparison of the increase in the delay of a critical data path with TS,r to evaluate the efficacy of exploiting the interdependence relationship. A 10% decrease in the power supply voltage is assumed.",
+    "Fig. 13. Comparison of the increase in the delay of a critical data path with TS,r to evaluate the efficacy of exploiting the interdependence relationship. A 10% increase in the threshold voltage is assumed.",
+    "Fig. 14. Comparison of the decrease in the delay of a short path with TH,r to evaluate the efficacy of exploiting the interdependence relationship. Two cases are analyzed: (1) a 10% increase in the power supply voltage is assumed, (2) a 10% decrease in the threshold voltage is assumed."
+  ],
+  "table_captions": [
+    "Table 1 Variation of the critical pairs due to a 10% decrease in the power supply voltage. Range of valid setup times is 139 ps.",
+    "Table 2 Variation of critical pairs due to a 10% increase in the power supply voltage. Range of valid hold times is 54 ps.",
+    "Table 3 Power supply voltage, clock-to-Q delay, and critical points TS,min, TH,max, TS,max, TH,min, TS,r, and TH,r for each technology.",
+    "Table 4 Compensation of delay uncertainty caused by power noise for a critical data path.",
+    "Table 5 Compensation of delay uncertainty caused by power noise for a short path.",
+    "Table 6 Compensation of delay uncertainty caused by threshold voltage variations for a critical data path.",
+    "Table 7 Compensation of delay uncertainty caused by threshold voltage variations for a short path."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Utilizing interdependent timing constraints to enhance robustness in synchronous circuits",
+    "author": "E. Salman",
+    "subject": "Microelectronics Journal, (2011) 119-127. doi:10.1016/j.mejo.2011.11.005",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 7.0.5 pour Macintosh",
+    "creationDate": "D:20240427114047+05'30'",
+    "modDate": "D:20240703212956+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-04-27",
+    "modified_date": "2024-07-03"
+  },
+  "text_path": "metadata/meatdatagenerated/text/46.txt",
+  "json_path": "metadata/meatdatagenerated/json/46.json",
+  "html_path": "html/46.html",
+  "citation": "E. Salman (2011). Utilizing interdependent timing constraints to enhance robustness in synchronous circuits. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2011.11.005"
+}

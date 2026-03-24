@@ -1,0 +1,60 @@
+{
+  "source_filename": "47.pdf",
+  "source_path": "papers50/47.pdf",
+  "title": "Fast Statistical Static Timing Analysis Using Smart Monte Carlo Techniques",
+  "authors": "Vineeth Veetil, Kaviraj Chopra, David Blaauw, Senior Member, IEEE, and Dennis Sylvester, Fellow, IEEE",
+  "authors_guess": "Vineeth Veetil, Kaviraj Chopra, David Blaauw, Senior Member, IEEE, and Dennis Sylvester, Fellow, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2011",
+  "doi": "10.1109/TCAD.2011.2108030",
+  "page_count": 14,
+  "word_count": 12344,
+  "abstract": "In this paper, we propose a stratification+hybrid quasi Monte Carlo (SH-QMC) approach to improve the efficiency of Monte Carlo-based statistical static timing analysis (SSTA) using sample size reduction. Sample size reduction techniques proposed in the literature exhibit a tradeoff between accuracy of the Monte Carlo estimate with fewer samples and their ability to handle large number of variables in multidimensional space. This paper proposes to target several such techniques to different sets of process variation variables by using information about the importance of these variables to the circuit delay, and the capability of the techniques to handle multiple dimensions. Simulations on benchmark circuits up to 90 K gates show that the proposed method requires up to 224 samples for varying levels of process variation to achieve accurate timing estimates. Results also show that when SH-QMC is performed with multiple parallel threads on a quad-core processor, the approach is faster than traditional SSTA with comparable accuracy. When the proposed SH-QMC technique is supplemented with a graph pruning method the runtime is further reduced by 46–48% on average. The technique is also extended to include an incremental approach to recompute a percentile delay metric after engineering change order.",
+  "keywords": [
+    "Algorithms",
+    "computer-aided design (CAD)",
+    "Monte Carlo",
+    "statistical timing",
+    "variance reduction",
+    "verification"
+  ],
+  "section_headings": [],
+  "figure_captions": [
+    "Fig. 1. Quasi random and pseudo random sequences.",
+    "Fig. 2. Stratification of a 2-D space. Variable X is divided into four bins, thus dividing the sample space into four strata.",
+    "Fig. 3. Latin hypercube sampling. (a) Divide each variable in eight equal probability bins and sample in bins. (b) Combine randomly to form eight triplets.",
+    "Fig. 4. Ordering variables using timing criticality.",
+    "Fig. 5. Stratified Latin hypercube sampling. (a) Ordering variables based on timing criticality. (b) One of 16 strata in the sample space. (c) QMC triplets and LHS pairs. (d) These are combined to obtain final samples.",
+    "Fig. 6. Error in estimating ρ versus number of variables that are assigned quasi Monte Carlo samples.",
+    "Fig. 7. Illustration of graph reduction. Slacks for nodes are indicated above corresponding gates. Gates with slack higher than 0.3 units at their output node are removed to obtain the reduced graph in this example.",
+    "Fig. 8. (a) Samples are visited in decreasing order of circuit arrival time, starting from the xth percentile (tx). Samples with delta crossing tx are selected, others pruned. (b) Recomputation of circuit arrival time is performed at the selected sample and tx is updated.",
+    "Fig. 9. Arrival time distribution of SH-QMC (128 samples) and traditional SSTA with respect to golden (40 000 MC) for USB benchmark.",
+    "Fig. 10. Performance comparison of traditional SSTA with multithreaded SH-QMC for VGA circuit (90 831 gates) as a function of number of grids in the process variation model.",
+    "Fig. 11. Error in estimation of the 99th quantile of circuit delay distribution. Repeated trials of SH-QMC yield to a distribution of the 99th quantile value. 95th quantile of the absolute error distribution is reported. Accurate results are obtained with a small number of samples as illustrated.",
+    "Fig. 13. Comparison of runtime versus pruning parameter for single-stage and two-stage pruning for the VD1 benchmark circuit.",
+    "Fig. 12. Comparison of the 95th percentile error in σ for single-stage and two-stage pruning for the VD1 benchmark circuit.",
+    "Fig. 14. Plot illustrating accuracy of the critical graph identification approach. 99.6% of the 80k total samples incur no error due to critical graph analysis relative to the non-pruned circuit STA. 67% of the remaining samples have error less than 0.15%."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Fast Statistical Static Timing Analysis Using Smart Monte Carlo Techniques",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2011;30;6;10.1109/TCAD.2011.2108030",
+    "keywords": "",
+    "creator": "DVIPSONE 2.2.2  http://www.YandY.com",
+    "producer": "Acrobat Distiller 7.0 (Windows); modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20110507134859Z",
+    "modDate": "D:20181124115133-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2011-05-07",
+    "modified_date": "2018-11-24"
+  },
+  "text_path": "metadata/meatdatagenerated/text/47.txt",
+  "json_path": "metadata/meatdatagenerated/json/47.json",
+  "html_path": "html/47.html",
+  "citation": "Vineeth Veetil, Kaviraj Chopra, David Blaauw, Senior Member, IEEE, and Dennis Sylvester, Fellow, IEEE (2011). Fast Statistical Static Timing Analysis Using Smart Monte Carlo Techniques. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2011.2108030"
+}

@@ -1,0 +1,187 @@
+156 IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS—II: EXPRESS BRIEFS, VOL. 71, NO. 1, JANUARY 2024
+
+Fast and Accurate Aging-Aware Cell Timing Model via Graph Learning
+
+Yuyang Ye , Tinghuan Chen, Zicheng Wang , Hao Yan , Bei Yu , Senior Member, IEEE, and Longxing Shi
+
+Abstract—With transistors scaling down, aging effects become increasingly significant in circuit design. Thus, the aging-aware cell timing model is necessary for evaluating the aging-induced delay degradation and their impact on circuit performance. However, the tradeoff between accuracy and efficiency becomes a bottleneck in traditional methods. In this brief, we propose a fast and accurate aging-aware cell timing model via graph learning. The information of multi-typed devices on different arcs can be embedded by heterogeneous graph attention networks (H-GAT) and the embedded results help improve the accuracy of our aging-aware timing model. The experimental results indicate the proposed timing model can achieve high accuracy efficiently.
+
+Index Terms—Timing analysis, graph learning, design for reliability.
+
+I. INTRODUCTION W ITH the continuous shrinking of CMOS technology nodes, transistor aging effects such as negative bias temperature instability (NBTI) become more and more significant, making timing closure and signoff increasingly challenging [1]. To guarantee the parametric yield and circuit lifetime, designers resort to adding performance-degrading timing guardbands (GBs) on the operational clock period [2], [3], [4]. The accuracy of the aging-aware cell timing model is of great importance for evaluating the amount of GBs efficiently. Existing methods for aging-aware cell timing modeling can be divided into two categories: (1) Look-up-table-based (LUT-based) modeling methods [5], [6], [7]. In [6], a LUTbased model is proposed to estimate NBTI-induced delay degradation while the PBTI aging effects are totally ignored. Kiamehr et al. [7] introduce an aging-aware timing model considering the impacts of input signal probabilities. In [5], a more accurate LUT-based method is introduced. (2) Machine learning-based modelingmethods [4], [8], [9]. In [8], the
+
+Manuscript received 26 June 2023; accepted 19 July 2023. Date of publication 26 July 2023; date of current version 8 January 2024. This work was supported in part by the National Natural Science Foundation of China under Grant 61874152 and Grant 61904030, and in part by the Research Grants Council of Hong Kong, SAR, under Project CUHK24209017. This brief was recommended by Associate Editor L. Qian. (Corresponding authors: Hao Yan; Tinghuan Chen.) Yuyang Ye, Zicheng Wang, Hao Yan, and Longxing Shi are with the National ASIC Research Center, Southeast University, Nanjing 210096, China (e-mail: yeyuyang@seu.edu.cn; yanhao@seu.edu.cn). Tinghuan Chen is with the School of Science and Engineering, The Chinese University of Hong Kong (Shenzhen), Shenzhen 518172, China (e-mail: chentinghuan@cuhk.edu.cn). Bei Yu is with the Department of Computer Science and Engineering, The Chinese University of Hong Kong, Hong Kong, SAR. Color versions of one or more figures in this article are available at https://doi.org/10.1109/TCSII.2023.3298917. Digital Object Identifier 10.1109/TCSII.2023.3298917
+
+support vector machine (SVM) model is used to capture the relationship between signal probabilities and delay degradation of cells. However, the impractical assumptions about constant supply voltages and temperatures cause an obvious loss of accuracy. Klemme and Amrouch [4] present a machine learning (ML) approach that accurately predicts aging-induced delay degradation for a continuous range of supply voltages and threshold voltages. In [9], feed-forward neural networks (FFNNs) are used. For LUT-based models, the accuracy is limited to the operating conditions under which the LUT is built. For ML-based models, the bottleneck of accuracy is caused by two main challenges: (1) They ignore the information of circuit structures on different timing arcs in cells. Due to significant parasitic effects, the timing arc structures of standard cells become more and more complex. In addition, there is an increasing necessity for modeling large cells with complicated structures, e.g., full adder (FA). Thus, the traditional ML methods always induce delay errors due to losing some essential structure information on timing arcs. (2) They ignore the impact of capacitors and resistors in cells. The cell circuits have heterogeneity since being composed of multi-typed devices, including transistors, capacitors and resistors. Thus, the impact of capacitors and resistors on transistor aging should be considered while modeling aging-induced timing degradation, especially under advanced technology To overcome the two challenges, graph learning methods can be used to collect information of all transistors, capacitors and resistors on different timing arcs in the whole cells. For challenge (1), the cell structures can be learned through aggregating cell circuit information among different timing arcs; For challenge (2), the impacts of capacitors and resistors on timing degradation caused by transistor aging can be mined by combing the information from multi-typed devices. Finally, the cells can be embedded accurately based on collected information and the embedded results helps to improve the aging-aware timing model accuracy. In this brief, we propose a fast and accurate aging-aware cell timing model via graph learning. It can estimate aginginduced delay degradation of cells based on information from transistors, capacitors and resistors on different timing arcs of cells under different operational conditions. For collecting information and embedding cells efficiently, we present heterogeneous graph attention networks (H-GAT). According to experimental results, the aging-aware cell timing model based on H-GAT achieves higher accuracy and efficiency benefitting from more cell information.
+
+1549-7747 c⃝2023 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission. See https://www.ieee.org/publications/rights/index.html for more information.
+
+Authorized licensed use limited to: Thapar Institute of Engineering & Technology. Downloaded on March 23,2026 at 16:49:40 UTC from IEEE Xplore. Restrictions apply.
+
+YE et al.: FAST AND ACCURATE AGING-AWARE CELL TIMING MODEL VIA GRAPH LEARNING 157
+
+Fig. 1. The examples of cell paths and cell path-based neighbors in NAND2 are shown in (a), (b) and (c). (d) is the heterogeneous graph representation for a NAND2 circuit with multi-typed nodes (devices), edges (connections) and an example of cell path P1 (a timing arc).
+
+• We develop a fast and accurate aging-aware cell timing model based on H-GAT, which can achieve a trade-off between model accuracy and efficiency.
+
+• We propose heterogeneous graph attention networks (H- GAT) to collect information from multi-typed devices on different timing arcs and to achieve cell embedding.
+
+• The experimental results indicate the proposed timing model outperforms conventional ML-based models and the LUT-based model in terms of accuracy.
+
+II. PRELIMINARIES
+
+A. Aging-Aware Cell Library Characterization Using SPICE
+
+In this brief, an aging-aware timing model method will be achieved to estimate aging-induced cell delay degradation for different kinds of cells in the cell library. For each kind of cell under different cell operational conditions, the commercial SPICE simulation tool (HSPICE in this brief [10]) with the MOSRA aging model [11] is adopted to perform the aging simulation to calculate the ground truths of cell delay. MOSRA in HSPICE offers an accurate solution for analyzing the agingaware timing degradation. Because it accurately models circuit performance with the MOS device aging and circuit operation. Finally, we can get accurate delay results. For accurate aging-aware timing analysis for timing paths, PrimeTime [12] helps generate SPICE deck templates from the design database for particular paths of interest. The SPICE deck templates are transistor-level netlists of timing paths with the parasitic information. Based on the SPICE deck templates and different testbenches, HSPICE [10] with the MOSRA aging model [11] is adopted to perform the aging simulation on each extracted timing path. Then it can generate the aging-aware timing baseline results of timing paths.
+
+B. Problem Formulation
+
+Definition 2 (Cell Path-Based Neighbors): The same type of devices located on the same cell path. Examples: As shown in Fig. 1, the timing arcs caused by three different input vectors in NAND2 (including [ A1 = 0, A2 = 1 ], [ A1 = 1, A2 = 0 ] and [ A1 = 1, A2 = 1 ]) are regarded as cell paths (including P1, P2 and P3). The input vector [ A1 = 0, A2 = 0 ] is considered when analyzing multiinput-switching effect, which will be discussed in our future work. In Fig. 1(a), the NMOS transistor T1 and T2 are on when [ A1 = 1, A2 = 1 ]. There is a discharging path from the output pin ZN to the power rail VSS, which is regarded as cell path P1; In Fig. 1(b), the NMOS transistor T1 and PMOS transistor T3 are on when [ A1 = 0, A2 = 1 ]. There is a charging path from the power rail VDD to the output pin ZN, the capacitor C7 and the capacitor C10, which is regarded as cell path P2; In Fig. 1(c), the NMOS transistor T2 and PMOS transistor T4 are on when [ A1 = 1, A2 = 0 ]. There is a charging path from the power rail VDD to the output pin ZN and a discharging path from the capacitor C10 to the power rail VSS, which are combined and then regarded as cell path P3. Note that the behavior of discharging path from the capacitor C10 influence the body voltage and threshold voltage of transistor T4, which cause different aging-aware cell delay degradation. For the transistor node T1 on cell path P1, the transistor node T2 is regarded as a cell path-based neighbor of T1. For the capacitor node C1 on cell path P2, the capacitor node C2 is regarded as a cell path-based neighbor of C1. There is a close relationship between timing arcs (cell paths) and cell delays [1]. Obviously, multi-typed devices on different cell paths push totally different impacts on aging-induced cell delay degradations. Thus, the information on multi-typed devices and cell path structures should be considered jointly while estimating aging-aware cell delay. Our problem formulation is formally defined as follows. Problem 1 (Aging-Aware Timing Cell Modeling): Given a cell circuit with multi-typed devices (transistors, capacitors and resistors), cell structure, cell paths and operational conditions, estimate the aging-aware cell delay.
+
+C. Cell Circuit Vs. Heterogeneous Graph
+
+We focus on getting fast and accurate aging-aware timing models for standard cells. To clearly define our problem, we first provide some definitions as follows. Definition 1 (Cell Path): The timing arcs controlled by different input vectors, which contain charging paths when PMOS is on and discharging paths when NMOS is on.
+
+As shown in Fig. 1(d), we model a cell circuit as a heterogeneous graph Gh = (Vh, Eh, P). In the heterogeneous
+
+Authorized licensed use limited to: Thapar Institute of Engineering & Technology. Downloaded on March 23,2026 at 16:49:40 UTC from IEEE Xplore. Restrictions apply.
+
+158 IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS—II: EXPRESS BRIEFS, VOL. 71, NO. 1, JANUARY 2024
+
+TABLE I ORIGINAL FEATURES OF MULTI-TYPED DEVICES AND CELL OPERATIONAL CONDITIONS USED IN OUR H-GAT
+
+graph, multi-typed nodes Vh = T ∪C ∪R, including red, green and blue nodes represent multi-typed devices, including transistors, capacitors and resistors. Multi-typed edges Eh = ET,C ∪ET,R ∪EC,R represent multi-typed connections between multi-typed devices. Cell paths P represent timing arcs consisting of all nodes and edges visited, which can be regarded as a sub-graph.
+
+Fig. 2. The flow of generating node representations for multi-typed devices based on aggregating information from cell path-based neighbors and cell paths.
+
+III. PROPOSED METHOD
+
+In this brief, we develop a fast and accurate aging-aware cell timing model via graph learning. The overall flow contains: Step 1 performs cell modeling with a heterogeneous graph consisting of multi-typed nodes, multi-typed edges and cell paths; Step 2 embeds cells to aggregate the information of multi-typed devices on different cell paths through multityped connections based on trained H-GAT. Then it generates cell embedding results, which helps improve the accuracy of timing models efficiently; Step 3 estimates aging-aware cell delays based on embedding results.
+
+A. Modeling Cells
+
+the features from their cell-path-based neighbors on different cell paths. It generates cell-path specific aggregated node representations {zP T , zP C , zP R }. In the path-level attention module, the cell-path specific aggregated node representations are fused jointly to generate final node representations {zT, zC, zR}. The flow of generating node representations is shown in Fig. 2. In the pooling module, the final node representations and cell operational condition matrix H are concatenated to generate the cell embeddings E. Projecting module: The multi-typed node matrices {xT, xC, xR} have different spaces. Thus, we design the type-specific transformation matrices to project multi-typed node feature matrices into the same space:
+
+x′ T = PT · xT, x′ C = PC · xC, x′ R = PR · xR, (1)
+
+The heterogeneous graph used to model cell Gh = (Vh, Eh, P) is represented by multi-typed node feature matrices X: {XT, XC, XR}, multi-typed adjacency matrices A: {AT,C, AT,R, AR,C} and a cell operational condition matrix H. The multi-typed node feature matrices XT: {xT, ∀T ∈T}, XC: {xC, ∀C ∈C} and XR: {xR, ∀R ∈R} collect information from multi-typed devices, including transistors, capacitors and resistors. The multi-typed adjacency matrices A indicate multityped connections in the given cell. The cell operational condition matrix H collects different operational conditions at the cell level. For all cells, the aging effects under various operating conditions cause different delay degradations due to trap generation [1]. Thus, we select some circuit parameters based on domain knowledge and parameter-sweeping experiments and use them in the multi-typed node feature matrices. They are shown in Table I.
+
+where xT, xC and xR are original feature matrices. Then, x′ T, x′ C and x′ R are projected feature matrices. PT, PC and PC are the transistor-specific, capacitor-specific and resistor-specific transformation matrix, respectively. Finally, x′ T, x′ C and x′ R have a same space. Neighbor-level attention module: This module takes the transformed multi-typed feature matrices x′ T, x′ C and x′ R as inputs, and produces cell-path specific node representations {zP T , zP C , zP R }. The information of cell path-based neighbors can be aggregated based on neighbor-level attention coefficients. Equation (2) is an example of how to calculate these coefficients. The neighbor attention coefficient αP1 T1,T2 means how important transistor node T2 will be for T1 on cell path P1. And all neighbor-level attention coefficients of node T1 should be normalized with softmax function.
+
+
+
+B. Embedding Cell Using H-GAT
+
+, (2)
+
+
+
+αP1 T1,T2 = exp  LeakyReLU  (aP1)⊤ x′ T1∥x′ T2
+
+Tk∈NP1 T1 exp  LeakyReLU  (aP1)⊤  x′ T1∥x′ Tk
+
+There are four important modules in H-GAT, including the projecting module, neighbor-level attention module, pathlevel attention module and pooling module. In the projecting module, the multi-typed device feature matrices {xT, xC, xR} are translated to {x′ T, x′ C, x′ R} with the same space. In the neighbor-level attention module, the target nodes aggregate
+
+where T1 is the target node and T2 is its cell path-based neighbor belonging to neighborhood set NP1 T1 . ·⊤represents transposition and ∥is the concatenation operation. The neighbor
+
+Authorized licensed use limited to: Thapar Institute of Engineering & Technology. Downloaded on March 23,2026 at 16:49:40 UTC from IEEE Xplore. Restrictions apply.
+
+YE et al.: FAST AND ACCURATE AGING-AWARE CELL TIMING MODEL VIA GRAPH LEARNING 159
+
+TABLE II THE MODEL ACCURACY AND RUNTIME RESULTS OF THE AGING-AWARE CELL DELAY ESTIMATION USING DIFFERENT APPROACHES, INCLUDING RE (%), MAE (PS) AND RUN.(MS). “RUN.” REPRESENTS RUNTIME OF PREDICTING CELL DELAY USING DIFFERENT APPROACHES. “OURS W/O R” AND “OURS W/O C” REPRESENT OUR WORK WITHOUT CONSIDERING RESISTOR ELEMENTS AND CAPACITOR ELEMENTS
+
+TABLE III THE BENCHMARK INFORMATION
+
+attention coefficient is parametrized by a weight vector aP1 with the LeakyReLU nonlinear function. Based on the normalized coefficients for each neighbor in NP1 T1 , we can perform a weighted sum to get the cell-path specific node representation (zP1 T1 ) of T1 on cell path P1:
+
+αP1 T1,Tkx′ Tk. (3)
+
+zP1 T1 = 
+
+Tk∈NP1 T1
+
+TABLE IV THE COMPARISONS OF ACCURACY FOR THE AGING-AWARE PATH DELAY CALCULATION, INCLUDING RE (%) AND MAE (PS)
+
+Given the cell-path set {P1, P2, . . . , Pn} through node T1, we can obtain cell path-specific node representations {zP1 T1 , zP2 T1 , . . . , zPn T1 }. Path-level attention module: Every node in a heterogeneous graph contains multiple cell path-specific node representations on different cell paths. To learn a more comprehensive node representation, they will be fused. The information of different cell path-specific node representations can be aggregated based on path-level attention coefficients. These coefficients can be calculated as follows:
+
+where NT, NC and NR are the numbers of transistors, capacitors and resistors in the cell, respectively.
+
+βP1 T1 = exp  (qP1)⊤tanh  WP1zP1 T1 + bP1 
+
+C. Predicting Aging-Aware Cell Delay
+
+n i=1 exp  (qPi)⊤tanh  WPizPi T1 + bPi , (4)
+
+Based on the cell embedding result E, we use a multilayer perceptron layer (MLP) to predict the aging-aware delay. A trainable parameter θ in the MLP is introduced.
+
+D = MLP(θ | E), (7)
+
+where WPi is the weight matrix, bPi is the bias vector and qPi is the path-level attention vector. Based on the normalized path-level attention coefficients, we can fuse cell-path specific node representations zPi T1 to obtain the final embedding zT1:
+
+n 
+
+zT1 =
+
+where D is the aging-aware delay estimation result. MLP is a multilayer perception.
+
+i=1 βPi t1 zPi T1 . (5)
+
+IV. EXPERIMENTAL RESULTS
+
+Following the progress, we can get the final node representations for each device in the cell, including transistors (ZT: {zT, ∀T ∈T}), capacitors (ZC: {zC, ∀C ∈C}) and resistors (ZR: {zR, ∀R ∈R}). Compared with the original features, the new representations contain more information from cell path-based neighbors and different cell paths. Pooling module: In the pooling module, all the node representations are combined with the operational condition feature H to generate the cell embedding E. As shown in Equation (6), the node representations of transistors, capacitors and resistors in the cell are summed up, averaged and concatenated with the operational condition feature:
+
+
+
+
+
+
+
+E =
+
+H, (6)
+
+ 1 NT
+
+ 1 NC
+
+ 1 NR
+
+For evaluating the model accuracy while estimating agingaware cell delay, the types of cells we consider include 65 different cells from the TSMC 16nm standard cell library. For each type of cell, we achieve one specific aging-aware delay model using our method. The ranges and options of used features are shown in Table I, and we generate 100000 samples for each kind of cell based on the ranges and options. Table II shows all aging-aware cell delay estimation accuracies. And for aging-aware path delay calculation, the timing paths are exacted from ISPD benchmarks [14] and details of designs in benchmarks used in our work are listed in Table III. Table IV illustrates the path delay calculation delay accuracy of agingaware STA based on different models and GNN4REL [15].
+
+T∈T zT
+
+C∈C zC
+
+R∈R zR
+
+Authorized licensed use limited to: Thapar Institute of Engineering & Technology. Downloaded on March 23,2026 at 16:49:40 UTC from IEEE Xplore. Restrictions apply.
+
+160 IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS—II: EXPRESS BRIEFS, VOL. 71, NO. 1, JANUARY 2024
+
+accuracy. Our model achieves better accuracy than others. Compared with the original OpenTimer, and our aging-aware STA only takes around 21 to 89 seconds for a circuit with 32K to 986K cells, which is manageable for large-scale circuit analysis with high efficiency.
+
+V. CONCLUSION
+
+Fig. 3. Average training RE (Tri. RE) and average validation RE (Val. RE) under different ratios of training samples ranging from 20% to 65%.
+
+In this brief, we propose an aging-aware cell timing model via graph learning, which helps optimize circuits after aging. A heterogeneous graph attention network, called H-GAT, is proposed to embed the cell by learning cell information from transistors, capacitors, resistors, timing arcs and cell structures. Experimental results on standard cells show that the agingaware timing model based on H-GAT and the aging-aware STA using our model are accurate and fast. In future work, our method can be applied to processes below 16nm. For accuracy, we will consider the multi-input-switching effect and aging effect jointly; For efficiency, we will use transfer learning to accelerate the retraining process.
+
+REFERENCES
+
+The ground truths of aging-aware cell delays and path delays are generated via HSPICE [10] (described in Section II-A). We use PyTorch to implement our models. For predicting path delay, we achieve aging-aware STA through implementing our model into Opentimer [16]. Our models are trained on a Linux machine with 32 cores and 4 NVIDIA Tesla V100 GPUs. The total memory used is 128GB. The parallel training progress on multiple GPUs consumes about 25 minutes on our servers for each cell on average. We use the root mean squared percentage errors (RE) and maximum absolute errors (MAE) between the estimated delay by our work (D) and the ground truths ( ˆD) to evaluate the accuracy of the aging-aware cell delay and path delay. The smaller RE score means higher accuracy.
+
+A. Generalization Ability
+
+For ensuring the generalization ability, we achieve our model under different ratios of training samples ranging from 20% to 65%. Fig. 3 shows the average training RE and validation RE results of different cells from TSMC 16nm standard cell library. The generalization ability of H-GAT is the most powerful with the smallest validation RE while the ratio setting to 35%, which we used in our work. Thus, it is unnecessary to include training time while predicting cell delay using our model with powerful generalization ability.
+
+B. Performance of Predicting Cell Delay
+
+We compare our work with the LUT-based model [5], the SVM-based model [8], Aadam [9], basic graph attention network-based (GAT) [13] and H-GAT without considering parasitics. For fair comparisons, the training and testing samples are the same. As shown in Table II, our model can achieve the highest estimation accuracy. In addition, the average RE of our work is smaller than 0.03% when the SVM-based model and Aadam reach 2.10% and 0.90%. The primary reason is that they ignore the structural information in cell circuits. Compared to other graph learning methods, considering parasitics in cell circuits improves the accuracy of our delay model. Table II shows the average runtime of cell delay prediction. Compared to SPICE, our delay model based on H-GAT can achieve obvious speedup. The average runtime of our model is 0.482 ms.
+
+C. Performance of Calculating Path Delay
+
+[1] R. Huang et al., “Variability-and reliability-aware design for 16/14nm and beyond technology,” in Proc. IEDM, 2017, p. 12. [2] K. Balaskas, G. Zervakis, H. Amrouch, J. Henkel, and K. Siozios, “Automated design approximation to overcome circuit aging,” IEEE Trans. Circuits Syst. I, Reg. Papers, vol. 68, no. 11, pp. 4710–4721, Nov. 2021. [3] X. Zhang, Z. Zhang, Y. Lin, Z. Ji, R. Wang, and R. Huang, “Efficient aging-aware standard cell library Characterization based on sensitivity analysis,” IEEE Trans. Circuits Syst. II, Exp. Briefs, vol. 70, no. 2, pp. 721–725, Feb. 2023. [4] F. Klemme and H. Amrouch, “Machine learning for on-thefly reliability-aware cell library characterization,” IEEE Trans. Circuits Syst. I, Reg. Papers, vol. 68, no. 6, pp. 2569–2579, Jun. 2021. [5] H. Amrouch, B. Khaleghi, A. Gerstlauer, and J. Henkel, “Reliabilityaware design to suppress aging,” in Proc. DAC, 2016, pp. 1–6. [6] J. B. Velamala, V. Ravi, and Y. Cao, “Failure diagnosis of asymmetric aging under NBTI,” in Proc. ICCAD, 2011, pp. 428–433. [7] S. Kiamehr, F. Firouzi, M. Ebrahimi, and M. B. Tahoori, “Aging-aware standard cell library design,” in Proc. DATE, 2014, pp. 1–4. [8] A. Vijayan, A. Koneru, S. Kiamehr, K. Chakrabarty, and M. B. Tahoori, “Fine-grained aging-induced delay prediction based on the monitoring of run-time stress,” IEEE Trans. Comput.-Aided Design Integr. Circuits Syst., vol. 37, no. 5, pp. 1064–1075, May 2018. [9] S. M. Ebrahimipour, B. Ghavami, H. Mousavi, M. Raji, Z. Fang, and L. Shannon, “Aadam: A fast, accurate, and versatile agingaware cell library delay model using feed-forward neural network,” in Proc. ICCAD, 2020, pp. 1–9. [10] Synopsys. “HSPICE user guide.” Accessed: 2023. [Online]. Available: https://www.synopsys.com/implementation-and-signoff/amssimulation/primesim-hspice.html [11] B. Tudor et al., “MOSRA: An efficient and versatile MOS aging modeling and reliability analysis solution for 45nm and below,” in Proc. ICSICT, 2010, pp. 1645–1647. [12] Synopsys. “PrimeTime user guide.” 2023. [Online]. Available: https:// www.synopsys.com/cgi-bin/imp/pdfdla/pdfr1.cgi?file=primetime-wp. pdf [13] P. Veliˇckovi ́c, G. Cucurull, A. Casanova, A. Romero, P. Lio, and Y. Bengio, “Graph attention networks,” 2017, arXiv:1710.10903. [14] M. M. Ozdal, C. Amin, A. Ayupov, S. M. Burns, G. R. Wilke, and C. Zhuo, “An improved benchmark suite for the ISPD-2013 discrete cell sizing contest,” in Proc. ISPD, 2013, pp. 168–170. [15] L. Alrahis, J. Knechtel, F. Klemme, H. Amrouch, and O. Sinanoglu, “GNN4REL: Graph neural networks for predicting circuit reliability degradation,” IEEE Trans. Comput.-Aided Design Integr. Circuits Syst., vol. 41, no. 11, pp. 3826–3837, Nov. 2022. [16] T.-W. Huang and M. D. Wong, “OpenTimer: A high-performance timing analysis tool,” in Proc. ICCAD, 2015, pp. 895–902.
+
+For evaluating the performance of different aging-aware timing models on path level, Table IV compares the path delay
+
+Authorized licensed use limited to: Thapar Institute of Engineering & Technology. Downloaded on March 23,2026 at 16:49:40 UTC from IEEE Xplore. Restrictions apply.

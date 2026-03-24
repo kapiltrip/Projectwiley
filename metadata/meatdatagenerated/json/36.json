@@ -1,0 +1,59 @@
+{
+  "source_filename": "36.pdf",
+  "source_path": "papers50/36.pdf",
+  "title": "An Analytical Gate Delay Model in Near/Subthreshold Domain Considering Process Variation",
+  "authors": null,
+  "authors_guess": null,
+  "journal": "IEEE Access",
+  "year": "2019",
+  "doi": "10.1109/ACCESS.2019.2955091",
+  "page_count": 10,
+  "word_count": 6523,
+  "abstract": null,
+  "keywords": [],
+  "section_headings": [
+    "171516 VOLUME 7, 2019",
+    "171518 VOLUME 7, 2019",
+    "171520 VOLUME 7, 2019",
+    "171522 VOLUME 7, 2019",
+    "171524 VOLUME 7, 2019"
+  ],
+  "figure_captions": [
+    "FIGURE 1. Relationship between process parameters and the skewness of drain current at different voltage nodes.",
+    "FIGURE 2. Schematic of NAND2 gate.",
+    "FIGURE 3. Relationship between VX and: (a) VthL; (b) VthU .",
+    "FIGURE 4. The flow diagram of statistical gate delay modeling.",
+    "FIGURE 5. The probability density of gates with FO4 load in supply voltage of 0.45V: (a) Inverter; (b) NAND2; (c) NOR2.",
+    "FIGURE 6. Error in terms of the delay variability and the maximum/minimum delay in near/subthreshold regime under different temperatures for inverter: (a) 0.35V; (b) 0.45V; (c) 0.55V.",
+    "FIGURE 7. Error comparison in terms of the delay variability and the maximum/minimum delay in near/subthreshold regime for inverter: (a) 0.35V; (b) 0.45V; (c) 0.55V.",
+    "Fig. 8 and Fig. 9 compare the accuracy of delay variation models when applied for stacked gates including NAND2 and NOR2. The accuracy of the delay variability and the extreme value of model [12] degrades distinctly to be respectively over 9.5 × and 6.4 × worse than our model at subthreshold voltage for stacked gates although it is comparative with this work when modeling the inverter delay variation. The reason is that the proposed linear approximation method for stacking effect matches the multivariate threshold variation much better than the fitting approach used in [12] for stacked gates under nominal condition. The loss of accuracy is exaggerated for near-threshold stacked gates where up to 40.8 × and 6.5 × error surge can be found for delay variability and the maximum/minimum delay respectively. When considering the accuracy of the model from [10] in subthreshold regime, the error of the delay variability and maximum/minimum delay are at least 1.7 × and 2.1 × worse than that of ours, indicating the advantage of our model for stacked gates over the identically threshold variation assumption used in [10]. In addition, since the current model utilized in this work [16] for low supply voltage is applicable for FinFET devices with considerable precision [19], the proposed statistical delay model can also be applied for FinFET with threshold variation besides bulk CMOS technology.",
+    "FIGURE 8. Error comparison in terms of the delay variability and the maximum/minimum delay in near/subthreshold regime for NAND2: (a) 0.35V; (b) 0.45V; (c) 0.55V.",
+    "FIGURE 9. Error comparison in terms of the delay variability and the maximum/minimum delay in near/subthreshold regime for NOR2: (a) 0.35V; (b) 0.45V; (c) 0.55V."
+  ],
+  "table_captions": [
+    "TABLE 1. Variabilities of the statistical drain current and gate delay for INV and NAND gate.",
+    "TABLE 2. Related fitting errors of gates with stack topology for different supply voltages.",
+    "TABLE 3. Related fitting errors of gates with stack topology for different temperatures."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.5",
+    "title": "An Analytical Gate Delay Model in Near/Subthreshold Domain Considering Process Variation",
+    "author": "",
+    "subject": "IEEE Access;2019;7; ;10.1109/ACCESS.2019.2955091",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "pdfTeX-1.40.13; modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20191203115135+05'30'",
+    "modDate": "D:20191205062337-05'00'",
+    "trapped": "False",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2019-12-03",
+    "modified_date": "2019-12-05"
+  },
+  "text_path": "metadata/meatdatagenerated/text/36.txt",
+  "json_path": "metadata/meatdatagenerated/json/36.json",
+  "html_path": "html/36.html",
+  "citation": "(2019). An Analytical Gate Delay Model in Near/Subthreshold Domain Considering Process Variation. IEEE Access. https://doi.org/10.1109/ACCESS.2019.2955091"
+}

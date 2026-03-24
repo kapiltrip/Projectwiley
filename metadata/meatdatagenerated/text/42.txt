@@ -1,0 +1,611 @@
+INTEGRATION, the VLSI journal 46 (2013) 345–358
+
+Contents lists available at SciVerse ScienceDirect
+
+INTEGRATION, the VLSI journal
+
+journal homepage: www.elsevier.com/locate/vlsi
+
+A gate-delay model focusing on current fluctuation over wide range of process–voltage–temperature variations
+
+Ken-ichi Shinkai, Masanori Hashimoto n, Takao Onoye
+
+Department of Information Systems Engineering, Graduate School of Information Science and Technology, Osaka University, 1-5 Yamadaoka, Suita, Osaka, Japan
+
+a r t i c l e i n f o
+
+a b s t r a c t
+
+Article history: Received 20 February 2011 Received in revised form 14 September 2012 Accepted 19 January 2013 Available online 5 February 2013
+
+This paper proposes a gate-delay model suitable for timing analysis that takes into consideration wideranging process–voltage–temperature (PVT) variations. The proposed model translates an outputcurrent fluctuation due to PVT variations into modifications of the output load and input waveform. After translation, any conventional model can compute delay taking into account PVT variations by using the modified output load and reshaped input waveform. Experimental results with 90- and 45-nm technologies demonstrate that the average error of the fall and rise delay estimation in single- and multi-stage gates was approximately 5% on average over a wide range of input slews, output loads, and PVT variations. The proposed model can be used in Monte Carlo STA (static timing analysis) in addition to corner-based timing analysis. It can be also used in statistical STA to calculate the sensitivities of delays to variation parameters on-the-fly even when the nominal operating condition changes as well. & 2013 Elsevier B.V. All rights reserved.
+
+Keywords: Gate-delay model Process–voltage–temperature (PVT) variations Static timing analysis Statistical timing analysis
+
+1. Introduction
+
+Process variations have been predicted to become severer [1], while environmental variations such as voltage noise and temperature fluctuations are also becoming aggravated [2–5], as technology continues to advance. These sources are often referred to as PVT (Process–Voltage–Temperature) variations. Due to the effect of PVT variations, fabricated circuits perform differently from targeted one in the design phase, which prompted designers to develop a timinganalysis method that could be used to estimate variations in delay before fabrication. Conventional STA (static timing analysis) assumes worst case scenarios of PVT variations, and its estimates are often excessively pessimistic. Presently, SSTA (statistical STA) has been intensively studied [6–10]. It treats delay stochastically and is expected to provide realistic estimates. In the meantime, recent chips have been designed with a lower supply voltage, Vdd, while power dissipation has been rather increasing [11]. This has forced designers to endure delay variations due to Vdd fluctuations [12,13]. As the demand for low-power devices has been increasing, post-fabrication techniques of reducing leakage and switching-power dissipation have often been used. For example, designs using DVS (dynamic voltage scaling) and variable Vth (threshold voltage) by body biasing are being incorporated into the SoC (system-on-a-chip) design flow.
+
+Intentional variations in Vdd and Vth associated with operation modes are generally larger in these designs than typical unintentional variations. Verification of timing in numerous operation modes and corners is urgently demanded, although the design time is tightly constrained. STA and SSTA are often used for such verifications, but it requires data of delay-characteristics in numerous corners, referred to as library data. Conventional gate-delay models that only cover a single mode/corner are totally insufficient for creating the whole library that covers a number of modes and corners. Statistical gate-delay and waveform-based models [14–17] have been proposed, and they characterize stochastic times when the output voltage of a gate reaches at certain levels. Thus, these models aim to give a gate-delay distribution around a given center corner for given distributions of process variations, and do not output a determinate delay value for a set of concrete process variations. Besides, Refs. [18,19] give a deterministic delay value for a set of concrete process variations. In particular, a model proposed in [19] copes with voltage variations as well as process variations, though most of the above models focus on process variations only. Such models that give a deterministic delay value are useful for implementing Monte Carlo STA (MC-STA) [20,21], since the gate delay and slew values must be computed for each set of concrete process variations. However, they are based on CSMs (current source models), and hence they are less compatible with frameworks of timing analysis that use conventional gate-delay models, such as sensitivity-based model and table look-up model. As the discussion above, accurate and reasonable modeling of gate-delay variations is required to consider PVT variations in
+
+n Corresponding author. Tel.: þ81 6 6879 4526; fax: þ81 6 6879 4529. E-mail address: hasimoto@ist.osaka-u.ac.jp (M. Hashimoto).
+
+0167-9260/$ - see front matter & 2013 Elsevier B.V. All rights reserved. http://dx.doi.org/10.1016/j.vlsi.2013.01.003
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 346
+
+Fig. 1. Table look-up model.
+
+where parameter pi equals a nominal value, i.e., pi_0, and Dpi is the difference of pi from pi_0. The sensitivity-based model is widely used in SSTA [6,7,23] and parametric STA [24,25], because it has advantageous statistical characteristics [7] and can consistently cope with various parameters. However, sensitivities depend on the output load and input-signal waveform, and hence a number of additional transient analyses are necessary for characterization, which is computationally very expensive. Another problem is that the sensitivity-based model is accurate as long as parameter variations are small, but might not be tolerant to large variations due to the linear approximation. Moreover, the sensitivity computed under the nominal condition by using Eq. (1) might differ greatly from sensitivity under actual operating conditions, such as where the average Vdd declines.
+
+3. Proposed gate-delay model
+
+STA, MC-STA and/or SSTA. This paper presents a gate-delay model that copes with wide-ranging PVT variations and has compatibility with conventional models. The key point is that the proposed model directly focuses on an output-current fluctuation and not on a delay variation. Once a set of determinate PVT variation values are given, the proposed model translates the current fluctuation caused by PVT variations into the output load on the basis of the fact that gate delay is the time required to charge/discharge output load. In addition, the input waveform is shifted to compensate for the timing difference that is irrelevant to the current fluctuation. The proposed model can be used as a wrapper to any conventional models with a small amount of additional characterization cost. The proposed model preliminarily reported in Ref. [22] works well in most conditions. However, we found that the accuracy degraded in some cases where the input transition was very slow. We improved the accuracy in such cases by making two improvements: (1) More accurately computing the input voltage at timing when the output voltage goes across 50% of Vdd. (2) Calculating the delay offset not dependent on current variations more properly. In this work, we verified the proposed model with 45-nm process technology in addition to 90-nm one. Characterization costs of the proposed and conventional models were evaluated. Moreover, we explain how we used the proposed model to calculate the sensitivity for SSTA, and verify that on-demand sensitivity updating is helpful for enhancing accuracy. The rest of the paper is organized as follows. Conventional gate-delay models are outlined and their inefficiency in variationaware analysis is described in Section 2. Section 3 first overviews the proposed model and then explains details on its calculation steps. To corroborate accuracy, Section 4 presents the experimental results in 90- and 45-nm process technologies. Section 5 discusses the demonstration in applying the proposed model to on-demand sensitivity recalculations in SSTA. Finally, the discussion is concluded in Section 6.
+
+2. Problems with conventional gate-delay models
+
+To construct variation-aware timing analysis, four features are usually required for a gate-delay model:
+
+A feature of the proposed model is that it focuses on currentvariation modeling instead of direct-delay modeling. The delay in a CMOS (complementary metal oxide semiconductor) logic gate is the time required to charge/discharge its output load, and hence an output-current variation caused by PVT variations changes the gate delay. In this section, the relations between gate delay, output current, and variation sources are reviewed to explain why this work focuses on the output-current variation. After that, this section outlines the proposed model and describes details on the computational procedures.
+
+3.1. Relations between gate delay, output current, and parameter variations
+
+1. Small migration cost from conventional model. 2. Small characterization cost. 3. Capability of handling the increase in the number of variation parameters. 4. Capability of being utilized in SSTA.
+
+The saturation current of a MOSFET (MOS field-effect transistor), Idsat, is usually expressed in the a-power-law MOSFET model [26]
+
+Idsat 1⁄4 kmEoxW toxL ðVgsVthÞa, ð2Þ
+
+Here, we explain conventional gate-delay models and discuss their advantages and disadvantages with respect to the above requirements. For handling PVT variations, a naive approach is to increase the number of parameters in the table look-up model. Fig. 1 shows an example of 2D (two-dimensional) table look-up model with regard to input slew and output load of a gate. If input slew is 10 ps and output load is 4 fF, for example, 28 ps of gate-delay is calculated. However, the table look-up model is obviously difficult to employ, because its characterization cost explodes exponentially as the number of variation parameters increases. The sensitivity-based model using Taylor expansion shown in Eq. (1) is a standard approach to variational analysis
+
+d 1⁄4 d0 þ X
+
+@d @pi
+
+ pi 1⁄4 pi_0 Dpi, ð1Þ
+
+8pi
+
+where Vgs means a gate-source voltage, m denotes the effective mobility, Eox is the dielectric constant of the gate oxide, and tox is the gate-oxide thickness. Here, W is the channel width and L is the channel length. a is a coefficient to express the carrier-velocity saturation effect, and this reaches close to one in advanced technologies. k is also a coefficient. Here is an example of saturation current variations in 90-nm CMOS technology in Fig. 2. It is obvious that the output current has an almost linear relation to variation sources and is tractable. However, gate delay is basically inversely proportional to current [27]. Intuitively, gate delay is also inversely proportional to ðVddVthÞ considering Eq. (2). This means that the sensitivitybased delay model is not suitable for large variations of Vdd and Vth, whereas it really works well for small variations. To develop a gate-delay model that can be applied to a wide range of variations
+
+where d is the delay, d0 is the nominal value of d, and pi is the i-th variation parameter. Here, ð@d=@piÞ9pi 1⁄4 pi_0 is the delay sensitivity
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 347
+
+450
+
+400
+
+350
+
+300
+
+Idsat [μA]
+
+Idsat [μA]
+
+250
+
+0 100 200 300 400 500 600
+
+0.5 0.7 0.9 1.1 1.3 1.5
+
+L [nm] 80 90 100 110 120 200
+
+Vdd [V]
+
+300
+
+290
+
+280
+
+270
+
+Idsat [μA]
+
+Idsat [μA]
+
+260
+
+250
+
+100 150 200 250 300 350 400 450
+
+-0.3 -0.2 -0.1 0 0.1 0.2 0.3
+
+-40 0 40 80 120 T [ oC]
+
+ΔVth0 [V]
+
+Fig. 2. Idsat at Vgs 1⁄4 Vds 1⁄4 Vdd vs. PVT variations in 90-nm process technology (L: channel length, Vdd: supply voltage, DVth0: variation in Vth0 from its nominal value, and T: temperature).
+
+Output load Input slew
+
+PVT variations Inputs
+
+Proposed model
+
+Translating part
+
+Load translation based on current variation
+
+Delay offset compensation
+
+Reshaped input waveform
+
+Translated output load
+
+Fig. 4. Operation of translating part.
+
+Conventional model
+
+Output slew
+
+Gate delay
+
+Outputs
+
+Fig. 3. Overview of flow for proposed model.
+
+of Vdd and Vth, which is eagerly required in DVS and variable Vth design, focusing on and modeling a current variation represents a reasonable approach.
+
+3.2. Overview of proposed gate-delay model
+
+Fig. 5. Conceptual diagram that shows how PVT variations affect the current waveform. A solid line denotes a waveform without PVT variations. Dashed and dotted lines are waveforms suffering from PVT variations.
+
+correlations and gives the samples to the gate delay model. This property is exploited in MC-STA. The proposed model gives determinate delay values for each sample. Thus, the proposed model is independent with how to handle correlations between process variables for path or circuit delay analyses. .
+
+Fig. 4 illustrates the operation of the translating part in Fig. 3. All variations are eliminated by reshaping the input waveform and replacing output load as shown in the right side of Fig. 4. The modification of the input waveform corresponds to scaling it in terms of voltage and shifting it in time axis.
+
+Fig. 3 overviews the flow for the proposed model, which translates three inputs (input slew, output load, and a set of PVT variations) into two outputs (output slew and gate delay). In other words, PVT variation information is embedded in the translated load and reshaped input waveform. Using them, any conventional model can compute delay taking PVT variations into consideration. Note that PVT variations in this work are not random variables but determinate parameter-differences from their nominal values. Input slew and output load are also determinate values. The proposed gate delay model provides a gate delay for a set of determinate device parameters given to each transistor, which means that the proposed model is independent from the device-parameters correlation. In fact, if there is a correlation, a model user generates samples (sets of deviceparameters) according to the device-parameter distributions with
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 348
+
+Fig. 6. Detail of translation on output waveform. Solid lines denote actual waveform with PVT variations. Dashed lines are waveforms in case that all PVT variations are removed. By applying load translation and delay compensation, the dashed line approaches to the actual waveform. Note that the actual waveforms are normalized to nominal Vdd.
+
+Fig. 7. Entire proposed procedure to calculate delay.
+
+Here, it is important that this work focuses on the fluctuation in output current Id, and not directly on delay variations. As shown in Fig. 5, PVT variations scale the current waveform up or down, and shift the starting time for transistor switching. This fact prompts the proposed model to translate output load on the basis of current variations, and to compensate for such timeshifting effects. Fig. 6 shows how the output waveform is altered at the two steps of the translating part in Fig. 3. The solid lines represent the actual waveform with PVT variations, and the dashed lines correspond to the waveform in the case that all the PVT variations are removed. In the left of Fig. 6, all the variations are simply removed, and then two waveforms are different. After the first step of load translation, the output slew is adjusted, but the timing is still different. The second step of delay compensation shifts the waveform, and finally the delay is well estimated. In the proposed model, the input waveform is not scaled with regard to time axis.
+
+slew and output load, and thus its characterization cost is quite small. The advantages of the proposed model associated with the demands discussed in Section 2 are four-fold: (1) The gate delay can be computed in any conventional models by using the translated output load and reshaped input waveform, and hence all timing analyzers can carry out variation-aware timing analysis by pre-processing the proposed model. (2) The additional characterization cost is quite limited. No time-consuming transient analysis is required for additional characterization. The modeling of current variations only needs a relatively small number of DC analyses. (3) Variation parameters are treated similarly as a factor that varies the output current. Therefore, when the number of parameters increases, the proposed model can handle them consistently. (4) The proposed model provides accurate results over a wide range of parameter variations, because current variations are easily and precisely modeled. Therefore, it is suitable not only for variation-aware STA but also for DVS and Vth control design. The large range of variations to which it can be applied may eliminate delay characterizations in numerous corners. By using the proposed model, libraries at PVT corners can be generated. In addition, when an actual operating condition varies from the nominal condition, the proposed model can update delay sensitivities. The following sections describe the details on each step in Fig. 7. It begins with Step 4 and goes through Step 3 to Step 1. After that, this section explains why Steps 0–5 need to be iterated, and ends with Step 6. This order is irregular but easier to follow, because the description of a step explains why a parameter, such as Iavg, calculated in the previous step is required. To simplify explanations in these sections, the following (1)–(4) are assumed. (1) The fall delay of a single-stage inverter will be estimated. (2) The Vdd variations on the driver and receiver sides are the same. (3) Ground voltages Vss have a constant value of 0 V. Note that the proposed model can also be applied to other gates and the rise delay. The mismatches of Vdd and Vss at each pin between the driver and receiver sides can be considered in the proposed model, and the experiments in Section 4 take these into account. (4) An input waveform is monotonic. The shape of input waveform is dependent on the gate-delay model used for nominal delay computation. When the given input waveform is totally different from that assumed in the gate-delay model, for example a non-monotonic waveform due to coupling noise, waveform approximation to a monotonic waveform by a method, such as in Refs. [28] and [29] might be necessary, since the proposed model could not directly deal with noises. Another approach could be an extension to handle superposition-based model for capacitive coupling [30]. With this model, the noise waveform at the victim is derived for each aggressor. These noise waveforms are superposed to the victim transition waveform without aggressor transitions, and the victim transition waveform with aggressor transition is obtained. In this case, the victim transition waveform without aggressor transitions can be computed by the proposed model. The remaining issue is the noise waveform at the victim. A possible computation might be: (1) the equivalent circuit of the aggressor load, which includes coupling capacitance, is scaled by the similar idea in Eq. (5) and then (2) conventional noise computation, such as one with the Thevenin resistance expression, is performed assuming that PVT variation is removed by the load translation. The extension for coping with coupling noise is one of our future works.
+
+3.3. Step 4: translation of current variations into output load
+
+This section explains the most important part of the proposed model, i.e., how to translate current fluctuations into output load.
+
+Fig. 7 illustrates a complete flowchart of the entire procedure. Load translation is carried out in Steps 1–4 and delay compensation in Step 6. The information required for this procedure, such as Iavg, will be described in the following sections. The proposed model needs two prior preparations. The first involves constructing a conventional delay model that takes the input transition time and output load as indices. This is used for calculating the nominal delay in Steps 0 and 5. This work assumes that a conventional 2D look-up table would be used to calculate nominal delay, even though other models can similarly be incorporated. The second involves characterization of the output current used in Step 3. This characterization only requires a limited number of DC (direct current) analyses independent of the input
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 349
+
+R
+
+C1 C2
+
+Fig. 8. CRC p model.
+
+Generally speaking, the delay varies due to a current fluctuation caused by PVT variations, while output-load variations also change the delay. When the output current becomes large due to PVT variations, the delay decreases. On the other hand, when the output load shrinks, the delay also decreases. Hence, these two cases are highly related in terms of delay. This means current variations caused by PVT variations can be translated into output load, while gate delays, strictly speaking the output slew, before and after translation are equal. This load translation is outlined in Fig. 4. Here, Id denotes the output current which mostly characterizes the performance of a gate, as will be discussed in the next section. Current variation DId caused by PVT variations is translated into a new output load, Cnew. After translation, the gate is supposed to be under a nominal condition, and therefore its output slew can be calculated with any conventional delay model. The delay is computed considering the delay offset in Step 6. First, the case where output load is capacitive is explained. Before translation, the amount of the whole charge, Q, that must be discharged is equal to CVdd, where C is the total capacitance to discharge, i.e., the sum of the load capacitance, CLoad, and parasitic capacitances1 inside the cell. Considering that Q varies with Vdd fluctuations, Cnew is expressed by Eq. (4) from the relation of Eq. (3)
+
+ðId þDIdÞ : Id 1⁄4 Q : Qnew,
+
+1⁄4 CðVdd þDVddÞ : CnewVdd, ð3Þ
+
+Vdd þDVdd Vdd C, ð4Þ
+
+‘ Cnew 1⁄4 Id Id þDId
+
+Fig. 9. Typical current waveform.
+
+where D denotes a parameter variation, and superscriptnew
+
+Vdd þDVdd Vdd C2, ð7Þ
+
+Cnew 2 1⁄4 Id Id þDId
+
+Rnew 1⁄4 Id þDId Id
+
+Vdd Vdd þDVdd R: ð8Þ
+
+Note that Eq. (4) is one of the special cases of Eq. (5) with R1⁄40.
+
+3.4. Step 3: estimating current variations
+
+Next, the estimate of Id used for load translation in Eqs. (4) and (5) is explained.
+
+corresponds to a translated value under a nominal condition. As a simple example, it is supposed that parameter variations double the current ðDId 1⁄4 IdÞ and the supply voltage is constant ðDVdd 1⁄4 0Þ. Eq. (4) means this translation reduces the output load to half instead of doubling the current so that the estimated output slew approaches to the actual one. The delay and output slew can be calculated with any conventional delay models using Cnew, where the delay estimation will be further improved in Step 6. The idea behind this load translation can be consistently applied to the generic output load. For example, when the output load is resistive interconnects, the capacitance in Eq. (4) should be replaced with admittance at the driving point. This is expressed by Eq. (5)
+
+Vdd þDVdd Vdd Y, ð5Þ
+
+Ynew 1⁄4 Id Id þDId
+
+where Y is the driving-point admittance of the actual circuit, and Ynew is the translated admittance. On-chip interconnects are often compacted to CRC p model in Fig. 8 for gate-delay computation [31]. Cnew 1 , Cnew 2 and Rnew can simply be expressed as follows2:
+
+Vdd þDVdd Vdd C1, ð6Þ
+
+Cnew 1 1⁄4 Id Id þDId
+
+3.4.1. Current used for load translation The delay is generally determined by the shape of the current in the interval between the time when an input voltage, Vin, equals Vth and the time when the output voltage, Vout, goes across 50% of Vdd. Therefore, the average current in this interval determines the delay and is appropriate for Id in Eqs. (4) and (5). To explain how to compute it, let us take an example of a typical current waveform in Fig. 9. Strictly speaking, the average current mentioned above should be numerically calculated by the integral of the current shape, but its computation is difficult because it requires a huge amount of variational current characterizations and pseudo-transient analyses. Instead, it can be estimated by a first-order approximation. The integral of the current shape is approximated as a trapezoid, and then the integrated area is equal to the area of a rectangle whose height is Iavg in Eq. (9)
+
+1 This work considers parasitic capacitances, such as the overlap and fringing capacitances between gate and drain/source terminals, and diffusion capacitances of drain/source terminals. Each drain/source terminal associated with the output transition is taken into account. These capacitances are incorporated into output capacitance considering the Miller effect. 2 We considered that the admittance of a p circuit is ðjoC2 þ1=ðR1 þð1=joC1ÞÞÞ. Thus
+
+!
+
+Iavg 1⁄4 1 2 ðIVin 1⁄4 Vth þIVout 1⁄4 0:5VddÞ, ð9Þ
+
+:
+
+Ynew 1⁄4 joCnew 2 þ 1 Rnew 1 þ 1 joCnew 1
+
+Substituting Eq. (5) into this, we obtain Eqs. (6)–(8).
+
+where IVin 1⁄4 Vth represents the output current when Vin equals Vth, and IVout 1⁄4 0:5Vdd is that when Vout is 50% of Vdd.
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 350
+
+1
+
+0.9
+
+It is experimentally verified that this approximation is reasonable in most combinations of CLoad, Slewin, and parameter variations. Therefore Iavg is used as Id. Instead, IVout 1⁄4 0:5Vdd can be used as Id, because in most situations IVin 1⁄4 Vth is negligibly small. IVin 1⁄4 Vth should be included to cover the situation that Vdd is close to Vth.
+
+0.8
+
+0.7
+
+Vin50nom [V]
+
+INV
+
+0.6
+
+NAND2
+
+NOR2
+
+0.5
+
+0 0.5 1 1.5 2 2.5 3
+
+3.4.2. Estimation of current Designers need to prepare the flexible and robust function of Id 1⁄4 fðDpÞ against the increase in variation parameters. In this work, the response-surface method [32] is employed as a candidate to estimate Iavg, because the order of polynomials could be chosen to satisfy the required accuracy. However, other methods can also be used as long as their accuracy and cost are reasonable. The polynomials for IVout 1⁄4 0:5Vdd is expressed in Eq. (10)
+
+Slew ratio
+
+IVout 1⁄4 0:5Vdd 1⁄4 fðDp,Vin50Þ: ð10Þ
+
+Fig. 11. Relation between Slew ratio and Vnom in50 with INV (INVerter), NAND2 (twoinput NAND), and NOR2 (two-input NOR) when a rise-input waveform is injected. This evaluation was carried out with 9800 combinations of CLoad and Slewin.
+
+Constructing Eq. (10) does not need any transient analyses for the combinations of various input waveforms and output loads, and only needs a limited number of DC analyses. The parameter left unknown is Vin50, i.e., Vin at Vout1⁄40.5Vdd. The next section will explain how Vin50 is computed.
+
+3.5. Step 2: estimate of Vin50
+
+It is generally difficult to accurately determine Vin50, because Vin50 depends on the input slew, output load, and PVT variations. For easy modeling, this section demonstrates how to approximate Vin50 using Vnom in50, where Vnom in50 is Vin50 after the output load CLoad has been replaced with Cnew. After the output load replacement, the supply voltage differs as seen in Fig. 4, and hence there must be an offset, DVin50, as plotted in Fig. 10
+
+Vin50 1⁄4 Vnom in50 þDVin50: ð11Þ
+
+Fig. 12. Currents in inverter when output reaches 0.5Vdd.
+
+when Vnom in50 is large, the input transition finishes earlier than the output transition, and vice versa. Considering the above and Eq. (11), a generalized form of Vin50 is constructed using Vnom in50 as a weighting factor instead of the Slew ratio
+
+Vin50  Vnom in50 þðrDVin50,f þð1rÞDVin50,sÞ, ð12Þ
+
+r 1⁄4 Vnom in50Vnom in50,s Vnom in50,f Vnom in50,s , ð13Þ
+
+where Vnom in50,s (Vnom in50,f ) means Vnom in50 when the input transition is much slower (faster) than the output transition. r is the empirical coefficient that is an alternative to the Slew ratio.
+
+Vnom in50 should be calculated with Cnew and Slewin, although Cnew is still unknown. To solve this problem, an iterative approach is taken, which will be explained in Section 3.7. The following discusses how DVin50 is estimated. This section derives a single expression of DVin50 that covers a wide range of input and output slews. It was experimentally observed that DVin50 strongly depends on the Slew ratio, which is defined as Slewout=Slewin. Therefore, DVin50 is expected to be between two extreme cases of DVin50 in terms of the Slew ratio, and is computed by averaging them with a weight related to the Slew ratio. One of them is DVin50,s where input translation is much slower than output translation, and another is DVin50,f in the opposite case. However, the estimate of Vin50 cannot directly use the Slew ratio as a weighting factor, because Slewout is unknown in Step 2. It was also experimentally found that Vnom in50 has a strong correlation with the Slew ratio, as shown in Fig. 11. This is because
+
+3.5.1. Estimate of Vin50,s (Vin50 when Slewin bSlewout) Where the output load is very small and the input slew is much larger than the output slew, inverter operation is determined by DC rather than AC (alternating current) characteristics. When Vout reaches 0.5Vdd as seen in Fig. 12, the current ILoad from CLoad would be negligibly small. It is assumed that both of NMOS and PMOS turn on and 9Idsat_n9 1⁄4 9Idsat_p9. Considering the channellength modulation, these saturation currents are expressed in Eqs. (14) and (15) on the basis of a-power-law MOSFET model [33]
+
+Idsat_n 1⁄4 bn 2 ðVinVth_nÞanð1þlnVoutÞ, ð14Þ
+
+Idsat_p 1⁄4  bp 2 ðVddVin9Vth_p9Þapð1þlpðVddVoutÞÞ, ð15Þ Fig. 10. Relation between Vin50 and Vnom in50.
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 351
+
+where b is a transconductance coefficient and l denotes a channel-length modulation parameter. For simplicity, it is assumed that the current characteristics of NMOS and PMOS are the same, i.e., bn 1⁄4 bp, an 1⁄4 ap 1⁄4 a and ln 1⁄4 lp 1⁄4 l. Here, Vin50,s and DVin50,s can be expressed by Eqs. (16) and (17)
+
+where Delaypro is the delay estimated with Cnew without compensation. In principle, Dt is simply regarded as the difference between two times. First one is t50,b that means the time when Vout reaches 0.5Vdd before load translation, and the other is t50,a that is the time when Vout does so after load translation. Therefore Dt is defined as Eq. (21)
+
+Dt 1⁄4 t50,bt50,a: ð21Þ
+
+Vin50,s 1⁄4 Vdd þVth_n9Vth_p9 2 : ð16Þ
+
+DVin50,s 1⁄4 DVdd þDVth_n9DVth_p9 2 : ð17Þ
+
+3.5.2. Estimate of Vin50,f (Vin50 when Slewin 5Slewout) Where the input slew is much smaller than the output slew, Vin has reached Vdd by the time when Vout reaches 0.5Vdd. Thus, Vin50,f and DVin50,f only depend on Vdd variations and are expressed in Eqs. (18) and (19)
+
+When Slewin 4Slewout, t50,b can be computed using Vin50 in Step 2, and then Dt can be obtained, which will be explained in the following section. However, when Slewin oSlewout, t50,b cannot be computed using Vin50, because Vin50 may be Vdd. Thus, the calculation of Dt should be changed according to the Slew ratio. The proposed model takes an approach similar to that employed in Section 3.5, i.e., it estimates Dt in two cases and empirically generalizes Dt using Vnom in50 similarly to DVin50 in Eq. (12). This is expressed as Eq. (22)
+
+Vin50,f 1⁄4 Vdd þDVdd, ð18Þ
+
+Dt  rDtf þð1rÞDts: ð22Þ
+
+DVin50,f 1⁄4 DVdd: ð19Þ
+
+3.6. Step 1: obtaining Vnom in50
+
+Here, Dts and Dtf are Dt where the input transition is much slower and faster than the output transition, respectively. r is the same as that in Eq. (13). Fortunately, the information required to compute Dt is given by STA or calculated in the previous steps with the proposed model, which will be explained in what follows.
+
+3.8.1. Estimation of Dts (Dt when Slewin 4Slewout)
+
+Fig. 14 shows a case where Slewin is larger than Slewout. As mentioned above, Dts can be expressed by
+
+Vnom in50 can easily be obtained without any transient simulations, because the information required to compute it is available before Step 1. This information, i.e., Slewin, Delay, and Slewout, can be calculated using the input and output waveforms estimated in Step 0.
+
+Dts 1⁄4 t50,bt50,a: ð23Þ
+
+3.7. Steps 0–5: iteration
+
+Iterative calculations are necessary in the proposed procedure for load translation. To accurately estimate Cnew, precise Vnom in50 is required. However, to precisely estimate Vnom in50, accurate Cnew is essential. This is a kind of chicken-and-egg problem. Hence, Vnom in50 is computed with CLoad in the first iteration and is recalculated with Cnew in subsequent iterations. Two or three iterations were empirically sufficient to accurately estimate Cnew.
+
+3.8. Step 6: delay offset compensation
+
+Fig. 13. PVT variations shift timing when MOS turns on/off, and beginning of output transition varies. Note: In Figs. 13–15, the solid and dashed lines denote respective waveforms before and after load translation. These figures show a case that the supply voltage has dropped to Vdd þDVdd.
+
+The delay and output slew are obtained after exiting iteration. Unfortunately, the delay obtained differs from what are desired to know. This section first explains why such differences arise, and next presents ways of compensating for them. The proposed method aims to be applied to a wide range of Vdd and Vth variations, while the time when the output transition starts could be considerably varied in such a situation. Here is a case that the supply voltage has dropped to Vdd þDVdd, as shown in Fig. 13. It is clear that ‘‘input at nominal’’ (input after the proposed translation) goes across a certain voltage, Vx (e.g., Vth), earlier than ‘‘input with DVdd’’ (input before the translation), because the proposed model stretches an input waveform in terms of the voltage, keeping the input transition times unchanged. In contrast, when the supply voltage is larger than its nominal value, an input waveform is shrunk and ‘‘input at nominal’’ comes later than ‘‘input with DVdd’’. Such a difference in time before and after the proposed load translation causes the crossing timing offset, Dt, which is irrelevant to current variations. Hence, Dt should be separately computed. A similar problem also occurs with Vth variations. From the above, the correct delay, Delay, should be compensated. As shown in Fig. 4, Delay is expressed by Eq. (20)
+
+Fig. 14. Dts calculation.
+
+Delay 1⁄4 Delaypro þDt, ð20Þ
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 352
+
+Table 1 Experimental conditions for PVT variations.
+
+Variation parameter 90-nm technology 45-nm technology
+
+m 3s m 3s
+
+Channel length L 100 nm 20 nm 50 nm 10 nm Vth0 offset DVth0 0 V 0.3 V 0 V 0.3 V Supply voltage Vdd 1.0 V 0.25 V 1.1 V 0.25 V Ground voltage Vss 0 V 0.25 V 0 V 0.25 V Temperature T 37.5 1C 82.5 1C 37.5 1C 82.5 1C
+
+Table 2 Experimental conditions for CLoad and Slewin.
+
+Parameter Min Max
+
+Fig. 15. Dtf calculation.
+
+1 3 3
+
+CLoad fan-out of 1 fan-out of 50 Slewin 20 ps 500 ps Slewout Slewin
+
+Note: here Slewout is under the nominal condition.
+
+t50,b is easily obtained with Vin50 and Slewin. For instance, if the input is a ramp waveform, t50,b is computed by
+
+t50,b 1⁄4 Slewin
+
+Vin50 Vdd þDVdd : ð24Þ
+
+t50,a is also readily computed by
+
+t50,a 1⁄4 0:5Slewin þDelaypro: ð25Þ
+
+3.8.2. Estimation of Dtf (Dt when Slewin oSlewout) The t50,b computation using Vin50 in Eq. (24) can be used as long as Vin50 oVdd. If Eq. (24) is applied to the case in Fig. 15, the estimated t50,b ð 1⁄4 t50,bðwrongÞÞ is different from the correct t50,b ð 1⁄4 t50,bðcorrectÞÞ. Thus, Eq. (23) cannot be used in this case. Here, another approach is adopted to estimate Dtf . Recall that output transition is supposed to start when Vin exceeds Vth. Therefore, Dtf can be estimated as the difference in timing when Vin traverses the threshold voltage before and after load translation, i.e., tVin 1⁄4 Vth,b and tVin 1⁄4 Vth,a.
+
+Dtf 1⁄4 tVin 1⁄4 Vth,btVin 1⁄4 Vth,a: ð26Þ
+
+For example, when the input is a ramp waveform, these are calculated by
+
+tVin 1⁄4 Vth,b 1⁄4 Slewin
+
+Vth þDVth Vdd þDVdd , ð27Þ
+
+tVin 1⁄4 Vth,a 1⁄4 Slewin
+
+Vth Vdd : ð28Þ
+
+4. Experimental results
+
+This section discusses the accuracy and characterization cost of the proposed gate-delay model with 90- and 45-nm process technologies. Here, a 90-nm industrial standard cell library and a 45-nm open-source standard cell library [34] are used for evaluation.
+
+4.1. Accuracy of delay and output slew estimates
+
+vary simultaneously under the condition in Table 1. All parameters are normally distributed and independent. Note that this assumption only defines the experimental conditions and limits neither the range nor conditions to which the proposed model can be applied. L and DVth0 differ transistor by transistor, and DT varies gate by gate. Vdd and Vss of driver and receiver sides fluctuate separately. In particular, Vdd, Vss, and Vth have widely varied, because the proposed model also aims to cover the DVS and variable Vth design. Given this parameter set, there are some combinations in which MOSFETs work in the sub-threshold region. Here, such combinations of Vdd, Vss, and Vth are eliminated, because the gate delay becomes unacceptably large in these combinations. The sub-threshold current changes exponentially as a function of them, and hence it is difficult to appropriately express the subthreshold current by the regression to polynomials given in Section 3.4.2. To evaluate accuracy under practical conditions often found in actual designs, CLoad and Slewin used in the simulation were randomly generated so that the conditions listed in Table 2 were satisfied. Note that in the 90-(45-)nm technology used for the experiments, 1.5 fF(0.5 fF) corresponds to the input capacitance of a 1 INV, and 20 ps is the output slew when a step input is given to a 1 INV with a fan-out of one. Here, the input waveform is expressed by a linear segment followed by an exponential tail [35]. Moreover, Slews are defined as five times 40–60% swing of the waveform. The number of the iterative calculations shown in Fig. 7 is set to two. Third-order polynomials are used in the current estimation model shown in Section 3.4.2. The stepwise regression procedure is adopted to derive them [36,37] using a numerical computing software, MATLAB [38]. The adjusted coefficient of determination, adjusted R2, is larger than 0.99, and this is sufficient to accurately estimate the current. The characterization cost will be shown in Section 4.3. In the following evaluations in this section, nominal delay calculation used in Steps 0 and 5 in Fig. 7 is performed by HSPICE [39], because this section aims to evaluate the error caused by the proposed model itself and isolates unnecessary errors from other error sources, such as table interpolation.
+
+4.1.2. Accuracy of estimates for 90-nm technology Simple single-stage gate with capacitive load. This section compares the results of actual simulation with PVT variations to
+
+4.1.1. Experimental conditions Five gates are used for the evaluation, which are three simple single-stage gates (INV, NAND2, and NOR2) and two complex single-stage/multi-stage gates (AND2 (two-input AND) and AOI21 (two-input AND-OR-INV)). It is assumed that L, DVth0, Vdd, Vss, and T
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 353
+
+Table 3 Average error [ps (%)] in estimation of delay and output slew for simple gates (90-nm process technology).
+
+Gate Improved model Preliminary model in [22]
+
+Delay Slewout Delay Slewout
+
+Rise Fall Rise Fall Rise Fall Rise Fall
+
+INV 6.5 (4.5) 4.7 (3.9) 6.6 (2.7) 4.4 (2.4) 12.7 (8.8) 8.0 (6.7) 13.2 (5.4) 5.3 (2.9) NAND2 6.1 (4.3) 7.7 (4.5) 5.3 (2.2) 10.2 (3.7) 11.6 (8.1) 11.4 (6.7) 10.5 (4.3) 12.6 (4.6) NOR2 10.0 (4.4) 4.6 (3.9) 17.2 (4.3) 4.2 (2.3) 16.5 (7.3) 7.5 (6.2) 24.9 (6.3) 4.7 (2.5) Avg. – (4.4) – (4.1) – (3.1) – (2.8) – (8.1) – (6.5) – (5.3) – (3.3) Avg. between rise and fall – (4.3) – (2.9) – (7.3) – (4.3)
+
+Fig. 16. Probability distribution of INV fall delay (#10,000).
+
+Fig. 18. Demonstration of inverted temperature dependence with 90-nm INV (rise-input with Slewin1⁄4100 ps, and CLoad1⁄4fan-out of 40). Solid lines denote delays obtained by SPICE, and dashed lines denote delays estimated by the proposed model.
+
+Table 5 Average error [ps (%)] in estimation of delay and output slew for complex gates (90-nm technology).
+
+Gate Improved model
+
+Delay Slewout
+
+Rise Fall Rise Fall
+
+AND2 7.3 (5.3) 6.4 (3.9) 4.4 (2.6) 4.6 (2.0) AOI21 10.3 (4.7) 6.9 (4.0) 21.3 (5.5) 10.6 (3.8)
+
+Fig. 17. Estimated transition waveform of INV. Solid lines denote actual waveforms with PVT variations and dashed lines denote waveforms estimated by the proposed model. Actual waveforms are normalized to nominal Vdd. Input after load translation is shifted by Dt.
+
+Table 4 Contribution to accuracy (for fall-delay of 90-nm INV).
+
+Load translation Delay compensation Average err. [ps (%)]
+
+Delay Slewout
+
+O O 4.7 (3.9) 4.4 (2.4)
+
+O 14.1 (11.9) 4.4 (2.4) 29.1 (24.4) 25.9 (14.1)
+
+that of the proposed calculation for INV, NAND2, and NOR2 by using a 10,000 set of generated CLoad, Slewin, and variation parameters. Table 3 lists the average errors in Delay and Slewout. Average errors with the proposed model are 4.3% for Delay and 2.9% for Slewout. Fig. 16 shows a fall-delay histogram and CDF (cumulative distribution function) of INV. The shape of distribution obtained with the proposed model is consistent with the actual distribution. Fig. 17 illustrates an example of the transition waveform. The shape of the waveform as well as the propagation delay is accurately estimated.
+
+in delay estimation is decreased to 3.9% by delay compensation. It is important to simultaneously employ both techniques. A dominant error source remaining is thought to be the current waveform approximation shown in Section 3.4.1. The average error between the true average current and Iavg was 3.25% for INV. The error due to the current waveform approximation is very close to the gate delay error in Table 3. At low supply voltages, a cell may suffer ITD (inverted temperature dependence) [40]. With ITD, the cell delay increases as temperature decreases. This phenomenon is caused by a competition between mobility and threshold voltage to dominate the cell delay variation. With the proposed model, as long as the output current is characterized at a range of low-voltage region, it can handle ITD effect. Fig. 18 shows an example that the proposed model reproduces ITD of an inverter at 0.6 V. The temperature dependence of the cell delay is well reproduced both at 0.75 and 0.6 V. Complex single-stage/multi-stage gate with capacitive load. The same evaluation in the above paragraph is performed for complex gates. In this evaluation, a multi-stage gate is divided into singlestages and each stage is analyzed by using the proposed model. For example, AND2 is divided into two single-stage gates, i.e., NAND2 and INV. Table 5 demonstrates that results in complex gates exhibit the same degree of accuracy with those in simple gates. When the proposed model is implemented in a timing analyzer, a wrapper that conceals the division of a multi-stage gate into
+
+Table 4 demonstrates which part, i.e., the load translation or the delay compensation part, contributes to the reduction in error. The case that neither technique is used is consistent with nominal delay calculations ignoring all variations of parameters. Load translation reduces the average error of Delay from 24.4% to 11.9% and that of Slewout from 14.1% to 2.4%. In addition, the error
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 354
+
+Fig. 20. Error of path-delay from primary input to each stage. Circles denote average errors and bars indicate standard deviations of errors.
+
+Fig. 19. Accuracy of delay estimates for 90-nm INV with RC output load (2.0-mmlong wire).
+
+Table 6 Average error [ps (%)] in estimation of delay and output slew for simple/complex gates (45-nm process technology).
+
+Gate Delay Slewout
+
+Rise Fall Rise Fall
+
+INV 11.1 (5.4) 4.9 (4.2) 18.8 (5.3) 5.4 (2.8) NAND2 12.1 (5.7) 8.5 (6.6) 21.4 (5.8) 7.0 (3.2) NOR2 15.4 (6.1) 4.5 (3.8) 29.7 (6.7) 4.5 (2.3) AND2 9.8 (5.1) 9.7 (4.6) 4.4 (2.3) 14.3 (4.1) AOI21 13.6 (5.2) 5.6 (4.2) 26.8 (5.8) 6.7 (3.0) Avg. – (5.5) – (4.7) – (5.2) – (3.1) Avg. between rise and fall – (5.1) – (4.1)
+
+though DVth0 varies by 70.35 V. When delay estimates within 10% error are required, the Vdd variation of 70.5 V and DVth0 variation of 70.35 V are acceptable in the proposed model as listed in Table 7, which reveals that the proposed model is suitable for DVS and variable Vth design.
+
+single-stage gates might be necessary. The characterization should be simply carried out for each single-stage in the following step: (1) Divide a multi-stage gate into single-stages. (2) Characterize Iavg and Dt for each stage. (3) Characterize Delay and Slewout for each stage. Simple single-stage gate with RC load. This section next evaluates the accuracy when RC output load is connected with INV. A 2.0 mm-long wire was translated into a CRC p model shown in Fig. 8 by O’Brien and Savarino [31], and was used as RC output load. Fig. 19 shows the accuracy of the proposed model for a 3000 set of generated parameters and the average error is 10.6 ps (1.1%). The proposed method works well for RC output load as well as for capacitive load. Multiple-stage path. The next evaluation is to apply the proposed model to path-delay estimation. It is assumed a 50-stage path consisting of five gates (INV, NAND2, NOR2, AND2, and AOI21) randomly. A load capacitance of each gate was randomly attached according to Table 2. Slewin given to a first gate is also randomly generated with Table 2. One thousand sets of 50-stage paths were generated. Note that, in this evaluation, gate-delay computation in Steps 0 and 5 in Fig. 7 was performed by not HSPICE but conventional 2D look-up tables on the assumption of a practical implementation.
+
+4.2.2. Comparison with direct delay modeling The proposed model is compared with one that treats delay directly. A direct-delay model is constructed with second-order polynomials using the response surface method. Similarly, second-order polynomials are used as the current estimates for the proposed model. The data-sampling points for both models were the same in terms of PVT variations. The typical, minimum ð 1⁄4 m3sÞ, and maximum ð 1⁄4 mþ3sÞ for each variation parameter were used for modeling. The input transition time and output load were fixed here to 100 ps and 100 fF, for simplicity.
+
+Fig. 20 shows the error of the path-delay from the input of the first gate to the output of each stage. The standard deviation of the error becomes small as the number of stage increases, which means the error is not accumulated with waveform propagation. In fact, the error of each single stage is almost the same. In this evaluation, the error is slightly larger than those shown above, since the error involved by table interpolation is included.
+
+Figs. 22 and 23 show the accuracy of estimating delay with these models. The average error in the direct-delay model is 39.9 ps (14.2%), whereas that of the proposed model is 4.5 ps (1.6%). As mentioned in Section 3.1, the current modeling is more reasonable than direct-delay modeling.
+
+4.3. Characterization cost
+
+4.1.3. Accuracy of estimates for 45-nm technology The accuracy of delay and output slew estimates is verified using 45-nm technology library in a way similar to Section 4.1.2. Table 6 shows the results, and the estimation errors are between 2.3% and 6.7%. Summarizing the results for 90- and 45-nm technologies, the average error of the proposed model in estimation of both delay and output slew is approximately 5% on average.
+
+4.2. Comparison with conventional methods
+
+This section demonstrates that the proposed model has advantages over conventional ones in terms of accuracy and its applicable range of variations.
+
+The proposed model can reduce the characterization cost of the conventional method. Here, it is assumed that a 2D look-up table model which takes the output load and input slew as indices is used for nominal-delay calculation. This comparison adopts a following policy of computing delay variations using the 2D lookup table. A delay variation due to PVT variations is calculated using sensitivities. Sensitivities of process variations are assumed to be constant, and hence one table is prepared for each process variation, while those due to VT variations are interpolated with two tables of sensitivity so as to cover environmental corners.
+
+4.2.1. Comparison with sensitivity-based model
+
+Fig. 21 compares the errors in delay estimation when DVth0 is varied. The proposed model provides accurate estimates even
+
+Table 8 summarizes the characterization costs for delay of one cell, where Ttable is the time required to generate a 2D look-up table, TDC is the time required to perform one DC analysis, N is the number of variation parameters, R is that of reference points for
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 355
+
+Fig. 21. Comparison in applicable range of DVth0.
+
+Table 7 Applicable range within delay error of 10%.
+
+Variation parameters Proposed Sensitivity-based
+
+Vdd 70.5 V 70.2 V DVth0 70.35 V 70.16 V
+
+result, the number of transient analyses is greatly reduced. The proposed model requires the current estimation model and the number of necessary DC analyses is RNp p RNe e , but TDC is significantly smaller than Ttable. In addition, the number of DC analyses could be reduced by adopting a smart design of experiments and/or deriving the orthogonal polynomials, such as those in Ref. [17]. Here is a numerical example. Ttable for a 7  7 look-up table is 0.10 s and TDC is below 0.0003 s with a 3.2-GHz CPU on a Linux server, not including other overheads, such as reading a file. It is assumed that NVnom in50 1⁄4 10 in order to deal with both of rise- and fall-delay. Using these values and assuming that Np 1⁄4 Ne 1⁄4 2, Rp 1⁄4 3, and Re 1⁄4 4, the computational time to construct a cell library is less than 0.532 s for the proposed model and is 1.90 s for the conventional method. Therefore, the characterization process becomes approximately 3.6 times faster by using the proposed model as well as the estimation accuracy improves.
+
+5. Application of proposed model to SSTA
+
+Fig. 22. Accuracy of delay estimates with direct-delay model.
+
+Fig. 23. Accuracy of delay estimates with proposed model.
+
+The sensitivity-based model is widely adopted in SSTA. However, efficient methods of characterizing sensitivities are still studied. Using the sensitivity-based delay model with SSTA, when the average of a variation parameter itself varies, the actual sensitivity could be different with one calculated under the nominal condition. This causes error in estimating delay. Particular for SSTA, which copes with VT variations, such as voltage noise [41], as well as process variations, the inaccuracy of sensitivity can be a serious problem since the average supply voltage given to gates differs. For example, the average voltage of gates near Vdd-pads must be different from that of gates far from Vdd-pads. The proposed model can be used for on-demand sensitivity updates without employing any additional transitional analyses.
+
+Table 8 Delay-characterization cost for one cell.
+
+5.1. Sensitivity calculation in SSTA
+
+Model Proposed Conventional
+
+Look-up tables Ttable  1 Ttable  ð1þNp þ2NeReÞ Current-estimation model TDC  ðNVnom in50 RNp p RNe e Þ –
+
+We will first explain why on-demand sensitivity updates are necessary. Suppose that the average of a variation parameter pi varies from pi_0 to pi0_0, as shown in Fig. 24. Here, the nominal sensitivity, ð@d=@piÞ9pi 1⁄4 pi_0, is inappropriate, and the actual sensitivity, ð@d=@piÞ9pi 1⁄4 pi0_0, should be used in calculating delay. To eliminate this sensitivity mismatch, on-demand sensitivity updates are necessary. However, the conventional characterization of sensitivity using a number of transient simulations with regard to output load, input slew and variation parameters, suffers from a large increase in the computational time. Here, the details on sensitivity updates with the proposed model are explained. For simplicity, it is assumed that variation parameter is only the channel length, L. Gate-delay d is
+
+each variation parameter, and subscripts p and e, respectively, mean the parameters for process and environmental variations. NVnom in50 means the number of DC analyses for creating Eq. (10). With the above policy, the number of tables that the conventional characterization requires is ð1þNp þ2NeReÞ, where ‘1’ denotes the number of a nominal-delay table and the others represent that of sensitivity tables. By contrast, the proposed model only needs one table for a nominal calculation, because it can easily calculate sensitivities and hence no sensitivity tables are required. As a
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 356
+
+Fig. 25. Three-stage INV used for evaluation.
+
+Fig. 24. Sensitivity mismatch in the case that nominal value of parameter pi shifts from pi_0 to pi0_0.
+
+expressed by
+
+d 1⁄4 d0 þkPDNDLPDN þkPUNDLPUN þ X
+
+i kriDLri, ð29Þ
+
+0.05 V. The wire capacitances between inverters are 10 fF and the transition time of input given to the first inverter is 100 ps. Delays of each inverter were computed similarly to that Eqs. (30) and (31). Additionally, the variations of input slews, i.e., the term of kSlewinDSlewin, were took into account, because the output slew in the previous stage corresponds to the input slew at the next gates, and hence the variation of input slew should be considered [7]. The slews of each inverter were computed similarly to that used in calculating the delay.
+
+Fig. 26 shows the estimated delay distribution. The distribution with sensitivity updating is almost identical to the actual results summarized in Table 9. The error in estimating the standard deviation is reduced from 22.7% to 1.6% thanks to the on-demand sensitivity updates.
+
+where PDN stands for a pull-down network, PUN stands for a pullup network, DLPDN=PUN is uniform variation on the PDN/PUN side, DLri represents an uncorrelated random variation of the i-th transistor, kPDN=PUN is the sensitivity to DLPDN=PUN, and kri is the sensitivity to DLri. The last term on the right-hand side in Eq. (29) is the sum of normal distributions where DLri is normally distributed. In this case, one can incorporate them into the one normal distribution, krNð0,1Þ, in Eq. (30), where kr is calculated in Eq. (31)
+
+d 1⁄4 d0 þkPDNDLPDN þkPUNDLPUN þkrNð0,12Þ, ð30Þ
+
+kr 1⁄4 ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X
+
+i s2ðkriDLriÞ r : ð31Þ
+
+Each sensitivity is expressed as a partial differential of d with regard to each parameter at their nominal value
+
+kPDN 1⁄4 @d @LPDN
+
+ DLPUN 1⁄4 0,8jDLrj 1⁄4 0 , ð32Þ
+
+kPUN 1⁄4 @d @LPUN
+
+ DLPDN 1⁄4 0,8jDLrj 1⁄4 0 , ð33Þ
+
+kri 1⁄4 @d @Lri
+
+ DLPDN 1⁄4 0,DLPUN 1⁄4 0,8jðjaiÞDLrj 1⁄4 0 : ð34Þ
+
+The number of gate-delay calculations required to recalculate the set of sensitivities in Eq. (30) is mnþ2mþ1, where m is the number of variation parameters and n is the number of transistors in the gate. mn corresponds to the number of kri, 2m to kPDN and kPUN of each p, and one to the nominal condition. When kPDN and kPUN are approximated as the sum of kri with iAPDN and iAPDN, the above number could be reduced to mnþ1. Thanks to the proposed gate-delay model, sensitivities can be updated on-thefly without performing transient simulations.
+
+5.2. Experiments
+
+5.2.2. Computation time of updating sensitivity As mentioned above, the usage of updated sensitivities improves the accuracy of SSTA. This section shows its additional calculation cost in SSTA. The same policy described in Section 4.3 is adopted and each table is created with a third-order polynomial. Next, the proposed model is implemented to calculate sensitivities for a SSTA reported in [41]. The specification of implemented proposed model is same with that in Section 4.1.1. A run-time of the SSTA was evaluated using an industrial embedded processor, MeP (media embedded processor) [42]. The processor was synthesized and layed out by commercial tools [43,44] using a 90-nm standard cell library. The layout size was 2  2 mm2, and the processor was composed of 83,552 cells and 10 SRAM (static random access memory) macros. A C program of image processing was implemented and compiled using GCC (GNU compiler collection) for MeP. In this image processing, MeP reads 256  256-pixel data from SRAM, executes arithmetic operation, and stores the result to SRAM. Using the executable binary, a gate-level simulation was performed and noised-voltage data for 8920 cycles were obtained. Finally, SSTA was executed by the same server with that used in Section 4.3. The computation times of SSTA are shown in Table 10. The additional cost of updating sensitivity is 5.96 s (9.89%). In this evaluation, the proposed model recalculated all sensitivities, but actually some of them are expected to be close to the nominal sensitivities in regions where voltage drops are small. Moreover, on-the-fly sensitivity analysis is not always necessary and it could be replaced with off-line sensitivity analysis. For example, if sensitivities at a dropped supply voltage were calculated for every cell beforehand in the process of cell library preparation, we do not need to calculate them on-the-fly and we can conceal the computational overhead. Thus, by using the proposed model, designers can receive the benefits of updating sensitivity with acceptable additional cost.
+
+6. Conclusion
+
+This paper proposed a gate-delay model coping with wideranging PVT variations. Additional characterization needed for the proposed model is only output-current modeling using a limited number of DC analyses. The proposed model translates the
+
+5.2.1. Accuracy enhancement with updated sensitivity This section tests on-demand sensitivity updates in order to verify how effective they were. Here, a 90-nm industrial standard cell library is used for evaluation. As an example, this evaluation examines the path delay of a three-stage INV in the circuit diagram of Fig. 25. Two results of estimating the delay with updating and without updating sensitivity are compared. The average supply voltages of each inverter, mðVddÞs, are indicated in the figure, and all the mðVssÞs are equal to 0 V. It is assumed that 3sðVddÞs and 3sðVssÞs were 0.05 V. Moreover, every transistor has DVth0 as a process variation parameter and 3sðDVth0Þ is also
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 357
+
+Fig. 26. Comparison of delay distributions (#25,000). Solid line denotes actual distribution. Dashed and dotted lines are with and without on-the-fly sensitivity updating.
+
+Table 9 Comparison of statistics.
+
+Statistics Actual (ps) With sensitivity updating [ps (% err.)] W/o sensitivity updating [ps (% err.)]
+
+m 168.2 167.7 (0.32) 167.7 (0.32) s 8.7 8.8 (1.60) 6.7 (22.7) mþ3s 194.2 194.1 (0.07) 187.8 (3.31)
+
+Table 10 Computation time of SSTA.
+
+Proposed (s) Conventional (s) Difference [s (%)]
+
+66.2 60.2 5.96 (9.89)
+
+output-current variation into output load, and hence the delay can be calculated with any conventional gate-delay model using the translated load and reshaped input waveform. The average errors in estimating the delay and output slew are 5%. The proposed model can be used for implementing MC-STA and SSTA. An application of the proposed model to updating sensitivity in SSTA was also described. It is demonstrated that the error in estimating the standard deviation could be considerably reduced using sensitivities that are updated on-the-fly by the proposed model with acceptable computational overhead.
+
+Acknowledgments
+
+This work was supported in part by NEDO and STARC, as well as by VLSI Design and Education Center (VDEC), the University of Tokyo in collaboration with Synopsys, Inc.
+
+References
+
+[1] H. Masuda, S. Ohkawa, A. Kurokawa, M. Aoki, Challenge: variability characterization and modeling for 65- to 90-nm processes, in: Proceedings of the CICC, 2005, pp. 593–599. [2] A. Mezhiba, E. Friedman, Scaling trends of on-chip power distribution noise, IEEE Transactions on Very Large Scale Integration (VLSI) Systems 12 (4) (2004) 386–394. [3] M. Badaroglu, P. Wambacq, G. Van der Plas, S. Donnay, G. Gielen, H. De Man, Evolution of substrate noise generation mechanisms with CMOS technology scaling, IEEE Transactions on Circuits and Systems I: Regular Papers 53 (2) (2006) 296–305. [4] N. Ahmed, M. Tehranipoor, V. Jayaram, Transition delay fault test pattern generation considering supply voltage noise in a SOC design, in: Proceedings of the Design Automation Conference, ACM, 2007, pp. 533–538. [5] K. Banerjee, A. Mehrotra, Global (interconnect) warming, IEEE Circuits and Devices Magazine 17 (5) (2001) 16–32.
+
+[6] C. Visweswariah, K. Ravindran, K. Kalafala, S. Walker, S. Narayan, First-order incremental block-based statistical timing analysis, in: Proceedings of the DAC, ACM, 2004, pp. 331–336. [7] H. Chang, S. Sapatnekar, Statistical timing analysis under spatial correlations, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 24 (9) (2005) 1467–1482. [8] J. Le, L. Pileggi, STAC: statistical timing analysis with correlation, in: Proceedings of the DAC, ACM New York, NY, USA, 2004, pp. 343–348. [9] W.-S. Wang, V. Kreinovich, M. Orshansky, Statistical timing based on incomplete probabilistic descriptions of parameter uncertainty, in: Proceedings of the ACM/IEEE Design Automation Conference (DAC), ACM, New York, NY, USA, 2006, pp. 161–166. http://dx.doi.acm.org/10.1145/1146909. 1146954. [10] S. Bhardwaj, S. Vrudhula, A. Goel, A unified approach for full chip statistical timing and leakage analysis of nanoscale circuits considering intradie process variations, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 27(10) (2008) 1812–1825. [11] International Technology Roadmap for Semiconductors, ITRS Reports 2009 Edition, /http://www.itrs.net/S. [12] S. Pant, D. Blaauw, Static timing analysis considering power supply variations, in: Proceedings of the ICCAD, IEEE Computer Society, 2005, pp. 365– 371. [13] M. Hashimoto, J. Yamaguchi, H. Onodera, Timing analysis considering spatial power/ground level variation, in: Proceedings of the ICCAD, 2004, pp. 814– 820. [14] K. Okada, K. Yamaoka, H. Onodera, A statistical gate delay model for intrachip and inter-chip variabilities, in: Proceedings of the ASP-DAC, ACM, 2003, pp. 31–36. [15] H. Fatemi, S. Nazarian, M. Pedram, Statistical logic cell delay analysis using a current-based model, in: 2006 43rd ACM/IEEE Design Automation Conference, 2006, pp. 253–256. [16] M. Schmidt, H. Kinzelbach, U. Schlichtmann, Variational waveform propagation for accurate statistical timing analysis, in: TAU Workshop, 2008, pp. 20–25. [17] A. Goel, S. Vrudhula, Statistical waveform and current source based standard cell models for accurate timing analysis, in: Proceedings of the 45th Annual Design Automation Conference, ACM New York, NY, USA, 2008, pp. 227–230. [18] A. Mitev, D. Ganesan, D. Shanmugasundaram, Y. Cao, J. Wang, A robust finitepoint based gate model considering process variations, in: Proceedings of the ICCAD, IEEE Press, 2007, pp. 692–697. [19] V. Zolotov, J. Xiong, S. Abbaspour, D. Hathaway, C. Visweswariah, Compact modeling of variational waveforms, in: Proceedings of the ICCAD, IEEE Press, 2007, pp. 705–712. [20] V. Veetil, K. Chopra, D. Blaauw, D. Sylvester, Fast statistical static timing analysis using smart Monte Carlo techniques, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 30 (6) (2011) 852–865. [21] J. Jaffari, M. Anis, On efficient Monte Carlo-based statistical static timing analysis of digital circuits, in: Proceedings of the ICCAD, 2008, pp. 196–203. [22] K. Shinkai, M. Hashimoto, A. Kurokawa, T. Onoye, A gate delay model focusing on current fluctuation over wide-range of process and environmental variability, in: Proceedings of the ICCAD, ACM, 2006, pp. 47–53. [23] S. Sapatnekar, Timing, Kluwer Academic Publishers, 2004. [24] S. Onaissi, F. Najm, A linear-time approach for static timing analysis covering all process corners, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 27 (7) (2008) 1291–1304. [25] S. Kumar, C. Kashyap, S. Sapatnekar, A framework for block-based timing sensitivity analysis, in: Proceedings of the DAC, ACM, 2008, pp. 688–693. [26] T. Sakurai, A. Newton, Alpha-power law MOSFET model and its applications to CMOS inverter delay and other formulas, IEEE Journal of Solid-State Circuits 25 (2) (1990) 584–594. [27] J. Rabaey, A. Chandrakasan, B. Nikolic ́, Digital Integrated Circuits: A Design Perspective, Prentice Hall, New Jersey, 1996. [28] M. Hashimoto, Y. Yamada, K. Onodera, Equivalent waveform propagation for static timing analysis, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 23 (4) (2004) 498–508. [29] S. Abbaspour, M. Pedram, Gate delay calculation considering the crosstalk capacitances, in: Proceedings of the ASPDAC, 2004, pp. 853–858. [30] V. Zolotov, D. Blaauw, R. Panda, C. Oh, Cross-coupled noise propagation in VLSI designs, International Journal of Analog Integrated Circuits and Signal Processing, vol. 35(2–3), I-2, Kluwer Press, 2003, pp. 133–142. [31] P.R. O’Brien, T.L. Savarino, Modeling the driving-point characteristic of resistive interconnect for accurate delay estimation, in: Proceedings of the ICCAD, Santa Clara, CA, 1989, pp. 512–515. http:dx.doi.org/10.1109/ICCAD. 1989.77002. [32] R. Myers, D. Montgomery, C. Anderson-Cook, Response Surface Methodology: Process and Product Optimization Using Designed Experiments, Wiley, 2009. [33] T. Sakurai, A. Newton, A simple MOSFET model for circuit analysis, IEEE Transactions on Electron Devices 38 (4) (1991) 887–894. [34] NANGATE, Inc., Nangate 45 nm Open Cell Library Datasheet, 2008. URL /http://www.nangate.com/S. [35] F. Chang, C. Chen, P. Subramaniam, An accurate and efficient gate level delay calculator for MOS circuits, in: Proceedings of the DAC, 1988, pp. 282–287. [36] M. Efroymson, Multiple regression analysis, Mathematical Methods for Digital Computers 1 (1960) 191–203.
+
+K. Shinkai et al. / INTEGRATION, the VLSI journal 46 (2013) 345–358 358
+
+Masanori Hashimoto received the B.E., M.E. and Ph.D. degrees in Communications and Computer Engineering from Kyoto University, Kyoto, Japan, in 1997, 1999, and 2001, respectively. Since 2004, he has been an Associate Professor in Department of Information Systems Engineering, Graduate School of Information Science and Technology, Osaka University. His research interest includes computer-aided-design for digital integrated circuits and high-speed circuit design. Dr. Hashimoto served on the technical program committees for international conferences including DAC, ICCAD, ASP-DAC, DATE, ISPD, ICCD, and ISQED. He is a member of IEEE, ACM, IEICE, and IPSJ.
+
+[37] N.R. Draper, H. Smith, Applied Regression Analysis, 3rd Ed., Wiley- Interscience, 1998. URL /http://amazon.com/o/ASIN/0471170828/S. [38] The MathWorks, Inc., MATLAB. [39] Synopsys, Inc., HSPICE Documentation. [40] A. Dasdan, I. Hom, Handling inverted temperature dependence in static timing analysis, ACM Transactions on Design Automation of Electronic Systems (TODAES) 11 (2) (2006) 306–324. [41] T. Enami, S. Ninomiya, M. Hashimoto, Statistical timing analysis considering spatially and temporally correlated dynamic power supply noise, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems 28 (4) (2009) 541–553. [42] Toshiba, Inc., MeP (Media embedded Processor). URL /http://www.MePcore. com/S. [43] Synopsys, Inc., Design Compiler User Guide, 2007. [44] Synopsys, Inc., Astro User Guide, 2007.
+
+Ken-ichi Shinkai received the B.E., M.E. and Ph.D. degrees in Information Systems Engineering from Osaka University, Osaka, Japan, in 2006, 2008, and 2011, respectively. He is currently with NEC Corporation. His major interest is variation-aware timing and reliability analysis. He is a member of IEEE.
+
+Takao Onoye received the B.E. and M.E. degrees in Electronic Engineering, and Dr.Eng. degree in Information Systems Engineering all from Osaka University, Japan, in 1991, 1993, and 1997, respectively. He is currently a Professor in the Department of Information Systems Engineering, Osaka University. His research interests include media-centric low-power architecture and its SoC implementation. He is a member of IEEE, IEICE, IPSJ, and ITE-J.

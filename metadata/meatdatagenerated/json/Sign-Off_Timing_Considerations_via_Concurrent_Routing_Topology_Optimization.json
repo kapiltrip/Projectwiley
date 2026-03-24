@@ -1,0 +1,59 @@
+{
+  "source_filename": "Sign-Off_Timing_Considerations_via_Concurrent_Routing_Topology_Optimization.pdf",
+  "source_path": "papers50/Sign-Off_Timing_Considerations_via_Concurrent_Routing_Topology_Optimization.pdf",
+  "title": "Sign-Off Timing Considerations via Concurrent Routing Topology Optimization",
+  "authors": "Siting Liu , Ziyi Wang , Fangzhou Liu, Yibo Lin , Member, IEEE, Bei Yu , Senior Member, IEEE, and Martin D. F. Wong , Fellow, IEEE",
+  "authors_guess": "Siting Liu , Ziyi Wang , Fangzhou Liu, Yibo Lin , Member, IEEE, Bei Yu , Senior Member, IEEE, and Martin D. F. Wong , Fellow, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2025",
+  "doi": "10.1109/TCAD.2024.3506216",
+  "page_count": 12,
+  "word_count": 9584,
+  "abstract": "Timing closure is considered across the circuit design flow. Generally, the early stage timing optimization can only focus on improving early timing metrics, e.g., rough timing estimation using linear RC model or prerouting path length, since obtaining sign-off performance needs a time-consuming routing flow. However, there is no consistency guarantee between early stage metrics and sign-off timing performance. Therefore, we utilize the power of deep learning techniques to bridge the gap between the early stage analysis and the sign-off analysis. A well-designed deep learning framework guides the adjustment of Steiner points to enable explicit early stage timing optimization. Cooperating with deep Steiner point adjustment, we propose the routing topology reconstruction to accelerate the convergence and hold a reasonable routing topology. Further, we also introduce Steiner point simplification as a post-processing technique to avoid unnecessary routing constraints. This article demonstrates the ability of the learning-assist framework to perform robust and efficient timing optimization in the early stage with comprehensive and convincing experimental results on real-world designs. With Steiner point adjustment alone, TSteinerPt, can help the state-of-the-art open-source router to obtain 11.2% and 7.1% improvement for the sign-off worst-negative slack and total negative slack, respectively. Under the additional joint optimization with routing topology reconstruction and simplification, TSteinerRec can further save 25.9% optimization duration with a better-sign-off performance.",
+  "keywords": [
+    "Graph neural networks",
+    "steiner trees",
+    "timing"
+  ],
+  "section_headings": [
+    "II. PRELIMINARIES",
+    "III. ALGORITHM",
+    "IV. EXPERIMENT RESULTS",
+    "V. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. Physical design flow with TSteiner techniques marked as blue blocks, including learning-guided Steiner point adjustment, routing topology reconstruction, and routing topology simplification.",
+    "Fig. 2. Relationship between Steiner tree and routing topology. The green lines are the RSMT of the given net pins and the blue wires represent the routing topology following the generated Steiner tree.",
+    "Fig. 3. Distribution of sign-off tns ratio of the updated solution with 10–50 times random Steiner point disturbance (within 5-grid region) to the original one. The larger the ratio deviates from 1, the greater the impact is.",
+    "Fig. 4. Overall flow of TSteiner framework, including the optimization gradient generation, the routing topology optimization, and the routing topology simplification.",
+    "Fig. 5. Overview of our proposed gradient generation flow driven by a customized timing evaluation model. The purple and green dots represent pin nodes, while the blue triangle represents Steiner nodes. The forward inference starts from bidirectional propagation on the Steiner graph, followed by the propagation on the netlist graph. Steiner graph broadcast and Steiner graph reduce are included in the bi-directional net propagation. Further, the blue lines depict the pin embedding propagation on the netlist graph. The forward propagation is applied to obtain the pin arrival time evaluation, while the backward propagation is used to collect the Steiner node gradients.",
+    "Fig. 6. Routing topology reconstruction with minimum spanning tree generation. The original nodes and tree segments are colored green, while the optimized ones are purple. The current root during the reconstruction process is colored in red and the final routing topology is marked with a red dashed circle.",
+    "Fig. 7. Routing topology simplification by removing redundant Steiner points to alleviate unnecessary topology limitations. Here, s2 is removed since it only connects two nodes in the given routing topology.",
+    "Fig. 8. Slack Distribution Comparison Among Different Settings, Including Pre-CTS, Post-Route Without Our TSteinerRec Optimization Stage, and Post- Route With TSteinerRec. Here, We Select Two Different Designs des3 and jpeg_encoder and Only Statistic the Negative Slack. “Count” Means the Number of Endpoints Within Each Slack Range. (a) des3. (b) jpeg_encoder.",
+    "Fig. 9. Optimization runtime scalability comparison over the increasing number of cells.",
+    "Fig. 10. Ablation study to show the necessity of routing topology simplification. Three comparisons on the averaged wns, tns, and the number of violated timing paths are elaborated. We set the original performance without any early stage optimization as 1.0 for reference and list the sign-off timing performance ratio. Note that “w/ Adjust” means TSteinerPt while “w/ Adjust+Rec+Simp” is TSteinerRec. (a) wns. (b) tns. (c) # Violated paths.",
+    "Fig. 11. Steiner point adjustment distance distributions."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Sign-Off Timing Considerations via Concurrent Routing Topology Optimization",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2025;44;5;10.1109/TCAD.2024.3506216",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20250410162214+05'30'",
+    "modDate": "D:20250421172425-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2025-04-10",
+    "modified_date": "2025-04-21"
+  },
+  "text_path": "metadata/meatdatagenerated/text/Sign-Off_Timing_Considerations_via_Concurrent_Routing_Topology_Optimization.txt",
+  "json_path": "metadata/meatdatagenerated/json/Sign-Off_Timing_Considerations_via_Concurrent_Routing_Topology_Optimization.json",
+  "html_path": "html/Sign-Off_Timing_Considerations_via_Concurrent_Routing_Topology_Optimization.html",
+  "citation": "Siting Liu , Ziyi Wang , Fangzhou Liu, Yibo Lin , Member, IEEE, Bei Yu , Senior Member, IEEE, and Martin D. F. Wong , Fellow, IEEE (2025). Sign-Off Timing Considerations via Concurrent Routing Topology Optimization. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2024.3506216"
+}

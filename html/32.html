@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Statistical gate-delay modeling with copulas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: light; --ink: #1b1c1d; --muted: #5a6470; --paper: #ffffff; --edge: #dfe4ea; --accent: #194a8d; --wash: #f5f8fc; }
+    body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: linear-gradient(180deg, #eef3f9 0%, #f8fafc 100%); }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+    article { background: var(--paper); border: 1px solid var(--edge); border-radius: 18px; box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08); overflow: hidden; }
+    header { padding: 32px; background: linear-gradient(135deg, #f7fbff 0%, #eef4fb 100%); border-bottom: 1px solid var(--edge); }
+    h1 { margin: 0 0 12px; font-size: 2rem; line-height: 1.15; }
+    h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    h3 { margin: 24px 0 10px; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); }
+    p, li, dd { line-height: 1.65; font-size: 1rem; }
+    section { padding: 28px 32px; border-top: 1px solid var(--edge); }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 20px; }
+    .meta dt { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta dd { margin: 0; }
+    .note { margin-top: 16px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--wash); }
+    .page { background: #fff; }
+    .page-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    ul { margin: 0; padding-left: 20px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+<article>
+<header>
+  <h1>Statistical gate-delay modeling with copulas</h1>
+  <p>Walter Schneider</p>
+  <div class="note"><strong>Abstract.</strong> The growing impact of process variations on circuit performance has become a major concern for deep-submicron integrated circuit design, resulting in numerous SSTA-algorithms. The acceptance of such algorithms in industry however will be dependent on modeling the real silicon behavior in SSTA. This includes that the statistical gate-delay models must consider arbitrary process variations and dependencies. In this paper, we introduce the innovative concept of Copulas to handle this topic. A complete Matlab based framework starting from process parameter statistics up to the computation of the statistical gate-delay distribution is presented. Experimental results demonstrate the importance of accounting realistic process variations.</div>
+</header>
+<section><h2>Paper Metadata</h2>
+<dl class="meta">
+  <div><dt>Source PDF</dt><dd><a href="../papers50/32.pdf">32.pdf</a></dd></div>
+  <div><dt>Pages</dt><dd>10</dd></div>
+  <div><dt>Year</dt><dd>2020</dd></div>
+  <div><dt>Journal</dt><dd>Microelectronics Journal</dd></div>
+  <div><dt>DOI</dt><dd>10.1016/j.mejo.2020.104938</dd></div>
+  <div><dt>Citation</dt><dd>Walter Schneider (2020). Statistical gate-delay modeling with copulas. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2020.104938</dd></div>
+</dl>
+</section>
+<section>
+<h2>Detected Section Headings</h2>
+<ul>
+  <li>1. Introduction</li>
+  <li>2. Process variations</li>
+  <li>2.2. Statistics of process variations</li>
+  <li>2.1. Sources of process variations</li>
+  <li>3. Overview on gate-delay modeling</li>
+  <li>3.1. Nominal gate-delay characterization</li>
+  <li>4. Dependency modeling using copulas</li>
+  <li>3.2. Statistical gate-delay characterization</li>
+  <li>4.1. Example of copulas</li>
+  <li>5. Procedure of statistical gate-delay modeling</li>
+  <li>4.2. Simulation of copulas</li>
+  <li>6. Experimental results</li>
+  <li>6.1. Quality of the nominal PDM</li>
+  <li>6.2. Delay distribution with different parameter statistics</li>
+  <li>6.3. Application on inverter-chain</li>
+  <li>7. Conclusion</li>
+</ul>
+</section>
+<section>
+<h2>Detected Figure Captions</h2>
+<ul>
+  <li>Fig. 2. Histograms of channel dopants Na and threshold voltage Vth with Poisson and Weibull Distribution fit.</li>
+  <li>Fig. 1. Behavior of channel dopants and threshold voltage variation with shrinking technologies [9].</li>
+  <li>Fig. 5. Example of a lookup-table.</li>
+  <li>Fig. 3. Different dependencies of two identical distributed RVs with the same linear correlation coefficient.</li>
+  <li>Fig. 4. Inverter-delay for a rising input ramp.</li>
+  <li>Fig. 6. Histogram of inverter-delay and corresponding CDFs for two different dependencies between L and Vth.</li>
+  <li>Fig. 7. Simulated data pairs (x, y) with normally distributed RVs X, Y and different copulas.</li>
+  <li>Fig. 8. General flow of the derivation of the cumulative distribution function (CDF) of a gate-delay td.</li>
+  <li>Fig. 9. Comparison between different PDM models.</li>
+  <li>Fig. 10. Results for statistical inverter-delay td in case of multi normally distributed parameters (a. Parameter Statistics, b. CDF of td, c. Comparison of td vs. normal-distribution, d. 0.99∕0.95-quantiles compared to worst-case corner delay).</li>
+  <li>Fig. 11. Effect of Archimedian Copulas on inverter-delay distribution (a. Parameter Statistics with CCl (Clayton) and CGu (Gumbel), b. CDF of inverter-delay td).</li>
+  <li>Fig. 10 illustrates the multinormally distributed parameters with ρ= 0.8, σ</li>
+  <li>Fig. 12. Histograms and Dependencies of normal and non-normal (nN) distributed parameters with Gauss-Copula CGa and ρ= 0.8.</li>
+  <li>Fig. 13. Effect of different inverter delay distributions on the path delay distribution of an inverter chain.</li>
+</ul>
+</section>
+<section>
+<h2>Detected Table Captions</h2>
+<ul>
+  <li>Table 1 0.99-quantiles of computed td (q99) with different dependency structures and parameter settings compared to the 0.99-quantiles of a normal fit td (q99n).</li>
+</ul>
+</section>
+<section>
+<h2>Image Insertion Note</h2>
+<p>This HTML is prepared for later figure insertion. Citation data for Wiley-style image credits is stored in the <code>images</code> folder.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 1</div>
+  <p>Microelectronics Journal 107 (2021) 104938</p>
+  <p>Contents lists available at ScienceDirect</p>
+  <p>Microelectronics Journal</p>
+  <p>journal homepage: www.elsevier.com/locate/mejo</p>
+  <p>Statistical gate-delay modeling with copulas</p>
+  <p>Walter Schneider</p>
+  <p>HAW Landshut, University of Applied Sciences, Landshut, Germany</p>
+  <h3>A R T I C L E I N F O</h3>
+  <h3>A B S T R A C T</h3>
+  <p>Keywords: Statistical gate-delay Process variations Copulas</p>
+  <p>The growing impact of process variations on circuit performance has become a major concern for deep-submicron integrated circuit design, resulting in numerous SSTA-algorithms. The acceptance of such algorithms in industry however will be dependent on modeling the real silicon behavior in SSTA. This includes that the statistical gate-delay models must consider arbitrary process variations and dependencies. In this paper, we introduce the innovative concept of Copulas to handle this topic. A complete Matlab based framework starting from process parameter statistics up to the computation of the statistical gate-delay distribution is presented. Experimental results demonstrate the importance of accounting realistic process variations.</p>
+  <p>1. Introduction</p>
+  <p>1. Ignoring variations of slope and load 2. Reduction of the amount of varying process parameters, mostly assumed to be normally distributed 3. Limitation of the parameters’ dependencies by means of a simple linear correlation coefficient.</p>
+  <p>In CMOS digital design, accurate timing characterization of logic gates and digital circuits is essential. For Static Timing Analysis (STA) it is common practice that two dimensional lookup-tables are used for describing the delay of cells dependent on input slope and load capacitance. By technology downscaling deep into the nanometer era, process variations increase significantly and will cause high variability in circuit performance. The photolithography process is one important source of process variations which impacts the channel length L and the channel width W of a MOS transistor. Another well known example is the random dopant fluctuation (RDF) which affects the transistor threshold voltage. The traditional way to treat variations is to consider process corners at which a logic cell has its worst-case delay. However, for an increasing number of process variations this corner-based approach using STA becomes computationally expensive. Furthermore, with a decrease in the transistor size the σ</p>
+  <p>μ-ratio of the varying parameters proportionally increase and leads to overly pessimistic and suboptimal designs. Statistical Static Timing Analysis (SSTA) has been proposed as an improvement since the actual statistics of the process parameters are considered via random variables (RV). In general, the SSTA algorithms can be classified into two categories: the block-based and the pathbased algorithms. Although many research papers addressing both techniques have been published in the past it must be asserted, that SSTA is still not widely utilized in industry. One main reason is due to some simplified assumptions for statistical gate-delay modeling, such as:</p>
+  <p>Despite of all enhancements concerning these issues (e.g. addressing non-normal distributions in [1–3]) a common view on the complete process parameter statistics given from a semiconductor manufacturer and its translation on a statistical gate-delay model is still missing. The most promising approach in this context is the research paper [4], where the authors have introduced the Generalized Lambda Distribution (GLD) together with rank correlations. Unfortunately, the presented results do not show the actual process statistics and their correlations. Furthermore, Monte Carlo runs are necessary to get rank correlation coefficients as well as the GLD parameters. Additionally, the high computational cost of SSTA algorithms turned out as a stumbling block for practical usage leading to several on-chip variation (OCV) approaches in recent years. In parametric on-chip variation (POCV) each cell is characterized by a delay variation σobtained through Monte-Carlo SPICE simulation [5]. Using the Liberty Variation Format (LVF) which reports cell-delay variation for different slope/load combinations improves the accuracy for 16 nm designs and below [6,7]. Cadence Liberate Trio Characterization Suite generates LVF libraries using statistical SPICE models [8] - however problem (3) from above has not exhaustively been solved. In this paper, the principal idea of [4] is extended in two essential aspects: 1) instead of the Generalized Lambda Distribution any distribution function (e.g. Lognormal, Gamma, Weibull, ExtremeValue ...) can</p>
+  <p>E-mail address: walter.schneider@haw-landshut.de.</p>
+  <p>https://doi.org/10.1016/j.mejo.2020.104938 Received 17 April 2020; Received in revised form 16 September 2020; Accepted 9 November 2020 Available online 28 November 2020 1879-2391/© 2020 Published by Elsevier Ltd.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 2</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Fig. 2. Histograms of channel dopants Na and threshold voltage Vth with Poisson and Weibull Distribution fit.</p>
+  <p>Fig. 1. Behavior of channel dopants and threshold voltage variation with shrinking technologies [9].</p>
+  <p>especially the channel length as the smaller CD of a transistor. Dependent on lithography technologies the 3σvariation in the amplitude of LER can vary between 4 nm and 8 nm for a line width of 80 nm [11]. The impact of LER also includes variation in Vth and is given by [12,13]:</p>
+  <p>σVth,LER ∝ 1 √</p>
+  <p>Weff &lt; σVth,RDF (2)</p>
+  <p>As it is expected that LER is continue rising in future technologies, variations in L, W and Vth also will increase.</p>
+  <p>be used for a process parameter and 2) instead of the rank correlations we use the theory of Copulas, which allows a more flexible modeling of parameter dependencies and therefore seems to be also interesting for the generation of LVF libraries. Using these two facts we are convinced that the statistical gate-delay model will really reflect the true silicon behavior. The rest of the paper is organized as follows. In the next Section we give a short overview on the variability of process parameters. In Section 3 we review the basic principles of gate-delay modeling. Then in Section 4 the theoretical background of Copulas is introduced. In Section 5 we present our statistical gate-delay framework based on Matlab and its associated Statistics Toolbox, which also incorporates a comfortable Copula package. Experimental results are discussed in Section 6 and finally we conclude in Section 7.</p>
+  <p>2. Process variations</p>
+  <p>2.1.3. Oxide thickness variation (OTV) OTV is caused by atomic scale roughness between silicon and gate dielectric [13]. In 45 nm technologies and beyond, OTV is becoming more dominant as Tox approaches to less than 2 nm. OTV introduces variations of the gate current Ig which leads to variations in Vth. Also the electron mobility μis influenced by OTV. Among the discussed sources of process variability and others (e.g. Optical Proximity Effect (OPE) or carrier velocity saturation with impact on channel length and electron mobility) LER and RDF have attracted most attention because it is expected that variations in L and Vth have the most impact on performance variation.</p>
+  <p>2.2. Statistics of process variations</p>
+  <p>Amongst a huge number of parameters, which affect the performance behavior of MOSFET devices, the geometry parameters channel length (L), channel width (W) as well as the physical parameters oxide thickness (Tox), electron mobility (μ) and threshold voltage (Vth) are the most important [9]. We briefly outline the major sources of variation of these parameters.</p>
+  <p>2.1. Sources of process variations</p>
+  <p>2.1.1. Random dopant fluctuation (RDF) RDF is caused by the random placement of the dopant atoms in the channel region of a transistor. With shrinking technologies the total number of dopant atoms decreases which results in an increase of the threshold voltage variation as shown in Fig. 1. The standard deviation of threshold voltage variation due to RDF is given by</p>
+  <p>4√</p>
+  <h3>NCH √</h3>
+  <p>σVth,RDF ≅Tox</p>
+  <p>3LeffWeff</p>
+  <p>εox · ⎛ ⎜ ⎜⎝</p>
+  <p>⎞ ⎟ ⎟⎠ (1)</p>
+  <p>where εox is the oxide permittivity, NCH is the channel doping concentration and Leff, Weffare the effective gate dimensions of the transistor [10,13].</p>
+  <p>Varying process parameters are usually treated as RVs. The assumption about normally distributed parameters is very convenient for SSTA. However this does not always reflect the true behavior. It is well known that some parameters really differ from a normal distribution: e. g. channel length or via resistances show an asymmetric non-Gaussian distribution [14,15]. Also the number of channel dopants Na is observed to be well modeled by a Poisson distribution affecting the distribution of the threshold voltage Vth, which is different from a normal distribution. This is illustrated in Fig. 2, where the Weibull distribution seems to be an adequate fit for the variability of Vth. The most difficulty is to get precise realistic process statistics from the industry. These statistics should contain the complete distribution and not only the first two moments μand σ. Moreover the knowledge about the dependency amongst the different process parameters is quite essential, meaning that the specification of a simple linear correlation coefficient is not sufficient for the accurate description of the dependency between RVs. To illustrate this fact we consider two RVs X, Y ∼N(0, 1), which are correlated with ρ(X, Y) = 0.85. The structure of the data points (x, y) can be quite different as shown in Fig. 3: the left part shows a strong upper tail dependency, the right part however a strong lower tail dependency despite of the same ρ.</p>
+  <p>2.1.2. Line edge roughness (LER) LER results from sub-wavelength lithography and etching process that causes variation in the critical dimensions (CD) of a transistor,</p>
+  <p>2</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 3</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Fig. 5. Example of a lookup-table.</p>
+  <p>Fig. 3. Different dependencies of two identical distributed RVs with the same linear correlation coefficient.</p>
+  <p>dent on slope/load conditions. Therefore, two dimensional lookuptables are built for each timing arc from input to output. This means that, for the inverter above, two lookup-tables (for rising and falling input) would be necessary. The drawback of this approach is with respect to varying parameters, since the delay dependency from process parameters is hidden. The only solution is given by introducing additional tables for best-/worst-case conditions, which are helpful for corner analysis. This is illustrated by an example lookup-table (NC = normal-case, BC = best-case, WC = worst-case) in Fig. 5 for one specific timing arc. Analytical Equations. Analytical gate-delay modeling has been the subject of much research, especially for a basic inverter. Early models were based on Shockley’s MOSFET model. Later on the alpha-power law MOSFET model considering the carrier velocity saturation effect of short channel devices was introduced by Sakurai [16]. Hence the inverter delay td can be written as</p>
+  <p>td = Tox</p>
+  <p>μεox · L</p>
+  <p>W · CLVdd (Vdd −Vth)α (4)</p>
+  <p>Fig. 4. Inverter-delay for a rising input ramp.</p>
+  <p>From this illustrative example it becomes clear, that a deeper insight into the dependency structure between RVs is necessary. Otherwise the statistical gate-delay models and the SSTA algorithms will not be trustable.</p>
+  <p>3. Overview on gate-delay modeling</p>
+  <p>where αis the Sakurai index and can be taken equal to 1 in scaled technologies. The authors in [17] extended this model to account for input slope and complex gates by conversion into an equivalent inverter. Despite of further improvement of analytical models accounting for physical effects (e.g. I/O coupling, channel-length modulation, drain-induced barrier lowering DIBL) [18–21], deriving a compact closed delay formula for a wide range of slope/load conditions remains challenging. Compared to the lookup-tables the analytical model has the advantage, that the dependency on process parameters is explicit known which is very helpful for the statistical analysis. Polynomial Parametric Delay Models (PDM). The majority of SSTA algorithms use polynomial parametric delay models with a polynomial of degree r. In case of r = 2 we get the popular quadratic timing model Q (e.g. used in Ref. [15]) as</p>
+  <p>n ∑</p>
+  <p>n ∑</p>
+  <p>k ∑</p>
+  <p>Q = a0 +</p>
+  <p>i=1 aipi +</p>
+  <p>k=1</p>
+  <p>l=1 bklpkpl (5)</p>
+  <p>The delay of a logic gate is defined as the time interval Δt between the 50% levels of input and output signal. Clearly Δt depends on process parameters ⃖⃗p (e.g. L, Vth, ...as discussed in the previous Section) as well as external factors given by supply voltage Vdd, temperature T, load capacitance CL and input slope sin. Thus in general the gate-delay td(̂=Δt) can be written as</p>
+  <p>with ⃖⃗p = (p1, p2, ... pn) as the parameters of interest and the fitting coefficients ai, bkl. These coefficients must be obtained by the least square solution of:</p>
+  <p>td = f (⃖⃗p, Vdd, T, CL, sin ) (3)</p>
+  <p>f(p(1))</p>
+  <p>Q(p(1))</p>
+  <p>min</p>
+  <p>−</p>
+  <p>⋮</p>
+  <p>⋮</p>
+  <p>with f as a non-trivial mapping function. Fig. 4 illustrates the delay definition for an inverter and a rising input ramp, whereat the drain current IDn discharges the capacitance CL via the nMOS transistor. Before looking at the statistical behavior of td, we give a short overview about different methods to determine the nominal gate-delay.</p>
+  <p>f(p(m))</p>
+  <p>Q(p(m))</p>
+  <p>⎞ ⎟ ⎟ ⎟ ⎟ ⎟⎠</p>
+  <p>⎛ ⎜ ⎜ ⎜ ⎜ ⎜⎝</p>
+  <p>⎛ ⎜ ⎜ ⎜ ⎜ ⎜⎝</p>
+  <p>⎞ ⎟ ⎟ ⎟ ⎟ ⎟⎠2</p>
+  <p>(</p>
+  <p>)2</p>
+  <p>m ∑</p>
+  <p>n ∑</p>
+  <p>n ∑</p>
+  <p>k ∑</p>
+  <p>3.1. Nominal gate-delay characterization</p>
+  <p>a0 +</p>
+  <p>= min a0,...,an,b11,...,bnn</p>
+  <p>i=1</p>
+  <p>j=1 ajp(i) j +</p>
+  <p>k=1</p>
+  <p>l=1 bklp(i) k p(i) l −f(p(i))</p>
+  <p>(6)</p>
+  <p>Lookup-Tables. Due to the complex function f in eq. (3) it is state-ofart in industry to obtain gate-delays through SPICE simulations depen-</p>
+  <p>3</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 4</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>This makes clear that a strategy is necessary to deal with different dependency structures and of course with arbitrary process parameter distributions. For this reason now we introduce the concept of Copulas.</p>
+  <p>4. Dependency modeling using copulas</p>
+  <p>Copulas are helpful in the understanding of dependency at a deeper level meaning that the dependency is not restricted to the simple case of linear correlation. Copulas combine arbitrary marginal distribution functions (df) to a joint distribution function with a variety of possible dependency models, which are isolated from the marginals. From these dependency models rank correlations as in [4] or coefficients of tail dependency can be derived. In the following the most important basic properties of copulas are summarized. The reader is referred to [26] for further detailled information.</p>
+  <p>Definition 4.1. A d-dimensional copula C is a df on the unit hypercube [0, 1]d with standard uniform marginal distributions, C ∶[0, 1]d → [0, 1].</p>
+  <p>Fig. 6. Histogram of inverter-delay and corresponding CDFs for two different dependencies between L and Vth.</p>
+  <p>In order to work with any type of marginal distributions, the following elementary proposition is necessary.</p>
+  <p>Proposition 4.2. Let G be a df and G−1 its generalized inverse, i.e. the function G−1 = inf{x ∶G(x) ≥y}.</p>
+  <p>where f (p(1)) , ... , f (p(m)) are known delay values from a SPICE simulation.</p>
+  <p>3.2. Statistical gate-delay characterization</p>
+  <p>1. Quantile transformation. If U ∼U(0, 1) has a standard uniform distribution, then P(G−1(U) ≤x) = G(x). 2. Probability transformation. If Y has df G, where G is a continuous univariate df, then G(Y) ∼U(0, 1).</p>
+  <p>Dependent on the chosen nominal gate-delay model, in general there are two possibilities to obtain its probability density function (pdf) or cumulative distribution function (cdf):</p>
+  <p>The construction of multivariate dfs with univariate dfs by using copulas is stated in Sklar’s Theorem.</p>
+  <p>Proposition 4.3. (Sklar’s Theorem) Let F be a joint distribution function with margins F1, F2, ... , Fd. Then there exists a copula C such that, for all x1, x2, ... , xd ∈R,</p>
+  <p>F(x1, x2, ... , xd) = C(F1(x1), F2(x2), ... , Fd(xd)) (7)</p>
+  <p>1. Using familiar rules from mathematical probability theory in case of an analytical or polynomial parametric model: e.g. sum/product of RVs or the multivariate density transformation theorem [22,23]. 2. Using Monte Carlo (MC) sampling, which is possible for all delay models and serves as “Golden reference” for SSTA algorithms. The only drawback of this method is the computational cost; therefore many authors have focussed on accelerating the MC runtime [24,25].</p>
+  <p>Conversely, if C is a copula and F1, ... , Fd are univariate dfs, then the function F in (7) is a joint df with the margins F1, ... , Fd.</p>
+  <p>4.1. Example of copulas</p>
+  <p>No matter what delay model is used, the main unresolved problem is the consideration of arbitrary process variations and dependencies. The following example should highlight this aspect.</p>
+  <p>Example 3.1. Assuming that L and Vth are normally distributed: L ∼N(μL, σL), Vth ∼N(μVth, σVth) with a linear correlation coefficient ρ= 0, 7. As it cannot be required that the two RVs are joint normally distributed, we take two possible dependencies according to Fig. 3:</p>
+  <p>∙Upper tail dependency (as shown in the left part of Fig. 3) ∙Lower tail dependency (as shown in the right part of Fig. 3)</p>
+  <p>In general copulas can be split into three categories: 1) fundamental copulas represent a number of important special dependency structures (e.g. independence or perfectly positive (negative) dependency); 2) implicit copulas are extracted from well-known multivariate distributions with Sklar’s Theorem (e.g. Gauss-Copula); 3) explicit copulas with simple closed-form expressions (e.g. Archimedian copula family). Some of them should be discussed for the bivariate case in more detail. Gauss-Copula. For a bivariate normal (Gaussian) RV X its copula is a so-called Gauss-Copula CGa ρ with correlation coefficient ρ. There is no</p>
+  <p>simple closed form, but CGa ρ can be expressed as an integral over the density of X as</p>
+  <p>CGa ρ(u1, u2) = Φ(Φ−1(u1), Φ−1(u2))</p>
+  <p>Φ−1(u1)</p>
+  <p>Φ−1(u2)</p>
+  <p>= ∫</p>
+  <p>(8)</p>
+  <p>−∞ ∫</p>
+  <p>−∞ 1</p>
+  <p>2π √</p>
+  <h3>1 −ρ2 ·</h3>
+  <p>]</p>
+  <p>[ −(s2 1 −2ρs1s2 + s2 2)</p>
+  <p>exp</p>
+  <p>ds1ds2</p>
+  <p>2(1 −ρ2)</p>
+  <p>From a number of pair-samples (L, Vth) preserving these two dependencies and ρ= 0.7 we compute the inverter-delay td using eq. (4). The result is shown in Fig. 6. From the left part (the histogram for the case with lower tail dependency) it can be seen that the inverter-delay distribution significantly differs from a normal distribution. Obviously for both dependencies the principal empirical CDFs (derived from the histogram) look very similar. But in the interesting region between the 0.90 and 0.99 quantiles we see that the lower tail dependency is more conservative. This results in a difference of roughly Δt = 6ps (≈12% in relation to μ= 49ps) for the 0.975 quantile.</p>
+  <p>4</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 5</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Further details concerning these algorithms together with examples and an extension for multidimensional copulas can be found in [27].</p>
+  <p>Example 4.4. The dependency of the RVs X, Y ∼N(0, 1), with ρX,Y = 0, 7 is examined with four different copulas:</p>
+  <p>with Φ−1 as the inverse of the standard normal df Φ. The Gauss- Copula can be interpreted as dependency model, which interpolates between perfect positive (ρ= 1) and negative (ρ= −1) dependency. t-Copula. The Student’s t-copula Ct ρ,νallows an increased probability of joint extreme events compared with the Gauss-Copula. This copula is given by</p>
+  <p>Ct ρ,ν(u1, u2) = tρ,ν(t−1 ν(u1), t−1 ν(u2))</p>
+  <p>a) Gauss-Copula b) Gumbel-Copula with parameter θ= 2 c) Clayton-Copula with parameter θ= 2.2 d) t-Copula with ν= 4</p>
+  <p>t−1 ν(u1)</p>
+  <p>t−1 ν(u2)</p>
+  <p>Γ( ν+2</p>
+  <h3>2 )</h3>
+  <p>= ∫</p>
+  <p>(9)</p>
+  <p>−∞ ∫</p>
+  <p>−∞</p>
+  <p>Γ( ν</p>
+  <h3>1 −ρ2 ·</h3>
+  <p>2)πν √</p>
+  <p>]−(ν+2)∕2 dxdy</p>
+  <p>[ 1 + x2 −2ρxy</p>
+  <p>ν(1 −ρ2)</p>
+  <p>By using the algorithms from above for each case 5000 data pairs (X, Y) have been generated. Fig. 7 shows the result: despite of same marginal distributions and same linear correlation coefficient, the dependency between X and Y clearly differs. It can be seen, that in case of the Gauss-Copula there is no tail dependency. This is opposite to the other ones: the Clayton-Copula shows an lower tail dependency, the Gumbel- Copala shows an upper tail dependency, whereas for the t-Copula there is both an upper and lower tail dependency.</p>
+  <p>where tρ,νis the bivariate Student t df with νdegrees of freedom and correlation ρ; t−1 ν denotes its inverse. Archimedian Copula. Unlike the Gauss- and t-Copula, the Archimedian Copulas have a simple closed form. The Gumbel-Copula CGu θ as</p>
+  <p>well as the Clayton- Copula CCl θwith</p>
+  <p>[</p>
+  <p>Remark. The Statistics-Toolbox of Matlab [28] contains several functions for simulating copulas. Such functions are applied in the next Section.</p>
+  <p>θ ]</p>
+  <p>, 1 ≤θ&lt; ∞</p>
+  <p>− ( (−ln u1)θ+ (−ln u2)θ) 1</p>
+  <p>CGu θ(u1, u2) = exp</p>
+  <p>(10)</p>
+  <p>5. Procedure of statistical gate-delay modeling</p>
+  <p>θ, 0 &lt; θ&lt; ∞</p>
+  <p>CCl θ(u1, u2) = ( u−θ 1 + u−θ 2 −1 )−1</p>
+  <p>and the copula parameter θare two prominent examples for bivariate Archimedian Copulas.</p>
+  <p>4.2. Simulation of copulas</p>
+  <p>The principal flow of our statistical gate-delay model is shown in Fig. 8. There is no restriction to any specific parameter distribution, parameter dependency or delay model. For the novel part of Copula Modeling (red highlighted in the above figure) the detailled steps are summarized in Algorithm 3, which also includes trivial parameter dependencies (e.g. multinormal distributions).</p>
+  <p>One primary application of copulas is in simulation, in which the problem of generating samples from a given copula must be addressed. In case of explicit copulas this is achieved by Algorithm 1.</p>
+  <p>Algorithm 3 Generation of SampleMatrix P.</p>
+  <p>Algorithm 1 Generating observations (x, y) from a pair of RVs (X, Y) with margins FX, FY and explicit 2-dim. copula C</p>
+  <p>(1) Generate two independent standard uniform (0,1) variates u and t (2) Set v = c−1 u (t) with c−1 u as inverse of the conditional distribution cu:</p>
+  <p>cu(v) = P{V ≤v ∣U = u} = ∂</p>
+  <p>∂u C(u, v) (11)</p>
+  <p>(3) Transform (u, v) →(x, y) using the Quantile Transformation of Proposition 4.2:</p>
+  <p>x = F−1 X (u), y = F−1 Y (v) (12)</p>
+  <p>This algorithm is not applicable for the Gauss- or t-Copula since cu, c−1 u are not explicitly computable. For the Gauss-Copula Algorithm 2 can be used, which is similarly valid for the t-Copula.</p>
+  <p>Additional remarks:</p>
+  <p>Algorithm 2 Generating a random vector (X, Y) with marginals FX, FY and Gaussian Copula CGa</p>
+  <p>(1) Generate a multinormal RV Z ∼N(0, P) with correlation matrix P (2) Set (U1, U2) = (Φ(Z1), Φ(Z2)) with its df CGa. U1, U2 are standard uniform distributed according to Proposition 4.2 (2). (3) Set (X, Y) = (F−1 X (U1), F−1 Y (U2))</p>
+  <p>∙The convenient Matlab function copularnd generates univariate samples based on a chosen copula - so it contains the Algorithms 1, 2 from the previous Section. Details on this function can be found in the Matlab Online Help [28]. ∙In case of Archimedian copulas, copularnd is only implemented for the bivariate case, which leads to an repeated calling of this function for m &gt; 2. ∙The algorithm can handle lots of parameter distributions Fi together with their generalized inverse function F−1 i from</p>
+  <p>5</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 6</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Fig. 7. Simulated data pairs (x, y) with normally distributed RVs X, Y and different copulas.</p>
+  <p>Fig. 8. General flow of the derivation of the cumulative distribution function (CDF) of a gate-delay td.</p>
+  <p>6</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 7</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>6. Experimental results</p>
+  <p>Our approach for statistical gate-delay modeling has been implemented in Matlab and tested using an inverter in 45 nm CMOS technology. First, a sensitivity SPICE analysis confirms that the discussed parameters in Section 2: L, W, Vth, Tox and VMAX (for modeling the decrease in mobility μdue to velocity saturation) are crucial for the inverter-delay td. These parameters together with load capacitance CL and input slope sin form the parameter vector ⃖⃗p.</p>
+  <p>6.1. Quality of the nominal PDM</p>
+  <p>Fig. 9. Comparison between different PDM models.</p>
+  <p>Matlab, e.g.: beta, gamma, generalized extreme value, weibull, ...amongst others. ∙The generated matrix P can also be used in combination with a Monte-Carlo SPICE simulation.</p>
+  <p>For the polynomial parametric delay model (PDM), each component of ⃖⃗p is expressed as a triple: pi = [pimin, pinom, pimax] where these values are given from the 45 nm Predictive Technology Model (PTM) [29]. CL and sin are set to [10 fF, 30 fF, 50 fF] and [2ps, 5ps, 10ps] respectively. A SPICE simulation of all parameter constellations yields 37 = 2187 delay values td. The Matlab algorithm polyfitn [30] reports the quality of a fitting polynomial with degree r. It can be seen, that a quadratic model (including cross terms like p1 · p2) yields an accurate result with an average error of less than 4%. The linear or “pure” quadratic (without cross terms) model however are much worse as shown in Fig. 9. So, the quadratic delay model will be used for comparing our different statistical modeling approaches.</p>
+  <p>6.2. Delay distribution with different parameter statistics</p>
+  <p>Now we want to study the impact of various distributions of ⃖⃗p on the CDF of td.</p>
+  <p>Certainly, getting realistic parameter distributions and dependencies from a semiconductor company is challenging. Nevertheless, Algorithm 3 can also be applied even if only some roughly information concerning distributions and dependencies is available: in this case the SampleMatrix P is generated with different copulas and margins and the effect on the timing behavior of td is analyzed. So, bounds for a specific ith-quantile of td are predicted.</p>
+  <p>Fig. 10. Results for statistical inverter-delay td in case of multi normally distributed parameters (a. Parameter Statistics, b. CDF of td, c. Comparison of td vs. normal-distribution, d. 0.99∕0.95-quantiles compared to worst-case corner delay).</p>
+  <p>7</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 8</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Table 1 0.99-quantiles of computed td (q99) with different dependency structures and parameter settings compared to the 0.99-quantiles of a normal fit td (q99n).</p>
+  <p>σ μ(%) (CL∕sin) jnpdf CGa (N) Ct (N) CGa (nN) Ct (nN)</p>
+  <p>Test♯ Corr. ρ</p>
+  <p>fF∕ps q99 q99n q99 q99n q99 q99n q99 q99n q99 q99n</p>
+  <p>1 0.2 10 (10/2) 5.5 5.1 5.7 5.1 6.8 5.3 5.8 4.9 6.7 5.2 2 (50/10) 31.6 30.0 30.7 30.0 34.5 30.9 30.8 30.8 35.1 31.6 3 20 (10/2) 11.5 9.6 10.0 8.1 14.2 9.6 11.6 8.5 15.4 10.0 4 (50/10) 48.8 42.5 47.0 41.3 49.6 40.0 46.8 42.2 49.5 41.3 5 0.5 10 (10/2) 5.5 5.1 5.6 5.0 6.4 5.0 5.8 5.4 6.4 5.2 6 (50/10) 30.7 29.7 32.4 31.4 32.4 30.8 32.7 31.5 32.2 31.6 7 20 (10/2) 11.6 8.8 12.3 8.9 10.8 8.4 13.6 10.0 11.4 8.4 8 (50/10) 45.3 41.2 47.8 42.8 50.2 44.9 47.8 46.2 50.7 42.6 9 0.8 10 (10/2) 5.9 5.0 5.5 5.0 6.3 5.1 5.4 5.1 6.2 5.2 10 (50/10) 31.2 30.7 32.6 32.1 33.2 32.2 31.4 31.3 32.6 32.8 11 20 (10/2) 11.4 8.8 12.3 8.2 11.9 9.2 12.8 9.1 12.6 9.9 12 (50/10) 50.0 45.8 47.8 41.4 53.4 45.7 50.0 45.6 55.9 44.8</p>
+  <p>Fig. 11. Effect of Archimedian Copulas on inverter-delay distribution (a. Parameter Statistics with CCl (Clayton) and CGu (Gumbel), b. CDF of inverter-delay td).</p>
+  <p>are illustrated in (d.), where also the remarkable difference to a worstcase corner td prediction is shown. For other settings concerning ρ, σ</p>
+  <p>6.2.1. Multinormally distributed parameters ⃖⃗p We take the parameter settings for pi ∼N(μi, σi) as follows: μL = 45 nm, μW = 2μm, μVth = 0.45 V, μTox = 1.8 nm, μVMAX = 3.5 · 105 m</p>
+  <p>s . μCL is either 10 fF or 50 fF and μsin is either 2ps or 10ps.1 Further we assume that σi</p>
+  <p>μi is either 10% or 20% and the parameters are correlated</p>
+  <p>μ, CL, sin Table 1 reports the computed 0.99-quantiles (q99) compared to the normal-fit quantiles (q99n) for multinormally distributed parameters in columns 5, 6 (jnpdf). Throughout all testcases the assumption of td as normally distributed will be too optimistic.</p>
+  <p>with the same correlation coefficient ρhaving the values 0.2, 0.5 or 0.8, which allows us to express a weak, medium or strong correlation.</p>
+  <p>Fig. 10 illustrates the multinormally distributed parameters with ρ= 0.8, σ</p>
+  <p>μ= 20% (a). The computed CDF of td (b.) with CL = 50 fF, sin = 10ps differs from a best normal-fit CDF, which becomes clearer by the probability plot in (c). So, from multinormally distributed parameters it cannot be concluded that td is also normally distributed. The numerical differences of the 0.95 and 0.99-quantiles between the computed and the normal-fit CDF (denoted with index n)</p>
+  <p>6.2.2. Gauss- and t-copula as dependency model In case of the same parameter distributions as in A) - meaning that all parameters are normally distributed - but different dependencies (Gauss-Copula CGa or t-Copula Ct), the result on the statistical inverterdelay td is reported in the columns 7–10 (N). In any case the normal fit for the 0.99-quantile (q99n) is less conservative than the corresponding q99-value. Additionally the difference of q99 between CGa and Ct (columns 7 and 9) is not negligible: e.g. in testcase ♯3 there is an increase of 42% between q99(CGa) and q99(Ct). For a mixture of normally and non-normally distributed parameters (nN), we consider the following distributions:</p>
+  <p>1 Taking slope and load as RVs is justified by the fact that treating them as specific values can result in 30% delay errors [31,32].</p>
+  <p>8</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 9</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>Fig. 12. Histograms and Dependencies of normal and non-normal (nN) distributed parameters with Gauss-Copula CGa and ρ= 0.8.</p>
+  <p>- CL, sin ∼N(μ, σ), - VMAX ∼LN(μ, σ) - Vth ∼W(a, b), - Tox ∼EV(μ) - W ∼GEV(μ, σ, k), - L ∼G(a, b).</p>
+  <p>with N as normal, LN as lognormal, G as Gamma, EV as ExtremeValue, GEV as GeneralizedExtremeValue and W as Weibull distribution. By transferring the normally distributed parameters from A) to the desired distribution, we obtain the relevant parameters μ, σas well as a, b, k for each case. For this, the Distribution Fitter App dfittool from Matlab is very helpful [28]. The principal shape of the parameter distributions is shown by the histograms in Fig. 12, where the dependency of the parameters is according to a Gauss-Copula CGa and ρ= 0.8. As in the case of normally distributed parameters (N) also for a mixture of normally and non-normally distributed parameters (nN) the numerical values of the 0.99-quantiles reveal, that the dependency structure is important: e.g. for testcase ♯12 in Table 1 the q99-value with t-copula is more than 5ps larger than the corresponding value with Gauss-Copula, an increase of 11.8%.</p>
+  <p>Fig. 13. Effect of different inverter delay distributions on the path delay distribution of an inverter chain.</p>
+  <p>delays) finished in less than 2 s. Considering some additional time effort for the nominal delay computation, a 20-30x speed up is achieved.</p>
+  <p>6.3. Application on inverter-chain</p>
+  <p>6.2.3. Archimedian Copulas as dependency model Finally, we examine Archimedian Copulas, where we take the Clayton- and Gumbel-Copula as introduced in Section 4. We adopt the non-normal parameter settings from B) but instead of a dependency between all parameters only a pairwise dependency is applied (this is only for practical reason as the Matlab function copularnd is limited to 2-dim. Archimedian copulas). Fig. 11 shows the dependency for CCl</p>
+  <p>(Clayton) and CGu (Gumbel) with lower and upper tail dependency as outlined in Section 4. The θparameter for both copulas has been chosen, such that in both cases the same linear correlation ρ= 0.8 is realized.2</p>
+  <p>Though the resulting CDFs of the inverter-delay td according to CCl</p>
+  <p>In a final experiment with a 10-stage inverter chain we want to analyze the effect of different single inverter delay distributions on the resulting path delay distribution (Fig. 13). In doing so we use the results of testcase ♯8 from Table 1 and consider the following two scenarios for the distribution of the inverter delay td:</p>
+  <p>and CGu are very similar, an appreciable difference in the higher quantiles exists. From Fig. 11 we extract the 0.99-quantiles as 41.1 ps for CCl</p>
+  <p>∙td-distribution as the result of normally distributed parameters with Gaussian Copula CGa (column 7 in Table 1 with q99 = 47.8ps) ∙td-distribution as the result of normally distributed parameters with t-Copula Ct (column 9 in Table 1 with q99 = 50.2ps)</p>
+  <p>and 38.4 ps for CGu. With respect to μtd = 20ps this difference of 2.7ps implies a discrepancy of 13.5%. While Monte-Carlo SPICE simulations are very time consuming this is different to our Matlab computation. SPICE simulations took more than 150 s to complete a single inverter delay analysis with 10000 runs. The Matlab algorithm (copula generation + computation of 10000 gate</p>
+  <p>2 The Matlab function copulaparam automatically computes θby using the linear correlation ρor the rank correlation τ.</p>
+  <p>From each of these 2 distributions 10 independent samples for the 10 inverter delays td1, ... , td10 with a sample size of 10000 for each delay are generated. The addition of the inverter delays yields the path delay tpath = td1 + · · · + td10 for CGa and Ct, which in turn is a tuple of 10000 delay values each. Using these values Matlab’s cdfplot automati-</p>
+  <p>9</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 10</div>
+  <p>W. Schneider Microelectronics Journal 107 (2021) 104938</p>
+  <p>cally creates the corresponding CDF’s, which are illustrated in Fig. 13. Obviously there is a remarkable difference between the two curves, e.g. the discrepancy of the 0.99-quantile delay is about 10%. It turned out, that this difference could be even worse - e.g. more than 20% for testcase ♯3. It is expected that such significant differences appear in a similar manner when regarding some arbitrary paths with various complex gates in a design.</p>
+  <p>7. Conclusion</p>
+  <p>[8] . Online available at:, http://www.cadence.com. [9] V. Champac, J.G. Gervacio, Timing performance of nanometer digital circuits under process variations, in: Springer, Frontiers in Electronic Testing, 2018. [10] P. Stolk, F. Widdershoven, D. Klaassen, Modeling statistical dopant fluctuations in MOS transistors, in: IEEE Trans. Electron Devices, vol. 45, 1998, pp. 1960–1971. no. 9. [11] A. Asenov, A.R. Brown, J.H. Davies, S. Kaya, G. Slavcheva, Simulation of intrinsic parameter fluctuations in decananometer and nanometer-scale MOSFETs, in: IEEE Trans. Electron Devices, vol. 50, 2003, pp. 1837–1852. no. 9. [12] S.K. Saha, Modeling process variability in scaled CMOS technology, in: IEEE Des. Test Comput., vol. 27, 2010, pp. 8–16. no. 2. [13] S.K. Saha, Compact MOSFET modeling for process variability-aware VLSI circuit design, in: IEEE Access, 2014. [14] H. Chang, V. Zolotov, S. Narayan, C. Visweswariah, Parameterized block-based statistical timing analysis with non-Gaussian parameters, nonlinear delay functions, in: Proc. of DAC, 2005. [15] K.R. Heloue, F.N. Najm, Parameterized timing analysis with general delay models and arbitrary variation sources, in: Proc. of DAC, 2008. [16] T. Sakurai, A.R. Newton, Alpha-power law MOSFET model and its applications to CMOS inverter delay and other formulas, in: IEEE Journal Solid-State Circuits, vol. 25, 1990, pp. 584–594. no. 2. [17] N. Chandra, A.K. Yati, A.B. Bhattacharyya, Extended-Sakurai-Newton MOSFET model for ultra-deep-submicrometer CMOS digital design, in: IEEE 22nd International Conference on VLSI Design, 2009. [18] Y. Wang, M. Zwolinski, Analytical transient response and propagation delay model for nanoscale CMOS inverter, in: IEEE International Symposium on Circuits and Systems, 2009. [19] S. Gummalla, A.R. Subramaniam, Y. Cao, C. Chakrabarti, An analytical approach to efficient circuit variability analysis in scaled CMOS design, in: 13th International Symposium on Quality Electronic Design, 2010.</p>
+  <p>SSTA is an important topic in the design of integrated circuits especially in the nanometer regime. The quality of SSTA algorithms strongly depends on the underlying statistical gate-delay models. Only with accurate models it is expected that such algorithms are accepted in industry. This paper demonstrates the novel modeling technique Copulas to combine any type of statistical parameter distribution with arbitrary dependencies. The effect of different dependencies and parameter distributions has been extensively studied with a CMOS inverter. The reported results have shown significant differences concerning the inverter delay distribution and consequently the path delay distribution as shown by a simple inverter chain. Future work includes the analysis of other cells and the application of copulas to path based SSTA algorithms.</p>
+  <p>Declaration of competing interest</p>
+  <p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.</p>
+  <p>References</p>
+  <p>[20] F.S. Marranghello, A.I. Reis, R.P. Ribas, Improving analytical delay modeling for CMOS inverters, in: Journal of Integrated Circuits and Systems, 2015. [21] P. Cao, Z. Liu, J. Guo, J. Wu, An analytical gate delay model in near/subthreshold domain considering process variation, in: IEEE Access, vol. 7, 2019. [22] G. Cui, et al., Exact distribution for the product of two correlated Gaussian random variables, in: IEEE Signal Processing Letters, vol. 23, 2016, pp. 1662–1666. 11. [23] A. Papoulis, S.U. Pillai, Probability, random variables and stochastic processes, in: McGraw-Hill Publ. Comp., fourth ed., 2001. [24] J. Jaffari, M. Anis, Efficient Monte Carlo-based statistical static timing analysis of digital circuits, in: Prof. of ICCAD, 2008. [25] A. Singhee, S. Singhal, R.A. Rutenbar, Practical, fast Monte Carlo statistical static timing analysis: why and how, in: Proc. of DAC, 2008. [26] A.J. McNeil, R. Frey, P. Embrechts, Quantitative Risk Management, Princeton University Press, 2005. [27] R.B. Nelsen, An introduction to copulas, in: Springer Series in Statistics, 2006. [28] ©1994 - 2020 the Mathworks, Inc., 2020. Online-Help, www.mathworks.de. [29] W. Zhao, Y. Cao, New generation of Predictive Technology Model for sub-45nm early design exploration, no. 11 in: IEEE Transactions on Electron Devices, vol. 53, 2006, pp. 2816–2823 Online at:, http://ptm.asu.edu. [30] Matlab file exchange. www.mathworks.com/matlabcentral/fileexchange. [31] Q. Tang, A. Zjajo, M. Berkelaar, N. van der Meijs, Transistor-level gate model based statistical timing analysis considering correlations, in: Proc. of DATE, 2012. [32] A. Goel, S. Vrudhula, Statistical waveform and current source based standard cell models for accurate timing analysis, in: Proc. of DAC, 2008.</p>
+  <p>[1] S. Bhardwaj, P. Ghanta, S. Vrudhula, A framework for statistical timing analysis using non-linear delay and slew models, in: Proc. of ICCAD, 2006. [2] Y. Zhan, A.J. Strojwas, X. Li, L.T. Pileggi, D. Newmark, M. Sharma, Correlation-aware statistical timing analysis with non-Gaussian delay distributions, in: Proc. of DAC, 2005. [3] J. Singh, S. Sapatnekar, Statistical timing analysis with correlated non-Gaussian parameters using independent component analysis, in: Proc. of DAC, 2006. [4] A. Lange, Ch. Sohrmann, R. Jancke, J. Haase, I. Lorenz, U. Schlichtmann, Probabilistic standard cell modeling considering non-Gaussian parameters and correlations, in: Proc. of DATE, 2014. [5] A. Mutlu, J. Le, R. Molino, M. Celik, A parametric approach for handling local variation effects in timing analysis, in: Proc. of DAC, 2009. [6] A.B. Kahng, New game, new goal posts: a recent history of timing closure, in: Proc. of DAC, 2015. [7] A. Elzeftawi, K. Tseng, Addressing Process Variation and Reducing Timing Pessimism at 16nm and below. Cadence, White Paper, 2019.</p>
+  <p>10</p>
+</section>
+</article>
+</main>
+</body>
+</html>

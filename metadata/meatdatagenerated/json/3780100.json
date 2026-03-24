@@ -1,0 +1,63 @@
+{
+  "source_filename": "3780100.pdf",
+  "source_path": "papers50/3780100.pdf",
+  "title": "Efficient Timing Prediction and Optimization Using Derivable Gradient Boosting Machine Model at Placement Stage",
+  "authors": null,
+  "authors_guess": null,
+  "journal": "ACM Trans. Des. Autom. Electron. Syst. 0.0",
+  "year": "2026",
+  "doi": "10.1145/3780100",
+  "page_count": 21,
+  "word_count": 10982,
+  "abstract": null,
+  "keywords": [],
+  "section_headings": [
+    "1 Introduction",
+    "3 Problem Formulation",
+    "5 Derivable Timing Prediction",
+    "5.1 Look-ahead RC Network Generation",
+    "6 Timing Optimization with Derivable Model",
+    "7.1 Dataset Generation"
+  ],
+  "figure_captions": [
+    "Fig. 1. Accurate timing analysis can reduce over-pessimistic design.",
+    "Fig. 2. Elmore delay model.",
+    "Fig. 3. The large gap between Elmore delay and sign-off wire delay may result in a significant inaccurate timing guide for critical path identification.",
+    "Fig. 4. Our timing analysis and optimization framework at placement stage.",
+    "Fig. 5. Feature extraction example. For a multi-pin net n3, it can be partitioned into two-pin nets from input pin bof driver c1 to sinks dand f, respectively. Each two-pin net-based delay incorporates both driver gate delay and wire delay to the target sink. Based on the placement layout, a fast routing analysis is applied to generate a look-ahead RC tree of n3. Finally, the timing features are extracted according to the generated RC tree.",
+    "Fig. 6. Our derivable GBM driver-sink delay model with MLP as basic learner.",
+    "Fig. 7. Comparison of error distribution of net delay prediction on circuit CVA6 and C910.",
+    "Fig. 8. Analysis of endpoint arrival time on circuit CVA6 and C910."
+  ],
+  "table_captions": [
+    "Table 1. Feature Summary in Our derivable Model",
+    "Table 2. Benchmark Suite Information",
+    "Table 3. Timing Prediction Comparison on Original Implementation",
+    "Table 4. More Challenge Timing Prediction Comparison with Wirelength Enlargement",
+    "Table 5. Comparison on Endpoint Arrival Time",
+    "Table 6. Critical Path Classification",
+    "Table 7. Performance on Timing-Driven Placement Analysis",
+    "Table 8. Derivable Model Comparison on Timing Correlation"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Efficient Timing Prediction and Optimization Using Derivable Gradient Boosting Machine Model at Placement Stage",
+    "author": "",
+    "subject": "ACM Trans. Des. Autom. Electron. Syst. 0.0",
+    "keywords": "",
+    "creator": "",
+    "producer": "iText 4.2.0 by 1T3XT",
+    "creationDate": "D:20260323085924-07'00'",
+    "modDate": "D:20260323085925-07'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2026-03-23",
+    "modified_date": "2026-03-23"
+  },
+  "text_path": "metadata/meatdatagenerated/text/3780100.txt",
+  "json_path": "metadata/meatdatagenerated/json/3780100.json",
+  "html_path": "html/3780100.html",
+  "citation": "(2026). Efficient Timing Prediction and Optimization Using Derivable Gradient Boosting Machine Model at Placement Stage. ACM Trans. Des. Autom. Electron. Syst. 0.0. https://doi.org/10.1145/3780100"
+}

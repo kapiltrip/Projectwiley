@@ -1,0 +1,81 @@
+{
+  "source_filename": "45.pdf",
+  "source_path": "papers50/45.pdf",
+  "title": "Delay-correlation-aware SSTA based on conditional moments",
+  "authors": "Zeqin Wu",
+  "authors_guess": "Zeqin Wu",
+  "journal": "Microelectronics Journal",
+  "year": "2012",
+  "doi": "10.1016/j.mejo.2012.01.003",
+  "page_count": 11,
+  "word_count": 8295,
+  "abstract": "Article history: Received 28 June 2011 Received in revised form 5 January 2012 Accepted 6 January 2012 Available online 25 January 2012 Corner-based Timing Analysis (CTA) becomes more and more pessimistic as feature size shrinks. This trend has motivated the development of Statistical Static Timing Analysis (SSTA). In this paper, we propose a new path-based SSTA framework that allows the estimation of path delay distributions and delay correlations by propagating iteratively mean and variance of cell delay. These moments, conditioned on input slope and output load values, are pre-characterized by an improved method: log-logistic distribution based input signals and inverters as output load. In applications, the delay gains of this SSTA framework with respect to CTA are shown to be significant. It is also highlighted that the discrepancy of critical paths orderings obtained by SSTA and CTA depends on two factors: cell-tocell delay correlation and standard deviation of cell delay. & 2012 Elsevier Ltd. All rights reserved.",
+  "keywords": [
+    "Statistical static timing analysis Moments propagation Cell-to-cell delay correlation Path-to-path delay correlation"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "3. Flow of the SSTA framework",
+    "3.1. Setup",
+    "2. Conditional moments",
+    "3.2. SSTA Engine",
+    "4.1. Input signal model",
+    "4. Timing characterization",
+    "4.2. Output load variations",
+    "5.2. Validation of the techniques to estimate correlations",
+    "5. Validation and comparison",
+    "5.1. Validation of the SSTA engine",
+    "5.3. Comparisons",
+    "6. Applications",
+    "6.1. Gains of SSTA",
+    "6.2. Ordering of critical paths",
+    "7. Conclusions"
+  ],
+  "figure_captions": [
+    "Fig. 1. Flow of the path-based SSTA framework.",
+    "Fig. 2. Structure of the statistical timing library.",
+    "Fig. 3. Illustration of bilinear interpolation.",
+    "Fig. 4. Procedure of moments propagation.",
+    "Fig. 5. Notations of input signal model.",
+    "Fig. 6. Normalized and transformed signals for Vdd1⁄41.2Vol. Fig. 7. Average relative errors of approximated signals.",
+    "Fig. 8. M inverters as output load.",
+    "Fig. 7 shows the results. The linear ramp model has large errors in the two voltage ranges [0.2Vdd, 0.4Vdd] and [0.6Vdd, 0.8Vdd]. This is problematic because it is in these ranges that threshold voltage values are used to extrapolate tin. In contrast, LL-based model has low errors in those ranges and shows large errors only in [0.8Vdd, Vdd].",
+    "Fig. 8 illustrates this procedure. M inverters are connected at the output pin of this cell. The sum of input charges of all inverters corresponds to the output load indexes C1,C2, y, Cj in the lookup tables. Such a replacement gives better accuracy as will be shown later.",
+    "Fig. 9 shows plots of the points ðr, ^rÞ. Most of the estimated CDCs in panel (a) are located in the dashed region corresponding to eabs r0.2. In addition, most of the points outside this dashed region corresponds to overestimated ^r, which results in overestimating standard deviations of path delays (see Eq. (12)). This explains why, in Table 2, the majority of relative errors of path delay standard deviations are positive. In Fig. 9(b), PDCs are mostly in the region where erelr10%, which validates the reasoning in (22)–(25). In order to obtain more information about these accuracies, we computed the percentages Poe, Pue of ^r overestimating and underestimating the corresponding r, respectively. Table 3 shows that 81% of the CDCs are overestimated while 84% of the PDCs are underestimated. This is preferable. To see why, we turn to the problem of timing verification. For ease of description, consider the setup time constraint",
+    "Fig. 9. (a) Validation of the technique to estimate CDC. (b) Validation of the technique to estimate PDC.",
+    "Fig. 10. Interpretation of discrepancy between orderings.",
+    "Fig. 11. Evolution of ðwpd\u0002sn pd=wpd\u0002spdÞ% with respect to logical depth.",
+    "Fig. 10 plots the four curves wpd, spd, s0pd, spd * . The rank of each path corresponds to decreasing values of wpd. The two curves wpd and spd * have a similar shape, and the same holds for the pair of curves spd and s0pd. These similarities allow concluding that, in this case, the discrepancy of orderings comes mainly from yk, i.e. from the pessimistic standard deviation values considered by CTA. Indeed, 81% of the average gap between wpd (CTA) and spd (SSTA) comes from the difference between wpd and s0pd. Note that the above paths have logical depths ranging from 10 to 16. This conclusion is further supported by Fig. 11 that shows the evolution of ðwpd\u0002sn pdÞ=ðwpd\u0002spdÞ% with respect to logical depth, i.e. the percentage of CTA pessimism explained by CDCs. For most of the paths, this percentage is around 30%, except for some short paths. From this figure, one may conclude that accurate estimates of CDCs are mandatory for accurate estimates of path delays, especially when logical depths are less than 10."
+  ],
+  "table_captions": [
+    "Table 1 CDCs varying with cell type, output load and I/O edge (R: rising edge, F: falling edge).",
+    "Table 2 Validation of the SSTA engine.",
+    "Table 4 shows the impacts of CDC and slope variations on the accuracy of estimated standard deviations. In addition to the technique to estimate CDC through (16) and (21), the following two extreme cases were considered:",
+    "Table 3 Accuracy of computed CDCs and PDCs.",
+    "Table 4 Impacts of CDC and slope variations s2tin .",
+    "Table 5 Comparisons of path delay standard deviations bspd computed with different statistical timing libraries.",
+    "Table 6 Average delay gains of the SSTA engine over CTA (without interconnects).",
+    "Table 6 gives the results for circuits b01, b05 and b07 of the ITC99 benchmarks. From this table, we can draw the following conclusions:"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Delay-correlation-aware SSTA based on conditional moments",
+    "author": "Zeqin Wu",
+    "subject": "Microelectronics Journal, (2012) 263-273. doi:10.1016/j.mejo.2012.01.003",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 7.0.5 pour Macintosh",
+    "creationDate": "D:20240417121912+05'30'",
+    "modDate": "D:20240704100752+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-04-17",
+    "modified_date": "2024-07-04"
+  },
+  "text_path": "metadata/meatdatagenerated/text/45.txt",
+  "json_path": "metadata/meatdatagenerated/json/45.json",
+  "html_path": "html/45.html",
+  "citation": "Zeqin Wu (2012). Delay-correlation-aware SSTA based on conditional moments. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2012.01.003"
+}

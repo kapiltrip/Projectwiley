@@ -1,0 +1,63 @@
+{
+  "source_filename": "23.pdf",
+  "source_path": "papers50/23.pdf",
+  "title": "Aging-Aware Critical Path Selection via Graph Attention Networks",
+  "authors": "Yuyang Ye , Tinghuan Chen , Member, IEEE, Yifei Gao , Hao Yan , Member, IEEE, Bei Yu , Senior Member, IEEE, and Longxing Shi , Senior Member, IEEE",
+  "authors_guess": "Yuyang Ye , Tinghuan Chen , Member, IEEE, Yifei Gao , Hao Yan , Member, IEEE, Bei Yu , Senior Member, IEEE, and Longxing Shi , Senior Member, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2023",
+  "doi": "10.1109/TCAD.2023.3276944",
+  "page_count": 14,
+  "word_count": 11530,
+  "abstract": "In advanced technology nodes, aging effects like negative and positive bias temperature instability (NBTI and PBTI) become increasingly significant, making timing closure and optimization more challenging. Unfortunately, conventional critical path (CP) selection tools used in reliability-aware design flow cannot accurately identify CPs under different aging conditions. To address this issue, we propose an aging-aware CP selection flow comprising two parts: 1) critical cell detection and 2) path criticality (PC) computation. We employ graph-attention (GAT) networks to predict the critical cells in the aged circuits, and a PC computation algorithm that takes into account circuitlevel and transistor-level parameters to generate PC rank lists. Our experimental results demonstrate that our GAT model outperforms classical machine learning models in detecting critical cells. Additionally, compared with the commercial tool, our agingaware flow achieves an average accuracy of 99.52%, 98.69%, and 97.20% for top-10%, top-5%, and top-1% path sets, respectively, in five industrial designs subjected to different aging conditions and workloads.",
+  "keywords": [
+    "EDA",
+    "machine learning",
+    "timing analysis. (b) Fig. 1. (a) Example showing how the path",
+    "which was uncritical before aging",
+    "became critical after aging. (b) Error rate of the top-10% path sets on four benchmarks in 10-year aging experiments"
+  ],
+  "section_headings": [
+    "II. PRELIMINARIES",
+    "III. GAT-BASED CRITICAL CELL DETECTION",
+    "IV. PATH CRITICALITY COMPUTATION",
+    "V. AGING-AWARE CRITICAL PATH SELECTION",
+    "VI. EXPERIMENTAL RESULTS",
+    "VII. CONCLUSION AND FURTHER WORK"
+  ],
+  "figure_captions": [
+    "Fig. 1. (a) Example showing how the path, which was uncritical before aging, became critical after aging. (b) Error rate of the top-10% path sets on four benchmarks in 10-year aging experiments.",
+    "Fig. 2. Aging-aware SPICE simulation flow.",
+    "Fig. 3. Aging-aware STA flow. The workload profiles are generated via logic simulator (Modelsim in this work) and the aging-aware timing library is generated via cell-level characterization via PrimeLib.",
+    "Fig. 4. Distribution of the top-10% CP delays for the design with timing wall (under one global timing constraint) and without timing wall (under multiple timing constraints).",
+    "Fig. 5. Relationships between the used potential CP set P and all paths.",
+    "Fig. 6. Framework of GAT-based critical cell detection. The input is a netlist graph represented in an adjacency matrix and its original node attributes. There are three key parts: circuit structure deep autoencoder, circuit attribute deep autoencoder, and critical cell detection classifier. Note that the GAT layers help us to get node embedding in the circuit structure deep autoencoder.",
+    "Fig. 7. Illustration to compute the node embedding for node 1 with GAT-layers when D equals 2. And the procedure to compute the attention coefficient between node 1 and node 2 based on a single-layer feedforward neural network. Kd is the dimension of the embedding results the dth GAT layer and K0 = 32 in the feature transform layer.",
+    "Fig. 8. Illustration of PC computation.",
+    "Fig. 9. Proposed parallel flow of CP selection. On multiple GPUs, we achieve graph learning in parallel to get a trained model under different aging conditions. And compute the PC on a multicore machine. Finally, a CP can be selected based on the path rank list.",
+    "Fig. 11. Ratio of critical and uncritical cells on (a) Top-1%, (b) Top-5%, and (c) Top-10% paths.",
+    "Fig. 10. Runtime comparison among aging-aware SPICE, aging-aware STA, and our work under (a) 1-year and (b) 9-year aging conditions."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Aging-Aware Critical Path Selection via Graph Attention Networks",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2023;42;12;10.1109/TCAD.2023.3276944",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20231107161819+05'30'",
+    "modDate": "D:20231120194212-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-11-07",
+    "modified_date": "2023-11-20"
+  },
+  "text_path": "metadata/meatdatagenerated/text/23.txt",
+  "json_path": "metadata/meatdatagenerated/json/23.json",
+  "html_path": "html/23.html",
+  "citation": "Yuyang Ye , Tinghuan Chen , Member, IEEE, Yifei Gao , Hao Yan , Member, IEEE, Bei Yu , Senior Member, IEEE, and Longxing Shi , Senior Member, IEEE (2023). Aging-Aware Critical Path Selection via Graph Attention Networks. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2023.3276944"
+}

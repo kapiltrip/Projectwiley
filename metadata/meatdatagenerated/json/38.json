@@ -1,0 +1,66 @@
+{
+  "source_filename": "38.pdf",
+  "source_path": "papers50/38.pdf",
+  "title": "Potential Critical Path Selection Based on a Time-Varying Statistical Timing Analysis Framework",
+  "authors": "P. R. Chithira , Student Member, IEEE, and Vinita Vasudevan, Member, IEEE",
+  "authors_guess": "P. R. Chithira , Student Member, IEEE, and Vinita Vasudevan, Member, IEEE",
+  "journal": "IEEE Transactions on Very Large Scale Integration (VLSI) Systems",
+  "year": "2019",
+  "doi": "10.1109/TVLSI.2019.2893020",
+  "page_count": 12,
+  "word_count": 10149,
+  "abstract": "Negative bias temperature instability along with the presence of process variations has resulted in time-varying path criticalities. To ensure reliable circuit operation, aging sensors are used at the end of potential critical paths (PCPs) for delay monitoring. Optimization of the number of delay sensors requires accurate computational models for prediction of criticality and selection of PCPs. We identify a path as a PCP if its maximum global criticality over the lifetime exceeds a certain threshold. However, the global criticality of a path could vary nonmonotonically over the lifetime of the device. In this paper, we propose a framework for time-varying statistical static timing analysis (TV-SSTA), wherein the circuit delay is obtained as a collection of time-varying canonicals with breakpoints in time which define the end of validity of one and the start of the next canonical. We show that the global criticality of any path will be maximum either at t = 0 or at these breakpoints. Hence, criticality computation and PCP selection need to be done only at these time points, which typically is less than four. The TV-SSTA is integrated with a previously proposed criticality computation technique to identify the PCPs and the results are validated against Monte Carlo simulations.",
+  "keywords": [
+    "Aging",
+    "negative bias temperature instability (NBTI)",
+    "path criticality",
+    "potential critical path (PCP)",
+    "statistical timing"
+  ],
+  "section_headings": [
+    "II. TIME-VARYING CANONICAL DELAY MODEL",
+    "III. TIME-VARYING SSTA",
+    "IV. TIME-VARYING PATH CRITICALITY",
+    "V. STATISTICAL PCP SELECTION",
+    "VI. PROPOSED FRAMEWORK",
+    "VII. RESULTS",
+    "VIII. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. Four regions in tightness probability domain determined by βl, βm, and βh.",
+    "Fig. 2. Nonmonotonic time-varying path criticalities of some paths in b04 and b05 circuits obtained using Monte Carlo simulations in 90-nm technology.",
+    "Fig. 3. Steps in the proposed framework.",
+    "Fig. 4 shows the percentage error in mean and standard deviation of circuit delay at the end of lifetime using the proposed TV-SSTA. The maximum error in mean of 3.17% occurs for s38417 circuit in UMC 90-nm technology and the average error is 0.70%. The maximum error in standard deviation is around 6% occurring in s9234 circuit synthesized using NanGate 4-nm library and the average error is 1.48%. If a conventional SSTA is performed using aged gate delays at t = 10 years, the error in mean is found to be 5.06% in s38417 circuit. Similarly, the error in standard deviation for s9234 circuit is 5.00%. This indicates that the error in these circuits is primarily due to the linearization of MAX operation in the standard SSTA formulation and there is no significant additional error due to the time-varying formulation. Fig. 5 compares the time variation in mean and standard deviation of circuit delay against the values obtained by rerunning conventional SSTA multiple times, from 0 to 10 years in steps of 1 year for three circuits, c432, s13207, and b04, in UMC 90-nm technology. The mean of circuit delay is plotted as a function of time in Fig. 5(a). The figure indicates that the mean of circuit delay increases with time and matches closely with the values obtained from individual SSTA runs. The error in the mean of circuit delay at 10 years is found to be 0.02%, 0.07%, and 0.13% for c432, s13207, and b04 circuits, respectively. The time variation in standard deviation is plotted in Fig. 5(b). There is a discontinuity of 1.5% in standard deviation of s13207 which occurs at a break point in the circuit delay distribution. This is seen in some circuits and is typically less than 1%. The error in standard deviation of circuit delay at 10 years is found to be 0.62%, 0.04%, and 2.22% for c432, s13207, and b04 circuits, respectively. The average number of breakpoints in arrival times across all the nodes (Ntb,avg) is shown in Fig. 6(a) and is found to be less than 2 in most of the benchmark circuits. This determines the run-time complexity of the TV-SSTA algorithm",
+    "Fig. 4. Percentage error in mean and standard deviation of circuit delay at t = 10 years with respect to Monte Carlo simulations using the proposed TV-SSTA technique. (a) Percentage error in the mean of circuit delay. (b) Percentage error in standard deviation of circuit delay.",
+    "Fig. 5. Time variation in mean and standard deviation of circuit delay obtained using the proposed method in UMC 90-nm technology. “o” markers: values obtained using conventional SSTA runs. (a) Mean. (b) Standard deviation.",
+    "Fig. 6. Number of break points using TV-SSTA. (a) Average number of break points in arrival times across all nodes. (b) Number of break points in circuit delay.",
+    "Fig. 7. Time-varying path criticality in s5378 (90 nm), b05 (90 nm), and s15850 and b04 (45 nm) circuits. “x” and “o” markers: Monte Carlo path criticalities at the break points in the circuit delay and the test points, respectively. A zoomed-in view of the region where maximum path criticality occurs is given in the inset figure. (a) s5378 circuit. (b) b05 circuit. (c) s15850 and b04 circuits.",
+    "Fig. 8. Time-varying path criticality in b05 circuit synthesized using UMC 90-nm library. “x” and “ ” markers: path criticalities at the break points in circuit delay computed using Monte Carlo and hierarchical methods, respectively.",
+    "Fig. 9. Maximum error in path criticality with respect to Monte Carlo simulations for (a) TV-SSTA + hierarchical partitioning and (b) SSTA at a given time point + hierarchical partitioning in various benchmark circuits. (a) Using UMC 90-nm library. (b) Using NanGate 45-nm library.",
+    "Fig. 9 shows a comparison of the maximum error in path criticality computed using the proposed method and by performing a conventional SSTA followed by criticality computation at the break points. The aim is to see if any additional error is introduced due to the approximations made in the TV-SSTA formulation. The results show that the maximum error in both the cases is comparable, both for UMC 90-nm and NanGate 45-nm technologies, indicating that the approximations involved in the TV-SSTA formulation does",
+    "Fig. 11. Number of PCPs identified by Monte Carlo simulations for thresholds of 0.05, 0.03, and 0.01. (a) Using UMC 90-nm library. (b) Using NanGate 45-nm library.",
+    "Fig. 10. Comparsion of paths reported by the proposed method against Monte Carlo simulations. (a) Number of PCPs reported by the proposed method. (i) Using UMC 90-nm library. (ii) Using NanGate 45-nm library. (b) Number of PCPs not identified by the proposed method with the associated maximum criticalities. (i) Using UMC 90-nm library. (ii) Using NanGate 45-nm library."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Potential Critical Path Selection Based on a Time-Varying Statistical Timing Analysis Framework",
+    "author": "",
+    "subject": "IEEE Transactions on Very Large Scale Integration (VLSI) Systems;2019;27;6;10.1109/TVLSI.2019.2893020",
+    "keywords": "",
+    "creator": "Aspose Ltd.",
+    "producer": "Aspose.Pdf for .NET 8.3.0; modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20190507083547+05'30'",
+    "modDate": "D:20190520162311-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2019-05-07",
+    "modified_date": "2019-05-20"
+  },
+  "text_path": "metadata/meatdatagenerated/text/38.txt",
+  "json_path": "metadata/meatdatagenerated/json/38.json",
+  "html_path": "html/38.html",
+  "citation": "P. R. Chithira , Student Member, IEEE, and Vinita Vasudevan, Member, IEEE (2019). Potential Critical Path Selection Based on a Time-Varying Statistical Timing Analysis Framework. IEEE Transactions on Very Large Scale Integration (VLSI) Systems. https://doi.org/10.1109/TVLSI.2019.2893020"
+}

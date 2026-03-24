@@ -1,0 +1,60 @@
+{
+  "source_filename": "44.pdf",
+  "source_path": "papers50/44.pdf",
+  "title": "The Impact of BTI Variations on Timing in Digital Logic Circuits",
+  "authors": "Jianxin Fang and Sachin S. Sapatnekar, Fellow, IEEE",
+  "authors_guess": "Jianxin Fang and Sachin S. Sapatnekar, Fellow, IEEE",
+  "journal": "IEEE Transactions on Device and Materials Reliability",
+  "year": "2013",
+  "doi": "10.1109/TDMR.2013.2237910",
+  "page_count": 10,
+  "word_count": 8515,
+  "abstract": "A new framework for analyzing the impact of bias temperature instability (BTI) variations on timing in large-scale digital logic circuits is proposed in this paper. This approach incorporates both the reaction–diffusion model and the chargetrapping model for BTI and embeds these into a temporal statistical static timing analysis framework capturing process variations and path correlations. Experimental results on 32-, 22-, and 16-nm technology models, which were verified through Monte Carlo simulation, confirm that the proposed approach is fast, accurate, and scalable and indicate that BTI variations make a significant contribution to circuit-level timing variations.",
+  "keywords": [
+    "Bias temperature instability (BTI)",
+    "circuit reliability",
+    "process variation (PV)",
+    "timing analysis"
+  ],
+  "section_headings": [
+    "II. MODELING VARIATIONS",
+    "III. TIMING ANALYSIS UNDER VARIATIONS",
+    "IV. RESULTS",
+    "V. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. (a) Narrow distribution of lifetime in large devices where randomness averages out. (b) Large variation of lifetime in small devices where stochasticity predominates [17].",
+    "Fig. 3. Example plot of defect occupancy probability function Pc(DF, t, ⃗τ) of a single defect.",
+    "Fig. 2. Distribution of defects according to their capture time constant τc and emission time constant τe.",
+    "Fig. 3 shows an example plot of the occupancy probability function, i.e., Pc(DF, t,⃗τ), of a single defect as defined in (7), with the values of the time constants shown in the figure. The plot indicates that the occupancy probability Pc gradually increases with DF but rapidly rises with time at the range of 105 to 106 a.u. Since the defect precursors (Si–Si bond in the SiO2 dielectric according to [24]) are created in the fabrication process and uniformly distributed in the dielectric layer, the statistical distribution of capture/emission time constants associated with each defect is i.i.d. For each defect, the four components of ⃗τ are correlated [4], and their joint distribution can be characterized for a specific technology. In this paper, we follow the assumptions in [17] to generate the distributions of time constants. Fig. 2 shows an example 2-D histogram of the joint distribution of τc,Stress and τe,Relax, which are the dominant components of ⃗τ. The proposed approaches in this paper are independent of the distribution of ⃗τ. We introduce the concept of the mean defect occupancy probability, i.e., ̄Pc(DF, t), which captures the expected value of the probability of a defect charged with carriers (i.e., captured), based on the single-defect model of (7), and f(⃗τ), the joint pdf of ⃗τ",
+    "Fig. 4 shows an example of ̄Pc(DF, t) function corresponding to the assumed f(⃗τ) plotted in Fig. 2. This plot indicates that",
+    "Fig. 4. Plot of mean defect occupancy probability function ̄ Pc(DF, t).",
+    "Fig. 5. Example circuit showing path reconvergence.",
+    "Fig. 6. Delay PDF and CDF of c3540 with 16-nm model.",
+    "Fig. 7. Runtime versus circuit size of different methods.",
+    "Fig. 8. Relative contribution of BTI CT, BTI R–D, and PV to circuit delay variation.",
+    "Fig. 9. Delay degradation versus time of c5315."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "The Impact of BTI Variations on Timing in Digital Logic Circuits",
+    "author": "",
+    "subject": "IEEE Transactions on Device and Materials Reliability;2013;13;1;10.1109/TDMR.2013.2237910",
+    "keywords": "",
+    "creator": "",
+    "producer": "Acrobat Distiller 7.0.5 (Windows); modified using iText® 7.1.1 ©2000-2018 iText Group NV (AGPL-version)",
+    "creationDate": "D:20130228101343+08'00'",
+    "modDate": "D:20181205001751-05'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2013-02-28",
+    "modified_date": "2018-12-05"
+  },
+  "text_path": "metadata/meatdatagenerated/text/44.txt",
+  "json_path": "metadata/meatdatagenerated/json/44.json",
+  "html_path": "html/44.html",
+  "citation": "Jianxin Fang and Sachin S. Sapatnekar, Fellow, IEEE (2013). The Impact of BTI Variations on Timing in Digital Logic Circuits. IEEE Transactions on Device and Materials Reliability. https://doi.org/10.1109/TDMR.2013.2237910"
+}

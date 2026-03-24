@@ -1,0 +1,77 @@
+{
+  "source_filename": "28.pdf",
+  "source_path": "papers50/28.pdf",
+  "title": "Machine-Learning-Based Multi-Corner Timing Prediction for Faster Timing Closure",
+  "authors": "Zhenyu Zhao, Shuzheng Zhang, Guoqiang Liu, Chaochao Feng, Tianhao Yang, Ao Han and Lei Wang",
+  "authors_guess": "Zhenyu Zhao, Shuzheng Zhang, Guoqiang Liu, Chaochao Feng, Tianhao Yang, Ao Han and Lei Wang",
+  "journal": "For the purpose of fixing timing violations",
+  "year": "2022",
+  "doi": "10.3390/electronics11101571",
+  "page_count": 15,
+  "word_count": 8424,
+  "abstract": "For the purpose of fixing timing violations, static timing analysis (STA) of full-corners is repeatedly executed, which is time-consuming. Given a timing path, timing results at some corners (“dominant corners”) are utilized to predict timing at other corners (“non-dominant corners”), which can greatly shorten the runtime of STA. However, the huge number of combinations of the dominant corners and the wide difference in prediction accuracy make it difficult to apply multi-corner timing prediction to chip industrial design. In this paper, we propose a dominant corner selection strategy to quickly determine the dominant corner combination with high prediction accuracy, along with which a new multi-corner timing prediction process is established to speed up STA. Experimental results show that our method can not only effectively accelerate STA, but also ensure the high prediction accuracy of the prediction timing. On the public ITC’99 benchmark, the prediction accuracy of the dominant corner combination selected by the proposed method is up to 98.2%, which is an improvement of 15% compared to the state-of-the-art method. For industrial application, we apply our method by using timing results on only 2 dominant corners to predict the other 12 non-dominant corners, which accelerates the runtime of the timing closure process by more than 2×. Citation: Zhao, Z.; Zhang, S.; Liu, G.; Feng, C.; Yang, T.; Han, A.; Wang, L.",
+  "keywords": [
+    "machine learning",
+    "chip physical design",
+    "STA",
+    "multi-corner",
+    "timing closure"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Related Work",
+    "3.2. Exploration of Dominant Corner Space",
+    "3.3. Data Construction",
+    "3.4. Machine Learning Models",
+    "4.1.1. Iterative Increase Strategy for Dominant Corner Selection",
+    "4.1.2. An Application Flow of Multi-Corner Timing Prediction",
+    "4.2.2. Prediction Performance Metrics",
+    "5.2. Experiment 2: Performance Evaluation of Corner Selection Strategy",
+    "5.3. Experiment 3: Further Comparison and Analysis of Prediction Performance",
+    "5.4. Experiment 4: Performance Evaluation of Small-Scale Training Data",
+    "5.5. Experiment 5: Performance Evaluation of Incremental Re-Training",
+    "5.6. Experiment 6: Faster Timing Closure in Industrial Application",
+    "6. Conclusions"
+  ],
+  "figure_captions": [
+    "Figure 1. Prediction accuracy distribution for art1. Each point represents a dominant corner combination. The abscissa value is the ID of the combination, and the ordinate value is the prediction accuracy corresponding to the combination. The maximum accuracy, minimum accuracy, and the difference between the two are all marked.",
+    "Figure 2. Extended Experiment. Subfigures (a–f) show all dominant corner combinations when the number of dominant corners varies from 1 to 6. n refers to the number of dominant corners, and each blue dot represents a dominant corner combination.",
+    "Figure 3. Data generation flow.",
+    "Figure 4. Iterative increase strategy.",
+    "Figure 5. Machine-learning-based timing prediction application flow.",
+    "Figure 6. Performance evaluation of the three models. Subfigure (a) shows the evaluation of LESS10 of three models on all designs. Subfigure (b) shows the evaluation of MAE of three models on all designs.",
+    "Figure 7. Performance evaluation of the two selection algorithms: Subfigures (a–n) show the evaluation of LESS10 and MAE of two strategies on all designs. Plots of our iterative increase strategy (red) and the existing greedy deletion strategy (green).",
+    "Figure 8. Performance evaluation of small-scale training data. Subfigures (a–g) show the evaluation of LESS10 and MAE on all designs when the number of dominant corners varies from 1 to 7.",
+    "Figure 9. Performance evaluation of incremental re-training. Subfigure (a) shows the evaluation of LESS10 of our model on art1. Subfigure (b) shows the evaluation of MAE of our model on art1. The green line represents that the training data only comes from b17, while the red line is from b17 and art2.",
+    "Figure 10. The commercial timing closure process (left) and machine-learning-based timing closure process (right)."
+  ],
+  "table_captions": [
+    "Table 1. Parameter Value of Corner.",
+    "Table 2. An example of PAF.",
+    "Table 3. Detailed information on designs.",
+    "Table 4. Reporting metrics for prediction accuracy evaluation.",
+    "Table 5. Performance comparison analysis.",
+    "Table 6. Runtime of commercial and machine-learning-based method in Industrial Application"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Machine-Learning-Based Multi-Corner Timing Prediction for Faster Timing Closure",
+    "author": "Zhenyu Zhao, Shuzheng Zhang, Guoqiang Liu, Chaochao Feng, Tianhao Yang, Ao Han and Lei Wang",
+    "subject": "For the purpose of fixing timing violations, static timing analysis (STA) of full-corners is repeatedly executed, which is time-consuming. Given a timing path, timing results at some corners (``dominant corners'') are utilized to predict timing at other corners (``non-dominant corners''), which can greatly shorten the runtime of STA. However, the huge number of combinations of the dominant corners and the wide difference in prediction accuracy make it difficult to apply multi-corner timing prediction to chip industrial design. In this paper, we propose a dominant corner selection strategy to quickly determine the dominant corner combination with high prediction accuracy, along with which a new multi-corner timing prediction process is established to speed up STA. Experimental results show that our method can not only effectively accelerate STA, but also ensure the high prediction accuracy of the prediction timing. On the public ITC'99 benchmark, the prediction accuracy of the dominant corner combination selected by the proposed method is up to 98.2%, which is an improvement of 15% compared to the state-of-the-art method. For industrial application, we apply our method by using timing results on only 2 dominant corners to predict the other 12 non-dominant corners, which accelerates the runtime of the timing closure process by more than 2.",
+    "keywords": "machine learning; chip physical design; STA; multi-corner; timing closure",
+    "creator": "LaTeX with hyperref",
+    "producer": "pdfTeX-1.40.21",
+    "creationDate": "D:20220516162416+08'00'",
+    "modDate": "D:20220516105428+02'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2022-05-16",
+    "modified_date": "2022-05-16"
+  },
+  "text_path": "metadata/meatdatagenerated/text/28.txt",
+  "json_path": "metadata/meatdatagenerated/json/28.json",
+  "html_path": "html/28.html",
+  "citation": "Zhenyu Zhao, Shuzheng Zhang, Guoqiang Liu, Chaochao Feng, Tianhao Yang, Ao Han and Lei Wang (2022). Machine-Learning-Based Multi-Corner Timing Prediction for Faster Timing Closure. For the purpose of fixing timing violations. https://doi.org/10.3390/electronics11101571"
+}

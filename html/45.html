@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Delay-correlation-aware SSTA based on conditional moments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: light; --ink: #1b1c1d; --muted: #5a6470; --paper: #ffffff; --edge: #dfe4ea; --accent: #194a8d; --wash: #f5f8fc; }
+    body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: linear-gradient(180deg, #eef3f9 0%, #f8fafc 100%); }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+    article { background: var(--paper); border: 1px solid var(--edge); border-radius: 18px; box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08); overflow: hidden; }
+    header { padding: 32px; background: linear-gradient(135deg, #f7fbff 0%, #eef4fb 100%); border-bottom: 1px solid var(--edge); }
+    h1 { margin: 0 0 12px; font-size: 2rem; line-height: 1.15; }
+    h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    h3 { margin: 24px 0 10px; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); }
+    p, li, dd { line-height: 1.65; font-size: 1rem; }
+    section { padding: 28px 32px; border-top: 1px solid var(--edge); }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 20px; }
+    .meta dt { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta dd { margin: 0; }
+    .note { margin-top: 16px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--wash); }
+    .page { background: #fff; }
+    .page-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    ul { margin: 0; padding-left: 20px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+<article>
+<header>
+  <h1>Delay-correlation-aware SSTA based on conditional moments</h1>
+  <p>Zeqin Wu</p>
+  <div class="note"><strong>Abstract.</strong> Article history: Received 28 June 2011 Received in revised form 5 January 2012 Accepted 6 January 2012 Available online 25 January 2012 Corner-based Timing Analysis (CTA) becomes more and more pessimistic as feature size shrinks. This trend has motivated the development of Statistical Static Timing Analysis (SSTA). In this paper, we propose a new path-based SSTA framework that allows the estimation of path delay distributions and delay correlations by propagating iteratively mean and variance of cell delay. These moments, conditioned on input slope and output load values, are pre-characterized by an improved method: log-logistic distribution based input signals and inverters as output load. In applications, the delay gains of this SSTA framework with respect to CTA are shown to be significant. It is also highlighted that the discrepancy of critical paths orderings obtained by SSTA and CTA depends on two factors: cell-tocell delay correlation and standard deviation of cell delay. &amp; 2012 Elsevier Ltd. All rights reserved.</div>
+</header>
+<section><h2>Paper Metadata</h2>
+<dl class="meta">
+  <div><dt>Source PDF</dt><dd><a href="../papers50/45.pdf">45.pdf</a></dd></div>
+  <div><dt>Pages</dt><dd>11</dd></div>
+  <div><dt>Year</dt><dd>2012</dd></div>
+  <div><dt>Journal</dt><dd>Microelectronics Journal</dd></div>
+  <div><dt>DOI</dt><dd>10.1016/j.mejo.2012.01.003</dd></div>
+  <div><dt>Citation</dt><dd>Zeqin Wu (2012). Delay-correlation-aware SSTA based on conditional moments. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2012.01.003</dd></div>
+</dl>
+</section>
+<section>
+<h2>Detected Section Headings</h2>
+<ul>
+  <li>1. Introduction</li>
+  <li>3. Flow of the SSTA framework</li>
+  <li>3.1. Setup</li>
+  <li>2. Conditional moments</li>
+  <li>3.2. SSTA Engine</li>
+  <li>4.1. Input signal model</li>
+  <li>4. Timing characterization</li>
+  <li>4.2. Output load variations</li>
+  <li>5.2. Validation of the techniques to estimate correlations</li>
+  <li>5. Validation and comparison</li>
+  <li>5.1. Validation of the SSTA engine</li>
+  <li>5.3. Comparisons</li>
+  <li>6. Applications</li>
+  <li>6.1. Gains of SSTA</li>
+  <li>6.2. Ordering of critical paths</li>
+  <li>7. Conclusions</li>
+</ul>
+</section>
+<section>
+<h2>Detected Figure Captions</h2>
+<ul>
+  <li>Fig. 1. Flow of the path-based SSTA framework.</li>
+  <li>Fig. 2. Structure of the statistical timing library.</li>
+  <li>Fig. 3. Illustration of bilinear interpolation.</li>
+  <li>Fig. 4. Procedure of moments propagation.</li>
+  <li>Fig. 5. Notations of input signal model.</li>
+  <li>Fig. 6. Normalized and transformed signals for Vdd1⁄41.2Vol. Fig. 7. Average relative errors of approximated signals.</li>
+  <li>Fig. 8. M inverters as output load.</li>
+  <li>Fig. 7 shows the results. The linear ramp model has large errors in the two voltage ranges [0.2Vdd, 0.4Vdd] and [0.6Vdd, 0.8Vdd]. This is problematic because it is in these ranges that threshold voltage values are used to extrapolate tin. In contrast, LL-based model has low errors in those ranges and shows large errors only in [0.8Vdd, Vdd].</li>
+  <li>Fig. 8 illustrates this procedure. M inverters are connected at the output pin of this cell. The sum of input charges of all inverters corresponds to the output load indexes C1,C2, y, Cj in the lookup tables. Such a replacement gives better accuracy as will be shown later.</li>
+  <li>Fig. 9 shows plots of the points ðr, ^rÞ. Most of the estimated CDCs in panel (a) are located in the dashed region corresponding to eabs r0.2. In addition, most of the points outside this dashed region corresponds to overestimated ^r, which results in overestimating standard deviations of path delays (see Eq. (12)). This explains why, in Table 2, the majority of relative errors of path delay standard deviations are positive. In Fig. 9(b), PDCs are mostly in the region where erelr10%, which validates the reasoning in (22)–(25). In order to obtain more information about these accuracies, we computed the percentages Poe, Pue of ^r overestimating and underestimating the corresponding r, respectively. Table 3 shows that 81% of the CDCs are overestimated while 84% of the PDCs are underestimated. This is preferable. To see why, we turn to the problem of timing verification. For ease of description, consider the setup time constraint</li>
+  <li>Fig. 9. (a) Validation of the technique to estimate CDC. (b) Validation of the technique to estimate PDC.</li>
+  <li>Fig. 10. Interpretation of discrepancy between orderings.</li>
+  <li>Fig. 11. Evolution of ðwpdsn pd=wpdspdÞ% with respect to logical depth.</li>
+  <li>Fig. 10 plots the four curves wpd, spd, s0pd, spd * . The rank of each path corresponds to decreasing values of wpd. The two curves wpd and spd * have a similar shape, and the same holds for the pair of curves spd and s0pd. These similarities allow concluding that, in this case, the discrepancy of orderings comes mainly from yk, i.e. from the pessimistic standard deviation values considered by CTA. Indeed, 81% of the average gap between wpd (CTA) and spd (SSTA) comes from the difference between wpd and s0pd. Note that the above paths have logical depths ranging from 10 to 16. This conclusion is further supported by Fig. 11 that shows the evolution of ðwpdsn pdÞ=ðwpdspdÞ% with respect to logical depth, i.e. the percentage of CTA pessimism explained by CDCs. For most of the paths, this percentage is around 30%, except for some short paths. From this figure, one may conclude that accurate estimates of CDCs are mandatory for accurate estimates of path delays, especially when logical depths are less than 10.</li>
+</ul>
+</section>
+<section>
+<h2>Detected Table Captions</h2>
+<ul>
+  <li>Table 1 CDCs varying with cell type, output load and I/O edge (R: rising edge, F: falling edge).</li>
+  <li>Table 2 Validation of the SSTA engine.</li>
+  <li>Table 4 shows the impacts of CDC and slope variations on the accuracy of estimated standard deviations. In addition to the technique to estimate CDC through (16) and (21), the following two extreme cases were considered:</li>
+  <li>Table 3 Accuracy of computed CDCs and PDCs.</li>
+  <li>Table 4 Impacts of CDC and slope variations s2tin .</li>
+  <li>Table 5 Comparisons of path delay standard deviations bspd computed with different statistical timing libraries.</li>
+  <li>Table 6 Average delay gains of the SSTA engine over CTA (without interconnects).</li>
+  <li>Table 6 gives the results for circuits b01, b05 and b07 of the ITC99 benchmarks. From this table, we can draw the following conclusions:</li>
+</ul>
+</section>
+<section>
+<h2>Image Insertion Note</h2>
+<p>This HTML is prepared for later figure insertion. Citation data for Wiley-style image credits is stored in the <code>images</code> folder.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 1</div>
+  <p>Microelectronics Journal 43 (2012) 263–273</p>
+  <p>Contents lists available at SciVerse ScienceDirect</p>
+  <p>Microelectronics Journal</p>
+  <p>journal homepage: www.elsevier.com/locate/mejo</p>
+  <p>Delay-correlation-aware SSTA based on conditional moments</p>
+  <p>Zeqin Wu a, Philippe Maurine a, Nadine Azemard a,n, Gilles R. Ducharme b</p>
+  <p>a LIRMM, UMR CNRS/University of Montpellier II, 161 rue Ada, 34095 Montpellier Cedex 5, France b Dept. Math University of Montpellier II, Place Eugene Bataillon, 34095 Montpellier, France</p>
+  <p>a r t i c l e i n f o</p>
+  <p>a b s t r a c t</p>
+  <p>Article history: Received 28 June 2011 Received in revised form 5 January 2012 Accepted 6 January 2012 Available online 25 January 2012</p>
+  <p>Corner-based Timing Analysis (CTA) becomes more and more pessimistic as feature size shrinks. This trend has motivated the development of Statistical Static Timing Analysis (SSTA). In this paper, we propose a new path-based SSTA framework that allows the estimation of path delay distributions and delay correlations by propagating iteratively mean and variance of cell delay. These moments, conditioned on input slope and output load values, are pre-characterized by an improved method: log-logistic distribution based input signals and inverters as output load. In applications, the delay gains of this SSTA framework with respect to CTA are shown to be significant. It is also highlighted that the discrepancy of critical paths orderings obtained by SSTA and CTA depends on two factors: cell-tocell delay correlation and standard deviation of cell delay. &amp; 2012 Elsevier Ltd. All rights reserved.</p>
+  <p>Keywords: Statistical static timing analysis Moments propagation Cell-to-cell delay correlation Path-to-path delay correlation</p>
+  <p>1. Introduction</p>
+  <p>As process technology enters the nanometer era (o90 nm), Corner-based Timing Analysis (CTA) reaches its limits in constructing guaranteed bounds on circuit delays and becomes overly conservative. This pessimism comes from the assumption that all physical and environmental parameters are at their worst or best conditions simultaneously. In other words, extreme values are used to replace random process parameters and all correlations between them are set to either ‘‘1’’ or ‘‘1’’. More importantly, this pessimism increases as feature size shrinks. Statistical Static Timing Analysis (SSTA) offers a way out of this problem and has been much developed in recent years. SSTA is richer than CTA in nature, while offering more accurate estimations of actual circuit performance. Rather than simply determine corners and attempt to obtain a single value for delays, statistical timing engines propagate Probability Density Function (PDF) of timing variables. A typical approach uses the first [1–3] or second order [4–6] Taylor expansion of cell delays based on process variation models, like the grid [1] or the quad-tree model [2]. However, digital circuit designers have been reluctant in adopting this new generation of timing analysis due to some remaining weaknesses. A first weakness lies with the limited number of published delay models taking into account the effects of: Input/output (I/O) edges and output load values [7]. In fact, most approaches typically make a worst-case estimate of slope, which can lead to significant errors [7].</p>
+  <p>A second weakness is the lack of an effective technique to estimate correlations between cell delays and between path delays. For a first order cell delay model, estimation of correlations is feasible, as in [3]. However, first order approximations do not describe very well the complex relationships between cell delays and process parameters, and this renders estimated correlations inaccurate. For a second order delay model, estimation of delay correlations from process parameters seems complex [4] due to their large number and the empirical nature of some of them in actual statistical model cards [8]. In addition, both weaknesses are compounded in the existing techniques of correlation estimation and render them crude. A recent solution, in the context of process parameters, involves bounding techniques [9]. According to the algorithm to explore timing graphs, the existing parametric SSTA fall into one of the two categories: block-based [1–6] and path-based SSTA [7,9–13]. Nowadays, the block-based algorithm gains favor due to the linearity of its runtime as a function of circuit size and the ability of handling false paths [13]. However, these advantages may be limited by accuracy losses due to the intensive use of the MAX/MIN operation and to the lack of an accurate timing model to handle multiple-input collisions [14]. The path-based algorithm requires finding an appropriate set of candidate paths but avoids the MAX/MIN operation, while propagating PDF along paths. Thus, it avoids sources of error during simple path timing estimate and offers a simple and rigorous framework to validate the main proposal of this work: an accurate and fast method to calculate delay correlations between cells along paths. This algorithm could eventually be applied in the block-based algorithm, provided techniques to perform accurately MAX/MIN operations and to propagate efficiently general PDF become available. Note that the proposed method remains valid for any set of paths. A complete path-based solution also requires solving the problem of extracting a</p>
+  <p>n Correspondence author. Tel.: þ33 467418585; fax: þ33 467418500. E-mail address: Nadine.Azemard@lirmm.fr (N. Azemard).</p>
+  <p>1879-2391/$ - see front matter &amp; 2012 Elsevier Ltd. All rights reserved. doi:10.1016/j.mejo.2012.01.003</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 2</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 264</p>
+  <p>3. Flow of the SSTA framework</p>
+  <p>As shown in Fig. 1, the flow of our framework is divided into four parts: INPUT, SETUP, SSTA ENGINE and OUTPUT. INPUT defines environmental conditions and for a given circuit design, extracts a set of candidate paths using RTL Compiler [16] based on a CTA considering the worst timing corner. SETUP is the procedure of constructing a statistical timing library with data from characterizations. SSTA ENGINE, fed by the library, estimates delay correlations and path delay distributions. OUTPUT generates a report. More details about this flow are given in the subsections below.</p>
+  <p>proper set of paths. We do not focus on this important but alternate problem, and instead use the conventional method as explained in Section 3. Our method propagates iteratively means and variances of cell delay using conditional moments. These moments, conditioned on values of input slope and output load values, are pre-characterized by Monte Carlo (MC) simulations and organized as a tree of lookup tables, called a statistical timing library. This step is a one-time job as the high time-cost simulations are only needed once to build the library. The technique proposed here, which is based on the timing library, allows estimating cell-to-cell and path-to-path delay correlations via a classification of process parameters. Correlations estimated by this technique depend on:</p>
+  <p>3.1. Setup</p>
+  <p>a) supply voltage and temperature, b) cell topology and polarity, c) input slope and output load values.</p>
+  <p>The data needed to construct a statistical timing library comes from characterizations done with statistical process models under HSPICE [17]. In this paper, the 130 nm and the 65 nm process models are provided by industry, which is more realistic than relying on theoretical model. Built into the code of these models are the following two constraints:</p>
+  <p>a) any two process parameters are uncorrelated, b) there is no spatial correlation,</p>
+  <p>This technique is applied to the interpretation of the discrepancies of critical paths orderings obtained by our SSTA framework and CTA. Another feature of our approach is the use of an improved method to characterize cell-timings. Instead of linear ramp and capacitor models, we use the log-logistic Cumulative Distribution Function (CDF) and active load (inverters) models for input slope and output load during the library statistical characterizations. These improvements provide increased accuracy, especially when capturing random variations of delays and slopes. The paper is organized as follows. Section 2 reviews conditional moments. Section 3 introduces the flow of the proposed framework, including the main techniques of the timing engine: moments propagation and estimation of delay correlations. Section 4 focuses on the improved method of timing characterizations. Section 5 discusses validation. Section 6 gives applications. Finally, Section 7 concludes the paper.</p>
+  <p>2. Conditional moments</p>
+  <p>which are imposed by industry (for some ideas on how to consider spatial correlations, see [18]). Fig. 2 shows that the statistical timing library has a tree structure with the following levels: cell type, I/O pin, I/O edge, temperature, supply voltage and timing variables (including cell delay gd and output slope tout). The tree leaves are lookup tables, referenced by given values of the pair of random variables tin and Cout, selected as follows. The range [T1,TI] of tin is partitioned by T1oT2o?oTio?oTI. Similarly, the range [C1,CJ] of Cout is partitioned by C1o C2o?oCjo?oCJ. These index values are selected by empirical design experience. The body of the tables contains the lookup values E(gd9Ti,Cj), Var(gd9Ti,Cj), E(tout9Ti,Cj) and Var(tout9Ti,Cj). Here, E(tout9Ti,Cj) is, as an example, a simplified notation for E(tout9tin1⁄4 Ti,Cout1⁄4Cj). Interpolation is used, based on the observed values t of tin and c of Cout, to approximate the conditional moments of tout and gd. Details are given in the following section.</p>
+  <p>Before proceeding, we briefly review conditional moments, which are the core elements of our SSTA framework. Let X and Y be two random variables. The conditional mean E(X9Y1⁄4y) is the mean of X given that Y has taken the value y. Unlike the conventional mean, which is constant for a given probability distribution, E(X9Y1⁄4y) is a function of y. Similarly, the conditional variance Var(X9Y1⁄4y) is the variance of X given that Y has taken the value y. If Y follows a continuous distribution with PDF f(y), then the mean mX and the variance sX 2 of X can be related to E(X9Y1⁄4y), Var(X9Y1⁄4y) by the following formulas [15]:</p>
+  <p>mX 1⁄4 EðXÞ 1⁄4 E1⁄2EðX9YÞ 1⁄4 Z EðX9Y 1⁄4 yÞfðyÞdy ð1Þ</p>
+  <p>s2 X 1⁄4 VarðXÞ 1⁄4 E1⁄2VarðX9YÞþVar1⁄2EðX9YÞ</p>
+  <p>1⁄4 Z VarðX9Y 1⁄4 yÞþ1⁄2EðX9Y 1⁄4 yÞmX2  fðyÞdy ð2Þ</p>
+  <p>Fig. 1. Flow of the path-based SSTA framework.</p>
+  <p>Eqs. (1) and (2), which also hold when Y is a vector, give alternative ways to compute mX and sX 2 if the PDF of X is not explicitly known. These equations require a relationship between X and Y, and this dependency allows implementing moments propagation.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 3</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 265</p>
+  <p>s2 toutðcÞ 1⁄4 Z 1⁄2b1ðcÞþb2ðcÞtþða2ðcÞta2ðcÞmtinÞ2f tinðtÞdt</p>
+  <p>1⁄4 ðb1ðcÞþb2ðcÞmtinÞþða2ðcÞstinÞ2 ð6Þ</p>
+  <p>Knowing mtin and s2tin, we look up the corresponding conditional moments according to the context, and compute a1(c), a2(c), b1(c), b2(c), by bilinear interpolation. Fig. 3 illustrates the bilinear interpolation. In this example, mtin A1⁄2T6,T7, cA1⁄2C2,C3, , and the technique of bilinear interpolation gives</p>
+  <p>a1ðcÞ 1⁄4 T7Eðtout9T6,cÞT6Eðtout9T7,cÞ T7T6 ð7Þ</p>
+  <p>a2ðcÞ 1⁄4 Eðtout9T7,cÞEðtout9T6,cÞ T7T6 ð8Þ</p>
+  <p>b1ðcÞ 1⁄4 T7Varðtout9T6,cÞT6Varðtout9T7,cÞ T7T6 ð9Þ</p>
+  <p>b2ðcÞ 1⁄4 Varðtout9T7,cÞVarðtout9T6,cÞ T7T6 ð10Þ</p>
+  <p>The three steps of the propagation procedure (lookup, interpolate, compute), shown in Fig. 4, are repeated iteratively for all cells along a path starting from the first. An important feature is that only the first two moments (not the distributions) need to be known. For example, tin and tout may follow any two parameters continuous distribution on condition that its mean and variance exist, like Uniform, Gaussian, Log-Normal, etc. Similarly, mgd and sgd 2 can be computed by replacing E(tout9Ti,c), Var(tout9Ti,c), respectively, with E(gd9Ti,c) and Var(gd9Ti,c) in (7)–(10).</p>
+  <p>Fig. 2. Structure of the statistical timing library.</p>
+  <p>3.2. SSTA Engine</p>
+  <p>We now introduce the main techniques of the engine: moments propagation and estimation of delay correlations.</p>
+  <p>3.2.2. Path delay distribution Because the moments propagation presented above allows computing cell delay moments associated to a path of L cells (l1⁄41, y, L), the path delay pd, which is the sum of all cell delays gdl, has mean mpd and variance spd 2 given by expressions (11)–(12) from standard probability theory</p>
+  <p>mpd 1⁄4 X L</p>
+  <p>i 1⁄4 1 mpdl ð11Þ</p>
+  <p>3.2.1. Moments propagation Suppose the context of each cell of a path is known: its type, I/O pin, I/O edge, temperature, supply voltage and output load. The user provides the information (clock period, setup and hold time, etc.) required to compute the moments mtin,s2tin of input slope for the first cell. Given these moments, we deduce from the library the cell delay moments ðmgd,s2 gdÞ and the output slope moments ðmtout,s2toutÞ. The latter is used as the input slope moments of the following cell. This procedure is repeated for each cell along the path. For this procedure, we replace X,Y in (1) and (2) by, respectively, output slope tout and the pair (tin,Cout). Suppose the observed pair (t,c)A[Ti,Tiþ1]  [Cj,Cjþ1]. Then, the smooth and slow varying nature of functions E(tout9t,c), Var(tout9t,c) justify linear approximations on t within the bins [Ti,Tiþ1]  [Cj,Cjþ1]. More precisely, we set in each of these bins</p>
+  <p>Eðtout9t,cÞ 1⁄4 a1ðcÞþa2ðcÞt ð3Þ</p>
+  <p>Varðtout9t,cÞ 1⁄4 b1ðcÞþb2ðcÞt ð4Þ</p>
+  <p>where a1(c), a2(c), b1(c), b2(c) are functions to identify. Combining (1)–(4), we have</p>
+  <p>mtoutðcÞ 1⁄4 a1ðcÞþa2ðcÞ Z tf tinðtÞdt 1⁄4 a1ðcÞþa2ðcÞmtin ð5Þ</p>
+  <p>Fig. 3. Illustration of bilinear interpolation.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 4</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 266</p>
+  <p>3.1). The effects of cell type, I/O edge and output load on CDCs can be important. As an example, the coefficients pertaining to OR2 decrease when output load values increase while for INV this trend is less pronounced and marred by the statistical noise of the simulations. For better accuracy, we need a technique that takes into account these effects. As cell delay depends on a number of factors, we propose a technique to estimate directly CDC. This technique avoids handling complex relationships between delay and process parameters. The statistical model card used in the present work contains one model for N transistors and one model for P transistors with the usual (BSIM4 [8]) disjoint groups of process parameters, PN</p>
+  <p>and PP, respectively, for each transistor type. To link the process variations of N and P transistors, an additional group of parameters, denoted PS and disjoint from both PN and PP, is embedded in the statistical model card. It contains parameters characterizing the fabrication steps that are common to both P and N transistors. More precisely, the M process parameters p1, p2, y, pM are classified into the three groups</p>
+  <h3>8 &gt; &gt; &lt;</h3>
+  <p>Fig. 4. Procedure of moments propagation.</p>
+  <p>&gt; &gt; : ð13Þ</p>
+  <p>PN 1⁄4 ðpN 1 ,pN 2 , . . ., pN m1Þ Pp 1⁄4 ðpp 1,pp 2, . . ., pN m2Þ M 1⁄4 m1 þm2 þm3 PS 1⁄4 ðpS 1,pS 2, . . ., pS m3Þ</p>
+  <p>Table 1 CDCs varying with cell type, output load and I/O edge (R: rising edge, F: falling edge).</p>
+  <h3>INV (10fF) BUF (10fF)</h3>
+  <h3>R/R F/F R/R F/F</h3>
+  <p>where PN\PS 1⁄4 PN\PP 1⁄4 PP\PS 1⁄4 |. As an example of this classification, during a SPICE MC simulation, the threshold voltage Vth N of a N transistor is a function of the form VN th 1⁄4 D1 þf 1ðpN i Þ for some component, say pi N, of group PN and similarly for a P transistor VP th 1⁄4 D2 þf 2ðpP j Þ. For the channel width of a N transistor WNand that of a P transistor WP, they depend on the same process parameter pk S through WN 1⁄4 D3 þf 3ðpS kÞ and WP 1⁄4 D4 þf 4ðpS kÞ. With this classification, cell delay can be modeled as</p>
+  <p>gd  gdnom þDgdN þDgdP þDgdS ð14Þ</p>
+  <p>INV 1fF R/F 0.97 0.73 0.90 0.94 F/R 0.61 0.97 0.94 0.92 10fF R/F 0.99 0.76 0.91 0.95 F/R 0.66 0.99 0.95 0.92 100fF R/F 0.98 0.62 0.89 0.88 F/R 0.64 0.99 0.89 0.87</p>
+  <p>where gdnom is the nominal value of gd; DgdN, Dgdp and DgdS are the delay components of the corresponding groups. According to the statistical model card, the parameters in each group are independent from those in the other groups, but may be correlated within a given group. Hence, because functions of independent groups of parameters are also independent, we have</p>
+  <p>corðDgdN,DgdpÞ 1⁄4 0</p>
+  <h3>8 &gt; &gt; &lt;</h3>
+  <p>corðDgdN,DgdSÞ 1⁄4 0</p>
+  <p>OR2 1fF R/R 0.84 0.65 0.87 0.89 F/F 0.62 0.98 0.91 0.76 10fF R/R 0.71 0.55 0.76 0.83 F/F 0.54 0.96 0.84 0.62 100fF R/R 0.62 0.49 0.64 0.78 F/F 0.38 0.93 0.77 0.52</p>
+  <p>&gt; &gt; : ð15Þ</p>
+  <p>corðDgdP,DgdSÞ 1⁄4 0</p>
+  <p>With (14) and the assumptions in (15), CDC between gdk and gdl is given by</p>
+  <h3>X L</h3>
+  <p>s2 pd 1⁄4 X L</p>
+  <p>rkl 1⁄4 conðgdk,gdlÞ sgdksgdl ð16Þ</p>
+  <p>l 1⁄4 1</p>
+  <p>k 1⁄4 1 rklsgdksgdl ð12Þ</p>
+  <p>where</p>
+  <p>covðgdk,gdlÞ 1⁄4 covðDgdN k þDgdP k þDgdS k,DgdN l þDgdP l þDgdS l Þ</p>
+  <p>Note that in (12), the path delay variance depends on the cellto-cell delay correlation (CDC) rkl. The following subsection discusses the estimation of rkl.</p>
+  <p>1⁄4 covðDgdN k ,DgdN l ÞþcovðDgdP k,DgdP l ÞþcovðDgdS k,DgdS l Þ</p>
+  <p>ð17Þ</p>
+  <p>Then, each delay component in (14) is divided into uncorrelated inter-die and intra-die parts as</p>
+  <h3>8 &gt; &gt; &lt;</h3>
+  <p>&gt; &gt; : ð18Þ</p>
+  <p>DgdN 1⁄4 DgdN IR þDgdN IA DgdP 1⁄4 Dgdp IR þDgdP IA DgdS 1⁄4 DgdS IR þDgdS IA</p>
+  <p>3.2.3. Cell-to-cell delay correlation A common way to estimate CDC is to approximate the dependency of cell delay on process parameters with a first order Taylor expansion [3], and then to translate the correlation between process parameters into correlation between cell delays. However, besides process parameters, other factors affect cell delay, like cell type, output load, etc., and should be taken into account when estimating delay correlations. Table 1 shows that CDCs vary along with cell type (INV, BUF , OR2), output load values (1fF, 10fF, 100fF) and I/O edge (R/F, F/R, R/R,F/F). The CDCs in this table were estimated with data from MC simulations (1500 runs with the 65 nm statistical process models described in Section</p>
+  <p>From the constraints (a), (b) in Section 3.1, we get covðDgdN k,IA,DgdN l,IAÞ 1⁄4 0. Now, because delays of different type of cells have similar behaviors if process parameters are identical, we assume they are approximately linearly related, which in turn</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 5</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 267</p>
+  <p>entails the approximation</p>
+  <p>corðDgdN k,IR,DgdN l,IRÞ  1 ð19Þ</p>
+  <p>This yields</p>
+  <p>covðDgdN k ,DgdN l Þ 1⁄4 covðDgdN k,IR,DgdN l,IRÞþcovðDgdN k,IR,DgdN l,IAÞ</p>
+  <p>þcovðDgdN k,IA,DgdN l,IRÞþcovðDgdN k,IA,DgdN l,IAÞ</p>
+  <p>1⁄4 covðDgdN k,IR,DgdN l,IRÞ</p>
+  <p>1⁄4 sN gdk,IrsN gdl,IrcorðDgdN k,IR,DgdN l,IRÞ</p>
+  <p> sN gdk,IRsN gdl,IR ð20Þ</p>
+  <p>The terms cov(Dgdk P,Dgdl P) and cov(Dgdk S,Dgdl S) in (17) are computed similarly. As a result, the covariance in (16) becomes</p>
+  <p>covðgdk,gdlÞ  sN gdk,IRsN gdl,IR þsP gdk,IRsP gdl,IR þsS gdk,IRsS gdl,IR ð21Þ</p>
+  <p>Fig. 5. Notations of input signal model.</p>
+  <p>where sN gdIR,sP gdIR,sS gdIR in (21) are pre-characterized and stored in</p>
+  <p>4.1. Input signal model</p>
+  <p>the lookup tables. These standard deviations depend on cell type, I/O pin, I/O edge, temperature, supply voltage, input slope and output load. Therefore, this technique incorporates all these factors in the estimates (16) and (21) of CDCs.</p>
+  <p>3.2.4. Path-to-path delay correlation To estimate path-to-path delay correlation (PDC), we consider two paths made of K1 and K2 cells. Then the PDC is</p>
+  <p>We focus on rising edges for simplicity, because rising and falling edges are similar in terms of shape. The notations used in the definition of LL-based models are given in Fig. 5. A signal is divided into two segments: t0rtrtmin and t4tmin. The idea is to describe the segment t0rtrtmin by a linear function, and the other by the LL CDF</p>
+  <p>corðpd1,pd2Þ 1⁄4 covðpd1,pd2Þ spd1spd2 ð22Þ</p>
+  <p> b þ1  1 ðx40Þ ð26Þ</p>
+  <p>Fðx;a,bÞ 1⁄4 a x</p>
+  <p>Using the classification in (13) and (14), (15), (18), (19), we get</p>
+  <h3>X K2</h3>
+  <p>covðpd1,pd2Þ 1⁄4 X K1</p>
+  <p>k1 1⁄4 1</p>
+  <p>k2 1⁄4 1 covðgdk1,gdk2Þ ð23Þ</p>
+  <p>where</p>
+  <p>where a, b40 are two parameters to identify. As seen above, the expression of the LL CDF is simple, or more precisely no integral is involved. This is the main advantage of using the LL-based approximation. To identify a,b first we define</p>
+  <p>covðgdk1,gdk2Þ  sN gdk1,IRsN gdk2,IR þsP gdk1,IRsP gdk2,IR þsS gdk1,IRsS gdk2,IR ð24Þ</p>
+  <h3>8 &gt; &lt;</h3>
+  <p>&gt; : ð27Þ</p>
+  <p>tin 1⁄4 ðt2t1Þ=0:6 DV 1⁄4 9Vmin9 Dt 1⁄4 Dtmint0</p>
+  <p>Note that if the two paths share a common cell, i.e. k1 and k2 are the indices of the same cell in both paths, then we may write</p>
+  <p>Then, we set the model</p>
+  <p>covðgd1,gd2Þ  sgdk1sgdk2 ð25Þ</p>
+  <p> DV Dt ðtþDttminÞ ðtrtminÞ</p>
+  <h3>8 &gt; &gt; &lt;</h3>
+  <p>bV 1⁄4</p>
+  <p>because intra-die variations effects on covariance vanish and corðgdN k,IA,gdN l,IAÞ  1.</p>
+  <p>h ib þ1  1 DV ðt4tminÞ</p>
+  <p>ðVdd þDVÞ a ðttminÞ=tin</p>
+  <p>&gt; &gt; : ð28Þ</p>
+  <p>4. Timing characterization</p>
+  <p>In (28), tin is known; tmin may be any value greater than Dt and indicates the location of the approximated signal. Finally, Dt, DV are two new values to identify. It turns out that the identification of Dt, DV and b can be done in such a way that the advantage of the linear ramp model, which is solely determined by the parameter tin, is retained. To see this we build the functions</p>
+  <h3>8 &gt; &gt; &gt; &lt;</h3>
+  <p>&gt; &gt; &gt; : ð29Þ</p>
+  <p>DV 1⁄4 gDVðtinÞ 1⁄4 CDV ADV þBDVtin Dt 1⁄4 gDtðtinÞ 1⁄4 ADt þBDttin b 1⁄4 gbðtinÞ 1⁄4 Cb Ab þ Bbtin þDb</p>
+  <p>Timing characterization is the step that prepares data for the construction of the statistical timing library of our SSTA engine. During this step, we need models to describe input signal and output load. The standard method uses the linear ramp model and capacitors. Because this method is now known (see also Table 5) to yield important underestimate of means and variances of timing variables, it cannot be used to validate our SSTA engine. In order to circumvent this problem, we consider an input signal model based on the Log-Logistic (LL) Cumulative Distribution Function (CDF), and use inverters in place of capacitors for output load. This CDF has an easy to compute explicit expression as opposed to the CDF of the Log-Normal [19] or that of the Weibull [20], while offering comparable accuracy of fit. Moreover, as will be seen in Section 5.3, the LL-based model with inverters produces slight overestimated standard deviations on delay, which allow us to validate our SSTA engine.</p>
+  <p>The expressions of DV, Dt are taken from [21] which gives fine and complex modeling of both the duration Dt and the amplitude DV of overshoots (undershoots). From the equations in [21,22], one may show that the amplitude DV and the duration Dt of the overshoots (undershoots) are as in (29). That of b follows from empirical curve fitting of simulated gate output signals. These signals, collected at the output pins of the following type of cells: INV, BUF, NOR2, NAND2 operating in various operating conditions</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 6</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 268</p>
+  <p>Fig. 6. Normalized and transformed signals for Vdd1⁄41.2Vol. Fig. 7. Average relative errors of approximated signals.</p>
+  <p>(input slope and load), were observed on a grid ranging from Vmin to Vdd with steps of 0.05Vol. All parameters (ADV, ADt, ADb, BDV, y) in (29), are estimated using the Least Squares Method. Then, given input slope tin and the estimated parameters in (29), we may compute DV, Dt, b. As for the identification of parameter a, solving for t in part t4tmin of (28) yields</p>
+  <p>!1 b ðt4tminÞ ð30Þ</p>
+  <p>t 1⁄4 tmin þtina VddbV bV þDV</p>
+  <p>Let t1 (resp. t2) be the value of (30) at bV 1⁄4 0:2Vddðresp: 0:8VddÞ. Then</p>
+  <p>Fig. 8. M inverters as output load.</p>
+  <p>3</p>
+  <p>!1 b 2</p>
+  <p>4</p>
+  <h3>5 ð31Þ</h3>
+  <p>t2t1 1⁄4 tina 0:2 0:8þ DV Vdd</p>
+  <p>!1 b  0:8 0:2þ DV Vdd</p>
+  <p>Recalling from (27) that tin1⁄4(t2–t1)/0.6, we finally get</p>
+  <p>1</p>
+  <p>3</p>
+  <p>!1 b 2</p>
+  <p>ð32Þ</p>
+  <p>4</p>
+  <p>5</p>
+  <p>a 1⁄4 0:6U 0:2 0:8þ DV Vdd</p>
+  <p>!1 b  0:8 0:2þ DV Vdd</p>
+  <p>Fig. 7 shows the results. The linear ramp model has large errors in the two voltage ranges [0.2Vdd, 0.4Vdd] and [0.6Vdd, 0.8Vdd]. This is problematic because it is in these ranges that threshold voltage values are used to extrapolate tin. In contrast, LL-based model has low errors in those ranges and shows large errors only in [0.8Vdd, Vdd].</p>
+  <p>4.2. Output load variations</p>
+  <p>We now compare the accuracy of the linear ramp and LL-based models in the following way:</p>
+  <p>a) collect 1000 simulated signals under various conditions for cell types: INV, BUF, NOR2, NAND2; b) for each signal, measure the 20–80% slope and approximate the signal respectively by linear ramp and LL-based model; c) normalized all measured and approximated signals by their own slope s, i.e. rescale the t axis of Fig. 5 to t/s; d) transform the point (t0/s, 0.5Vdd) of each signal to point (0, 0.5Vdd), i.e. take tn1⁄4(t–t0)/s, as shown in Fig. 6; e) define the grid of points t*1⁄4 1.5,1.4, y, 0, y, 1.4,1.5, and compute errors point by point for both linear ramp and LLbased approximations; f) compute the average errors of the following three signal subsamples: all linear ramp approximations, LL-based approximations with slopes, respectively, less than 100 ps and 200 ps, and all LL-based approximations.</p>
+  <p>The main drawback in modeling output load with capacitors having constant values is that they cannot capture output load variations, or more precisely, the impact of load variations on cell timings; in real circuit, the charges of input pins of all cells depend on process parameters and therefore are random variables. Moreover, the mean and variance of output load may depend on interconnects and the subsequent cells [23] because of an I/O coupling phenomenon that generates overshoots (or undershoots) [21], [22]. Modeling this dependency is necessary to observe accurately the values c of Cout. This requires further work unrelated to the current SSTA proposal and is not pursuit further here. To circumvent this and better represent what occurs in the next stage of a given cell in real circuits, our timing characterization uses inverters instead of capacitors to model output load. The basic idea is to embed the impact of output load random variations, but also</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 7</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 269</p>
+  <p>Table 2 Validation of the SSTA engine.</p>
+  <p>Circuit name Path number Logical depth Path delay (1012 s) Error (%)</p>
+  <p>^spdspd spd %</p>
+  <p>SPICE MC simulation (1500 runs) Estimation with proposed engine ^mpdmpd mpd %</p>
+  <p>mpd spd ^mpd ^spd</p>
+  <p>b01 1 9 500.2 26.8 489.7 27.5 2.1 2.5 2 8 495.0 27.4 492.6 27.9 0.5 1.8 3 7 461.9 25.9 460.2 26.4 0.4 2.1 4 9 496.2 27.1 498.5 27.4 0.5 1.1 5 7 475.7 26.2 475.8 27.1 0.0 3.7 6 9 494.9 26.4 489.3 27.0 1.1 2.3 7 8 504.8 27.1 495.8 26.7 1.8 1.7 8 8 497.0 26.8 499.7 27.5 0.5 2.7 9 9 507.9 26.5 503.2 26.6 0.9 0.5 10 8 489.0 27.4 483.1 27.5 1.2 0.6</p>
+  <p>b05 1 25 1067.6 57.8 1050.2 57.3 1.6 0.8 2 23 1077.7 58.5 1069.5 59.9 0.8 2.5 3 22 1080.9 57.7 1073.7 59.5 0.7 3.1 4 22 1110.4 59.0 1113.2 60.4 0.3 2.3 5 23 1077.7 58.5 1069.5 59.9 0.8 2.5 6 23 1088.8 56.6 1068.2 58.7 1.9 3.7 7 25 1063.3 57.7 1045.5 57.2 1.7 0.9 8 25 1067.7 57.1 1048.2 58.2 1.8 1.8 9 15 797.1 45.4 791.6 45.2 0.7 0.4 10 16 774.5 41.8 761.9 43.1 1.6 2.9</p>
+  <p>b07 1 12 657.4 34.3 642.2 34.9 2.3 1.7 2 11 657.0 34.2 656.7 36.2 0.1 5.8 3 13 659.1 35.2 647.6 36.1 1.8 2.6 4 10 674.9 36.2 685.9 38.3 1.6 5.8 5 11 654.4 35.6 655.2 38.0 0.1 6.8 6 13 659.1 35.2 647.6 36.1 1.8 2.6 7 12 663.0 33.7 648.7 34.5 2.2 2.5 8 13 659.4 35.4 655.2 37.0 0.6 4.4 9 11 680.9 35.7 678.7 37.1 0.3 3.8 10 9 668.3 36.0 694.6 38.3 3.9 6.4</p>
+  <p>the I/O coupling effect induced variations, in those of the cell to be characterized. This amounts to approximate c by its mean (typical value) during the moments propagation stage explained in Section 3.2.</p>
+  <p>means and standard deviations of path delays are respectively less than 5% and 10%, thus validating the SSTA framework. Moreover, most of the standard deviations are slightly overestimated. This will reduce the probability of violating the setup time and hold time constraints if ICs are designed with this engine. Regarding CPU time, on any given path, our SSTA engine is on average 105 times faster than a corresponding 1500 runs Monte Carlo simulation.</p>
+  <p>Fig. 8 illustrates this procedure. M inverters are connected at the output pin of this cell. The sum of input charges of all inverters corresponds to the output load indexes C1,C2, y, Cj in the lookup tables. Such a replacement gives better accuracy as will be shown later.</p>
+  <p>5.2. Validation of the techniques to estimate correlations</p>
+  <p>5. Validation and comparison</p>
+  <p>5.1. Validation of the SSTA engine</p>
+  <p>We now validate the techniques to estimate CDCs and PDCs. Denote by ^r the correlation coefficients estimated by the SSTA engine and by r the coefficients from MC simulations. We compute the absolute eabs and relative errors erel.</p>
+  <p>Fig. 9 shows plots of the points ðr, ^rÞ. Most of the estimated CDCs in panel (a) are located in the dashed region corresponding to eabs r0.2. In addition, most of the points outside this dashed region corresponds to overestimated ^r, which results in overestimating standard deviations of path delays (see Eq. (12)). This explains why, in Table 2, the majority of relative errors of path delay standard deviations are positive. In Fig. 9(b), PDCs are mostly in the region where erelr10%, which validates the reasoning in (22)–(25). In order to obtain more information about these accuracies, we computed the percentages Poe, Pue of ^r overestimating and underestimating the corresponding r, respectively. Table 3 shows that 81% of the CDCs are overestimated while 84% of the PDCs are underestimated. This is preferable. To see why, we turn to the problem of timing verification. For ease of description, consider the setup time constraint</p>
+  <p>We applied the path-based SSTA engine to the ITC99 benchmark circuits implemented in the 65 nm process. Note that, according to the setup described in Section 3.1, we consider only process variations, including 24 process parameters (channel length and width, oxide thickness, etc.), which are Gaussianly or Uniformly distributed as imposed by industry. But our engine is distribution free. The scale of variations is also imposed by industry. To validate the SSTA engine, we first did timing characterizations and constructed the statistical timing library. Then, some critical paths were extracted from the considered circuits using CTA under RTL Compiler [16]. Next, we performed SSTA on these paths with the timing engine described in Section 3.2. Finally, we ran MC simulations (under HSPICE) on the same set of critical paths for comparisons. The three considered circuits were b01, b05 and b07 of the ITC99 benchmark. Table 2 shows that the relative errors on estimated</p>
+  <p>pddatapdclk oTCLK ð33Þ</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 8</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 270</p>
+  <p>where sdata 2 , sclk 2 are, respectively, the variance of pddata and pdclk; rdc is the PDC between pddata and pdclk and varies in the interval [0,1] in reality. According to (34), Var(pddatapdclk) will increase if one or more of the following cases appear:</p>
+  <p>a) sdata increases, b) sclk increases, c) rdc decreases.</p>
+  <p>In other words, both the overestimation of CDCs and the underestimation of PDCs result in the overestimation of Var(pddatapdclk). Therefore, if the distribution with overestimated variance satisfies the setup time constraint, then so will the actual distribution. Thus, the overestimation on Var(pddatapdclk) is slightly pessimistic but preferable to any underestimation.</p>
+  <p>5.3. Comparisons</p>
+  <p>Table 4 shows the impacts of CDC and slope variations on the accuracy of estimated standard deviations. In addition to the technique to estimate CDC through (16) and (21), the following two extreme cases were considered:</p>
+  <p>a) rkl1⁄41 for any two cells k and l, b) rkl1⁄40 except for k1⁄4l.</p>
+  <p>As shown in Table 4, these two cases respectively lead to an average relative error of 23.7% and 56.3%. The magnitude of this range shows the importance of estimating more precisely CDCs. The last column shows an average error of 2.7% when slope variations are not taken into account, leading to a difference of about 8% compared with the proposed approach. Finally, Table 5 demonstrates the benefits of using the models in Section 4. It compares standard deviations of path delays estimated by data from MC simulations, which are considered as reference values, with those computed using statistical timing libraries based on the following combinations of input signal and output load models:</p>
+  <p>a) LL-based signal and inverters, b) linear signal and inverters, c) LL-based signal and capacitors.</p>
+  <p>Fig. 9. (a) Validation of the technique to estimate CDC. (b) Validation of the technique to estimate PDC.</p>
+  <p>Table 3 Accuracy of computed CDCs and PDCs.</p>
+  <p>Sample size Poe (%) Pue (%)</p>
+  <p>In Table 5, attention must be focused on the following comparisons: combinations (a) vs (b) and combinations (a) vs (c). The average relative errors show a difference in percentage of about 16 between combinations (a) and (b), and about 12 between combinations (a) and (c). Note that the column corresponding to combination (b) (and also combination (c)) shows that they are all underestimated, which is unexpected in case of SSTA. From these results, we may conclude that both LL-based input signal and inverters output load improve the accuracy of computing path delay standard deviations.</p>
+  <h3>CDC 10532 81 19 PDC 780 16 84</h3>
+  <p>6. Applications</p>
+  <p>6.1. Gains of SSTA</p>
+  <p>where TCLK is the clock period and pddata, pdclk are, respectively, delays of data path and clock path. Suppose that TCLK is a constant while pddata, pdclk are random variables. Then, we have</p>
+  <p>To show the gain of SSTA, we implemented several benchmarks under timing constraints using both CTA and SSTA. Then, we compared the timing margins for target values of area. For this comparison, we constructed area-delay curves. Then, for a series of N area values, we computed the two following</p>
+  <p>VarðpddatapdclkÞ 1⁄4 s2 data þs2 clk2rdcsdatasclk ð34Þ</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 9</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 271</p>
+  <p>Table 4 Impacts of CDC and slope variations s2tin .</p>
+  <p>Path Logical depth spd (ps) ^spdspd spd %</p>
+  <p>(</p>
+  <p>(%) For each cell k, s2 tin,k 1⁄4 0 (%)</p>
+  <p>rkl from (16) and (21) (%) 8k,l rkl1⁄41 (%) rkl 1⁄4 1, k 1⁄4 l rkl 1⁄4 0, kal</p>
+  <p>1 5 22.9 7.0 23.1 33.2 3.0 2 10 36.2 7.7 25.1 50.8 2.4 3 15 45.4 0.9 21.6 61.7 6.3 4 20 57.7 6.4 24.8 66.4 1.2 5 25 57.8 2.8 23.8 69.2 5.4 Average error 5.0 23.7 56.3 2.7</p>
+  <p>Table 5 Comparisons of path delay standard deviations bspd computed with different statistical timing libraries.</p>
+  <p>Path Logical depth spd (ps) ^spdspd spd %</p>
+  <p>Linear signalþinverters (combination b) (%) LL-based signalþcapacitors (combination c) (%)</p>
+  <p>LL-based signalþinverters (combination a) (%)</p>
+  <p>1 5 22.9 7.0 6.8 4.6 2 10 36.2 7.7 4.5 4.8 3 15 45.4 0.9 14.6 10.7 4 20 57.7 6.4 11.1 5.7 5 25 57.8 2.8 17.2 7.2 Average error 5.0 10.84 6.6</p>
+  <p>6.2. Ordering of critical paths</p>
+  <p>Table 6 Average delay gains of the SSTA engine over CTA (without interconnects).</p>
+  <p>Name Technology (nm) Logical depth GD ðpsÞ rGD ð%Þ</p>
+  <p>Maximum Average</p>
+  <p>b01 130 8 6 7 0.8 65 9 7 104 11.3</p>
+  <p>b05 130 18 16 50 2.6 65 27 25 295 13.6</p>
+  <p>b07 130 12 9 11 1.0 65 17 11 140 12.3</p>
+  <p>average gains of delays:</p>
+  <h3>GD 1⁄4 1 N X N</h3>
+  <p>i 1⁄4 1 ðwisiÞ</p>
+  <h3>8 &gt; &gt; &gt; &gt; &gt; &lt;</h3>
+  <p>ð35Þ</p>
+  <h3>rGD 1⁄4 1 N X N</h3>
+  <p>wisi wi %</p>
+  <p>&gt; &gt; &gt; &gt; &gt; :</p>
+  <p>i 1⁄4 1</p>
+  <p>where wi is the delay from CTA, and si is the delay corner of SSTA, defined as: si1⁄4miþ3si.</p>
+  <p>Table 6 gives the results for circuits b01, b05 and b07 of the ITC99 benchmarks. From this table, we can draw the following conclusions:</p>
+  <p>At the present time, most IC designers still use tools based on path-based CTA, and consider SSTA as a complement to CTA. However, results of SSTA do not necessarily coincide with those of CTA even when considering a single voltage Vdd and temperature T corner [25]. A well known reason explaining such differences, is the effect of path re-convergence that induces topological correlations between paths and creates false paths [13]. Block-based SSTA offers a solution to take this effect into account, but does not offer a solution to manage simultaneously process, temperature and voltage variations. This section shows there are at least two additional sources of discrepancy between orderings obtained with SSTA and CTA. They appear even on an isolated path. One of these sources could explain the rare unexpected optimism of CTA pointed out in [25]. A typical Computer-Aided-Design (CAD) tool based on CTA, like RTL Compiler [16], extracts a set of N critical paths for optimization of circuit design. These N critical paths are ordered by decreasing worst delay according to CTA, i.e. the first critical path has the maximal worst delay; the second one has the second maximal value, etc. However, if path delays of the same set are computed by SSTA, the ordering of these paths may be different with that of CTA. Consider a timing path of K cells under the worst environmental condition: 125 1C and 1.1 V. Let wgdk be the worst cell delay computed by CTA, and mgdk, s2 gdk be the mean and the variance of cell delay provided by the SSTA engine. To gain some insights about the difference of orderings, we write wgdk in terms of mgdk, s2 gdk as a function of yk in the following way:</p>
+  <p>wgdk 1⁄4 mgdk þyksgdk ðk 1⁄4 1,2, . . ., KÞ ð36Þ</p>
+  <p>a) For both technologies, GD values increase with logical depth. However, the triplets of rGD values are less sensitive to logical depth: (0.8%, 2.6%, 1.0%), and (11.3%, 13.6%, 12.3%). b) For the three circuits, both GD and rGD in the 65 nm technology are larger than those in the 130 nm technology. This trend agrees with technology roadmaps [24] that predict these average gains of delays will become more and more important as the feature size shrinks from 65 nm to 45 nm, 32 nm, etc.</p>
+  <p>Then, according to (11), (12) and (36), the statistical 3s corner of path delay spd and the worst path delay wpd can be decomposed</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 10</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 272</p>
+  <p>Fig. 10. Interpretation of discrepancy between orderings.</p>
+  <p>Fig. 11. Evolution of ðwpdsn pd=wpdspdÞ% with respect to logical depth.</p>
+  <p>as</p>
+  <h3>X K</h3>
+  <p>ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X K</p>
+  <p>Spd 1⁄4 mpd þ3spd</p>
+  <p>v u u t ð42Þ</p>
+  <p>sn pd 1⁄4</p>
+  <p>ymsgdm 3</p>
+  <p>yksgdk 3</p>
+  <p>m 1⁄4 1 rkm</p>
+  <p>k 1⁄4 1</p>
+  <h3>X K</h3>
+  <p>ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X K</p>
+  <h3>1⁄4 X K</h3>
+  <p>v u u t ð37Þ</p>
+  <p>m 1⁄4 1 rkmsgdksgdm</p>
+  <p>k 1⁄4 1 mgdk þ3</p>
+  <p>k 1⁄4 1</p>
+  <p>!</p>
+  <p>Comparing (37) with (41) shows that eliminates the influence of rkm. In the same manner, going from (42) to (37) eliminates the influence of yk, from (38a) to (41) eliminates the influence of yk, and from (42) to (38a) eliminates the influence of rkm.</p>
+  <p>wpd 1⁄4 X K</p>
+  <p>yksgdk 3</p>
+  <p>k 1⁄4 1 wgdk 1⁄4 X K</p>
+  <p>k 1⁄4 1 mgdk þ3 X K</p>
+  <p>k 1⁄4 1</p>
+  <p>ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X K</p>
+  <h3>X K</h3>
+  <h3>1⁄4 X K</h3>
+  <p>v u u t ð38aÞ</p>
+  <p>ymsgdm 3</p>
+  <p>m 1⁄4 1 1 yksgdk 3</p>
+  <p>k 1⁄4 1 mgdk þ3</p>
+  <p>k 1⁄4 1</p>
+  <h3>X K</h3>
+  <p>ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X K</p>
+  <h3>1⁄4 X K</h3>
+  <p>v u u t ð38bÞ</p>
+  <p>wgdkmgdk 3</p>
+  <p>m 1⁄4 1 1 wgdkmgdk 3</p>
+  <p>k 1⁄4 1 mgdk þ3</p>
+  <p>k 1⁄4 1</p>
+  <p>Fig. 10 plots the four curves wpd, spd, s0pd, spd * . The rank of each path corresponds to decreasing values of wpd. The two curves wpd and spd * have a similar shape, and the same holds for the pair of curves spd and s0pd. These similarities allow concluding that, in this case, the discrepancy of orderings comes mainly from yk, i.e. from the pessimistic standard deviation values considered by CTA. Indeed, 81% of the average gap between wpd (CTA) and spd (SSTA) comes from the difference between wpd and s0pd. Note that the above paths have logical depths ranging from 10 to 16. This conclusion is further supported by Fig. 11 that shows the evolution of ðwpdsn pdÞ=ðwpdspdÞ% with respect to logical depth, i.e. the percentage of CTA pessimism explained by CDCs. For most of the paths, this percentage is around 30%, except for some short paths. From this figure, one may conclude that accurate estimates of CDCs are mandatory for accurate estimates of path delays, especially when logical depths are less than 10.</p>
+  <p>7. Conclusions</p>
+  <p>Comparing (37) with (38), the quantities rkm are fixed to the constant ‘‘1’’, meaning that all cell delays are perfectly correlated. In (38a), sgdkUyk=3 are the pessimistic standard deviation values considered by CTA, and thus are the duals of sgdk in (37). Therefore, the discrepancy of orderings comes from two factors: cell-to-cell delay correlation rkm and standard deviation of cell delay sgdk. On the one hand, in the context of timing analysis, rkm varies in the interval [0,1], and it is rare that rkm1⁄41 if kam. However, rkm is systematically set to ‘‘1’’ in (38), which introduces a first difference between wpd and spd. On the other hand, according to the CTA, wgdk is computed by setting each process parameter pl to a corner value. Therefore it is unlikely that yk is exactly equal to 3 in (38a), which introduces a second source of difference in orderings. To identify which of these two factors has more influence, we compute s0pd and spd * with</p>
+  <p>s0 pd 1⁄4 mpd þ3s0 pd ð39Þ</p>
+  <p>sn pd 1⁄4 mpd þ3sn pd ð40Þ</p>
+  <p>In this paper, we have developed a path-based SSTA framework that allows a fast estimation of path delay distributions and delay correlations by propagating iteratively mean and variance of cell delay. Its accuracy derives mainly from a realistic estimation of delay correlations and the use of log-logistic and active load (inverters) models for input slope and output load. As a result, the proposed engine gives estimates of path delay means and standard deviations with relative errors less than 5% and 10%, respectively. Compared to CTA, our SSTA framework yields a delay gain of about 12% in 65 nm technology. Finally, the application of our SSTA framework shows that main sources of pessimism of CTA are</p>
+  <p>where</p>
+  <p>ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi X K</p>
+  <h3>X K</h3>
+  <p>v u u t ð41Þ</p>
+  <p>s0 pd 1⁄4</p>
+  <p>m 1⁄4 1 1sgdksgdm</p>
+  <p>k 1⁄4 1</p>
+  <p>a) the overestimation of standard deviation of cell delays, b) the assumption that cell-to-cell delay correlations are unrealistically set to ‘‘1’’.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 11</div>
+  <p>Z. Wu et al. / Microelectronics Journal 43 (2012) 263–273 273</p>
+  <p>References</p>
+  <p>[12] K. Heloue, F. Najm, Statistical timing analysis with two-sided constraints, Proc. ICCAD (2005) 829–836. [13] Y. Zhan, A.J. Strojwas, M. Sharma, D. Newmark, Statistical critical path analysis considering correlations, Proc. ICCAD (2005) 699–704. [14] J. Sridharan, T. Chen, Modeling multiple input switching of CMOS gates in DSM technology using HDMR, Proc. DATE (2006) 624–629. [15] B.W. Lindgren, Statistical Theory, 3rd edition, MacMillan, 1976. (Chapter 2). [16] Using Encounter RTL Compiler, Product Version 7.2, Cadence, 2007. [17] Star-Hspice Manual, Release 1998.2, Avanti, 1998. [18] Z. Wu, P. Maurine, N. Azemard, G. Ducharme, SSTA with delay correlations, Proc. NEWCAS (2010) 261–264. [19] C.J. Alpert, F. Liu, C. Kashyap, A. Devgan, Delay and slew metrics using the lognormal distribution, Proc. DAC (2003) 382–385. [20] C.S. Amin, F. Dartu, Y.I. Ismail, Weibull based analytical waveform model, Proc. ICCAD (2003) 161–168. [21] S. Turgis, D. Auvergne, A novel macromodel for power estimation for CMOS structures, IEEE Trans. Comput.-Aided-Des. 17 (no.11) (1998) 1090–1098. [22] Z. Huang, H. Yu, A. Kurokawa, Y. Inoue, Modeling the overshooting effect for CMOS inverter in nanometer technologies, IEEE Trans. Comput.-Aided-Des. 29 (2) (2010) 250–260. [23] N. Menezes, C. Kashyap, C. Amin, A ‘true’ electrical cell model for timing, noise, and power grid verification, Proc. DAC (2008) 462–467. [24] B. Calhoun, Y. Cao, X. Li, K. Mai, L. Pileggi, R. Rutenbar, K. Shepard, Digital circuit design challenges and opportunities in the era of nanoscale CMOS, Proc. IEEE 96 (2) (2008) 343–365. (Special Issue on Integrated Electronics: Beyond Moore’s Law). [25] C. Forzan, D. Pandini, Why we need statistical static timing analysis, Proc. ICCD (2007) 91–96.</p>
+  <p>[1] H. Chang, S. Sapatnekar, Statistical timing analysis considering spatial correlations using a single PERT-like traversal, Proc. ICCAD (2003) 621–625. [2] A. Agarwal, D. Blaauw, V. Zolotov, Statistical timing analysis for intra-die process variations with spatial correlations, Proc. ICCAD (2003) 900–907. [3] C. Visweswariah, K. Ravindran, K. Kalafala, S. Waler, S. Narayan, First-order incremental block-based statistical timing analysis, Proc. DAC (2004) 331–336. [4] L. Zhang, W. Chen, Y. Hu, J. Gubner, C. Chen, Correlation-preserved non- Gaussian statistical timing analysis with quadratic timing model, Proc. DAC (2005) 83–88. [5] L. Cheng, J. Xiong, L. He, Non-linear statistical static timing analysis for nongaussian variation sources, Proc. DAC (2007) 250–255. [6] Z. Feng, P. Li, Y. Zhan, Fast second-order statistical static timing analysis using parameter dimension reduction, Proc. DAC (2007) 244–249. [7] A. Ramalingam, G. Nam, A. Singh, M. Orshansky, S.R. Nassif, D.Z. Pan, An accurate sparse matrix based framework for statistical static timing analysis, Proc. ICCAD (2006) 231–236. [8] University of California, 2001. [9] W. Schneider, M. Schmidt, B. Li, U. Schlichtmann, A new bounding technique for handling arbitrary correlations in path-based SSTA, Proc. PATMOS (2008) 167–177. [10] F. Najm, N. Menezes, Statistical timing analysis based on a timing yield model, Proc. DAC (2004) 460–465. [11] C. Amin, N. Menezes, K. Killpack, F. Dartu, U. Choudhury, N. Hakim, Y. Ismail, Statistical static timing analysis: how simple can we get? Proc. DAC (2005) 652–657.</p>
+</section>
+</article>
+</main>
+</body>
+</html>

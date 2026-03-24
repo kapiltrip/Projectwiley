@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Timing analysis algorithm using a neural network under PVT variations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: light; --ink: #1b1c1d; --muted: #5a6470; --paper: #ffffff; --edge: #dfe4ea; --accent: #194a8d; --wash: #f5f8fc; }
+    body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: linear-gradient(180deg, #eef3f9 0%, #f8fafc 100%); }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+    article { background: var(--paper); border: 1px solid var(--edge); border-radius: 18px; box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08); overflow: hidden; }
+    header { padding: 32px; background: linear-gradient(135deg, #f7fbff 0%, #eef4fb 100%); border-bottom: 1px solid var(--edge); }
+    h1 { margin: 0 0 12px; font-size: 2rem; line-height: 1.15; }
+    h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    h3 { margin: 24px 0 10px; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); }
+    p, li, dd { line-height: 1.65; font-size: 1rem; }
+    section { padding: 28px 32px; border-top: 1px solid var(--edge); }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 20px; }
+    .meta dt { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta dd { margin: 0; }
+    .note { margin-top: 16px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--wash); }
+    .page { background: #fff; }
+    .page-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    ul { margin: 0; padding-left: 20px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+<article>
+<header>
+  <h1>Timing analysis algorithm using a neural network under PVT variations</h1>
+  <p>Yan Liu</p>
+  <div class="note"><strong>Abstract.</strong> Process-voltage-temperature variations result in an increase in logic gate delays, which further lead to timing violations. Because of the computational complexity of the operators such as max and sum in statistical static timing analysis, this paper proposes a timing analysis algorithm using neural network to evaluate circuit timing under the PVT variations. In the proposed algorithm, a neural network method is applied to model the mean or standard deviation of the gate delay. Then, a viability analysis method is introduced to recognize the true critical path. The simulation results on ISCAS89 benchmarks illustrate that compared with SPICE Monte Carlo simula tion, the error in the mean calculated by the proposed algorithm is less than 2%, and the error in the standard deviation is less than 3.64%. In addition, for s298, s344, s832, s1238 and s13207, the viability analysis algorithm achieves 1.04X, 1.01X, 2.77X, 1.62X and 4.48X speedup over full path search, respectively.</div>
+</header>
+<section><h2>Paper Metadata</h2>
+<dl class="meta">
+  <div><dt>Source PDF</dt><dd><a href="../papers50/30.pdf">30.pdf</a></dd></div>
+  <div><dt>Pages</dt><dd>5</dd></div>
+  <div><dt>Year</dt><dd>2022</dd></div>
+  <div><dt>Journal</dt><dd>Microelectronics Journal</dd></div>
+  <div><dt>DOI</dt><dd>10.1016/j.mejo.2022.105480</dd></div>
+  <div><dt>Citation</dt><dd>Yan Liu (2022). Timing analysis algorithm using a neural network under PVT variations. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2022.105480</dd></div>
+</dl>
+</section>
+<section>
+<h2>Detected Section Headings</h2>
+<ul>
+  <li>1. Introduction</li>
+  <li>2. Timing analysis algorithm using a back-propagation neural network</li>
+  <li>2.2. Viability analysis</li>
+  <li>2.1. Gate delay modeling</li>
+  <li>3. Simulation results</li>
+  <li>3.1. Gate delay modeling</li>
+  <li>3.2. The effectiveness of viability analysis</li>
+  <li>3.3. Path timing verification</li>
+  <li>4. Conclusion</li>
+</ul>
+</section>
+<section>
+<h2>Detected Figure Captions</h2>
+<ul>
+  <li>Fig. 1. Example of a false path.</li>
+  <li>Fig. 2. The flow of the proposed timing analysis.</li>
+  <li>Fig. 4. The example of path sensitivity condition.</li>
+  <li>Fig. 5. The delay error between MC and our method.</li>
+  <li>Fig. 6. Example of a false path in s344.</li>
+</ul>
+</section>
+<section>
+<h2>Detected Table Captions</h2>
+<ul>
+  <li>Table 1 Sampling of parameters for MC simulation.</li>
+  <li>Table 2 The average errors of the logic gate rising propagation delay.</li>
+  <li>Table 3 The comparison results between the true critical path and false path.</li>
+  <li>Table 4 The comparison results between MC and our method.</li>
+  <li>Table 5 The comparison results between NN-based linear SSTA and our method.</li>
+</ul>
+</section>
+<section>
+<h2>Image Insertion Note</h2>
+<p>This HTML is prepared for later figure insertion. Citation data for Wiley-style image credits is stored in the <code>images</code> folder.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 1</div>
+  <p>Microelectronics Journal 125 (2022) 105480</p>
+  <p>Contents lists available at ScienceDirect</p>
+  <p>Microelectronics Journal</p>
+  <p>journal homepage: www.elsevier.com/locate/mejo</p>
+  <p>Timing analysis algorithm using a neural network under PVT variations</p>
+  <p>Yan Liu, Yan-Hua Ma *, Yu-Chun Chang **</p>
+  <p>School of Microelectronics, Dalian University of Technology, Dalian, China</p>
+  <h3>A R T I C L E I N F O</h3>
+  <h3>A B S T R A C T</h3>
+  <p>Keywords: PVT Neural network Viability analysis</p>
+  <p>Process-voltage-temperature variations result in an increase in logic gate delays, which further lead to timing violations. Because of the computational complexity of the operators such as max and sum in statistical static timing analysis, this paper proposes a timing analysis algorithm using neural network to evaluate circuit timing under the PVT variations. In the proposed algorithm, a neural network method is applied to model the mean or standard deviation of the gate delay. Then, a viability analysis method is introduced to recognize the true critical path. The simulation results on ISCAS89 benchmarks illustrate that compared with SPICE Monte Carlo simula tion, the error in the mean calculated by the proposed algorithm is less than 2%, and the error in the standard deviation is less than 3.64%. In addition, for s298, s344, s832, s1238 and s13207, the viability analysis algorithm achieves 1.04X, 1.01X, 2.77X, 1.62X and 4.48X speedup over full path search, respectively.</p>
+  <p>1. Introduction</p>
+  <p>characterization complexity goes up enormously when operating con ditions change. Instead of the kernel density estimation, the authors in Ref. [4] applied an artificial neural network to model the relationship between the gate delay and the process parameters. Considering the effect of temperature and voltage on circuit timing, a single delay model for the logic gate using multi-layer perceptron with a single hidden layer is employed to capture the process, voltage, temperature, load and input slew in Ref. [8]. The path-based SSTA method computes the delay of each path and estimates circuit timing with the maximum of all path delays [9]. However, with the increasing scale and complexity of the circuits, the number of paths that need to be analyzed rises accordingly, which further leads to expensive calculations. In addition, according to Hrapcenko’s analysis, there are either no false paths or a large number of false paths in the circuit [10]. Fig. 1 lists an example of the false path. To propagate a toy, m and z must be 1; x andb is 0. However, the output signaly is always 0 whenx andb are 0. In other words, path{a, c, z, y} is not sensitive to signals x andb. Due to the false paths, we can hardly detect the true critical path, which finally results in an inaccurate timing calculation [11]. Since the PVT effects and the false paths have a great influence on evaluating the circuit timing, we pay attention to the timing analysis problem considering both the PVT effects and the presence of the false paths in this paper. Our main contributions are summarized as follows.</p>
+  <p>With the size of transistors is continuously shrinking, the inevitable process variations that are the physical deviation of the parameters of transistors such as channel width and gate oxide thickness become more prominent [1]. The changes in physical parameters of transistors lead to the variations in circuit performance. Additionally, circuit performance is also affected by temperature and voltage [2]. The process-voltage-temperature variations are called the PVT effects. Because of these effects, the threshold voltage of transistors shifts, resulting in a change in logic gate delay, which eventually leads to the timing violation of the circuit [3]. Therefore, it is significant to evaluate the impact of PVT effects on circuit timing. Studies on the impact of PVT effects mainly concern the statistical static timing analysis (SSTA) based methods, which calculate the dis tribution function of circuit timing by propagating the hypothetical distribution function of logic gate delay [4,5]. The SSTA methods can be generally divided into block-based and path-based SSTA methods. The block-based SSTA method uses sum and max operators to propagate the delay distribution [6]. For simplifying the max operator, it is the Gaussian distribution that is often assumed to be the distribution of process parameters [3]. But practically, the Gaussian distribution is too ideal to calculate circuit timing accurately [7]. In Ref. [7], the kernel density estimation is used to build a look-up table which contains the performance under different operating conditions. However, the library</p>
+  <p>* Corresponding author. ** Corresponding author. E-mail addresses: 1059115944@qq.com (Y. Liu), mayanhua@dlut.edu.cn (Y.-H. Ma), cyc@dlut.edu.cn (Y.-C. Chang).</p>
+  <p>https://doi.org/10.1016/j.mejo.2022.105480 Received 7 February 2022; Received in revised form 11 April 2022; Accepted 21 May 2022</p>
+  <p>1879-2391/</p>
+  <p>Available online 26 May 2022 © 2022 Elsevier Ltd. All rights reserved.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 2</div>
+  <p>Y. Liu et al.</p>
+  <p>Microelectronics Journal 125 (2022) 105480</p>
+  <p>Fig. 1. Example of a false path.</p>
+  <p>1) Instead of the hypothetical distribution function of logic gate delay, a back-propagation neural network based method is applied to calcu late the mean or standard deviation of logic gate delay. 2) The viability analysis method is introduced to reduce the path search space. Instead of reducing the number of the process parameters in gate delay modeling by the efficient dimension reduction technique, the viability analysis method is developed to filter out the true crit ical path, which finally calculates the timing accurately. 3) The simulation results illustrate that compared with SPICE Monte Carlo simulation, the error in the mean calculated by the proposed algorithm is less than 2%, and the error in the standard deviation is less than 3.64%.</p>
+  <p>The rest of this paper is organized as follows. Section 2 details the timing analysis algorithm using a back-propagation neural network. The simulation results are presented in section 3. Section 4 concludes this paper.</p>
+  <p>stages: forward propagation and error back propagation. In the forward propagation stage, the output is predicted by the cumulative input calculation through the hidden layers. If the output does not match the expected output, the BPNN returns to the error back propagation stage. In the error stage, the weights of each layer are adjusted according to the error gradient descent, and then the error is recalculated in the forward propagation. After continuously repeating the forward propagation and the error back propagation, the BPNN will terminate until the output error reaches an acceptable value or the iteration number reaches a predefined value. Due to the strong nonlinear dependence of the logic gate delay on temperature and voltage [8], a BPNN is applied to model the mean and standard deviation of the logic gate delay because BPNN has strong nonlinear mapping ability. To construct our BPNN, for each logic gate delay, 500 sample points are randomly sampled to perform SPICE MC simulation where μ and σ of all the variations are 0 and 1 respectively. The voltage range is 0.9V–1.2 V; the temperature range is −40◦C-125 ◦C; the load range is 1fF-20fF. To train and test our constructed BPNN, the sample points are summarized in Table 1. In Table 1, #sample points is the number of sample points composed of temperature, voltage and load. According to the combination of these sample points, we collect the rising or falling propagation delay mean and standard deviation of each logic gate by SPICE MC simulation as the raw datasets. Subse quently, we adopt the mapminmax function to normalize the datasets. After normalization, according to a structure of 4-32-18-1, we applied the newff function and the Levenberg-Marquardt method to train our BPNN. To ensure the effectiveness of our BPNN, 70% of the normali zation samples are for training, and 30% of the normalization samples are for testing. When the number of iterations reaches 5000 or the mean square error reaches a predefined value, the training of our NN terminates.</p>
+  <p>2. Timing analysis algorithm using a back-propagation neural network</p>
+  <p>2.2. Viability analysis</p>
+  <p>The overall framework of the proposed timing analysis algorithm consists of gate delay modeling and viability analysis method, as shown in Fig. 2. In the gate delay modeling stage, a neural network is applied to model the mean or standard deviation of the gate delay according to an appropriate number of SPICE Monte Carlo simulations. In the viability analysis stage, we first merge logic gates and their fan-outs into a graph; then all timing paths of the circuit can be found by a depth-first search algorithm. Next, based on the types of logic gates, the sensitivity con ditions of the paths could be constructed. Finally, the true critical paths can be recognized according to the sensitivity conditions.</p>
+  <p>According to Hrapcenko’s analysis, there may exist the false paths in circuit. Additionally, if the critical path in circuit is a false path, the estimated circuit timing is pessimistic. Therefore, it is very significant to identify the true critical path. To filter out the true critical path, we first collect all timing paths, the types of logic gates and the side input signals of the logic gates by the depth-first search algorithm. Subsequently, the sensitivity condition of the timing path is constructed. Thus, the true critical path can be recognized. An overview of the viability analysis is summarized in Al gorithm 1.</p>
+  <p>2.1. Gate delay modeling</p>
+  <p>Algorithm 1.</p>
+  <p>Neural networks are widely used to model implicit nonlinear re lationships [4]. The back-propagation neural network (BPNN) is one of the most widely used in NNs. The structure of a BPNN consists of two</p>
+  <p>Input: the netlist of the circuit; the input signal of the circuit Output: the longest timing path I = {in1,in2,⋯,ins}: the set of input ports Q = {q1,q2,⋯,qt}: the set of DFF output pins G = I ∪Q = {in1,in2,⋯,ins,q1,q2,⋯,qt}: a collection of input ports and DFF output pins C = {c1,c2,...,cN}: a collection of logic gates in the circuit N: the number of logic gates in the circuit Begin 1 count = 0 2 merge C and the fan-outs of c1, c2, ..., cN into a graphGH(V,E) 3 for i ∈G: 4 find the timing paths pij fromi 5 store the timing pij in the listL 6 record the types of the logic gate gi inpij, and then determine the types of logic gates that connect to the side inputs of gi and are not on the pathpij 7 if the output of path pij meets the sensitivity condition 8count = count + 1; remove path pij fromL 9 find the longest path from L End</p>
+  <p>Fig. 2. The flow of the proposed timing analysis.</p>
+  <p>2</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 3</div>
+  <p>Y. Liu et al.</p>
+  <p>Microelectronics Journal 125 (2022) 105480</p>
+  <p>Table 1 Sampling of parameters for MC simulation.</p>
+  <p>paths of the circuit. After the critical path identification, the mean μpath and standard deviation σpath of the critical path can be calculated by the following equations [1].</p>
+  <p>Parameters Sample points #sample points</p>
+  <p>μpath = ∑ N</p>
+  <p>μgi (1)</p>
+  <p>i=1</p>
+  <p>Voltage(V) 0.9, 0.95, 1.0, 1.05, 1.08, 1.1, 1.15, 1.2 640 Temperature (◦C) −40, −30, −25, −15, 0, 15, 25, 30, 40, 55, 70, 80, 90, 100, 110, 125 640</p>
+  <p>Load (fF) 1, 5, 10, 15, 20 640</p>
+  <h3>∑ N</h3>
+  <p>Cov ( gi, gj</p>
+  <p>) (2)</p>
+  <p>σ2 path = ∑ N</p>
+  <p>σ2 gi + 2 ∑ N</p>
+  <p>i=1</p>
+  <p>i=1</p>
+  <p>j=i+1</p>
+  <p>) = ∑ k</p>
+  <p>Cov ( gi, gj</p>
+  <p>Sgi,mSgj,mρmgigjσgiσgj (3)</p>
+  <p>m=1</p>
+  <p>In the above equations, gi denotes the logic gatei; the number of logic gates on the critical path is N; the mean of gate i isμgi; the standard deviation of gate i isσgi; the number of the effects that make logic gate delay vary is k; ρmgigj is the correlation of the factorm for gate gi andgj;</p>
+  <p>Sgi,m is the delay sensitivity in the factorm for gategi. In our experiment, delay sensitivity Sgi,m can be estimated</p>
+  <p>2.2.1. Path search algorithm In this subsection, we take logic gates in the circuit as vertexes in a graph. The logic gate and its fan-outs are regarded as edges in a graph. According to the above description, a graph is constructed to charac terize a circuit. A graph GH(V, E) is a directed graph, wherev ∈V is a logic gate, ande ∈E denotes an edge. The sources of graph GH are the input ports and the outputs of all flip-flops; the output ports and the inputs of all flipflops are the sinks of graphGH. Based on the above description and the structure of the circuit, a graph GH can be constructed, as shown in Fig. 3. Then all timing paths of the circuit can be found by the depth-first search algorithm.</p>
+  <p>byFBPNN(x+Δm)−FBPNN(x) Δm , where x is the input vector andΔm is the change with respect to factorm. Therefore, based on the mean or standard de viation of logic gate delay and the path sensitivity conditions, the characteristic of the path timing under the PVT effects could be esti mated.</p>
+  <p>3. Simulation results</p>
+  <p>In this section, ISCAS85 benchmarks, ISCAS89 benchmarks [12] and the 130-nm process are applied to test our proposed algorithm. We implement our simulations on a Linux server with an Intel Xeon Plat inum CPU 8260L @2.4 GHz and 1T memory.</p>
+  <p>3.1. Gate delay modeling</p>
+  <p>2.2.2. Sensitivity condition Since the signal change in the preceding logic gate would cause a change in the following logic gate, the combination of each logic gate’s side input signals constitutes the sensitivity conditions of the timing path. For p ∈L, according to logic gate gi on pathp, we can determine the types of gate gmn that connect to gi and are not on pathp, and then the signal of a gate gi input pin that is not on p is determined according to the input signal of the circuit. Based on these signal conditions, if the output of pathp is always 0, these conditions are called the sensitivity condi tions of pathp. Fig. 4 shows an example of a path sensitivity condition. For propagating a to c, the side input signal e of AND2 is 1; to propagatec tod, g must be 1; however, the output signaly is always 0 whene andg are 1. Hence, the condition e = g = 1 is the sensitivity condition of path{a,b, c,d,y}. According to the definition of the path sensitivity conditions, the viability analysis could filter out the true critical paths from all timing</p>
+  <p>In this subsection, we present the simulation results of our proposed delay model. To facilitate comparison with the statistical comprehensive gate delay (CGDM) model, artificial neural network (ANN) gate delay model and global second order response surface (2-RSM) model [4], we normalize the errors of the mean μ and standard deviation σ to the standard deviation. The average errors of the logic gate rising propa gation delay mean and standard deviation are listed in Table 2. In Table 2, num represents the size of the samples used to fit the logic gate delay model; NAN denotes an unreported value. It can be inferred from the table that the delay of the logic gate calculated by our proposed method has more minor errors than the others. In all the results of our proposed method, the maximum mean and standard deviation errors are less than 3%. Actually, the mean and standard deviation of the logic gate delay evaluated by our BPNN are very close to the results computed by the MC simulation, as illustrated in Fig. 5. It can be concluded that in all simulations, the maximum error is below 1%. Therefore, our proposed method can effectively model the mean and standard deviation of the logic gate delay and critical factors.</p>
+  <p>3.2. The effectiveness of viability analysis</p>
+  <p>To test the viability analysis algorithm, we compare the viability analysis algorithm with the paths search algorithm. The results are listed in Table 3. In Table 3, num denotes the number of timing paths; CPU represents the runtime of the path search. From Table 3, it can be concluded that there are no false paths in s27, but there are a large number of false paths in s298, s344, s832, s1238 and s13207, which is consistent with Hrap cenko’s analysis. An example of a false path in s344 is listed in Fig. 6. To propagate the signal to CNTVG3VD, the signal N12 andN50 must be 1. In other words, the signalCNTVG3VG2VOR1NF andCNTVCON2 must be 1. Fig. 3. The graph structure of ISCAS 89 circuit s27 (a) is shown in (b).</p>
+  <p>3</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 4</div>
+  <p>Y. Liu et al.</p>
+  <p>Microelectronics Journal 125 (2022) 105480</p>
+  <p>Fig. 4. The example of path sensitivity condition.</p>
+  <p>Table 2 The average errors of the logic gate rising propagation delay.</p>
+  <p>Gate Num Statistical CGDM(%) ANN delay model (%) Global 2-RSM (%) Our method (%)</p>
+  <p>μ σ μ σ μ σ μ σ</p>
+  <p>INV 500 7.30 3.96 5.57 3.83 51.63 12.49 2.20 0.21 NAND2 500 4.53 3.53 4.57 5.61 17.60 5.12 1.65 2.88 NOR2 500 5.25 4.25 5.94 5.65 42.78 8.81 1.61 0.30 NAND3 500 4.32 3.62 4.76 5.50 4.77 2.90 2.95 0.43 NOR3 500 4.98 2.99 5.50 3.73 40.67 7.49 0.0005 0.77 AND2 500 4.38 3.80 NAN NAN 6.68 2.51 1.04 0.39 OR2 500 2.72 3.11 NAN NAN 3.57 1.85 0.54 0.008</p>
+  <p>If theCNTVCON2 is 1, the signalN8 is 0. Therefore, the signalN5 andCT2 are 0. However, the signal CNTVG3VG2VOR1NF is 0 when the signalN5 andCT2 are 0, which conflicts with the signal CNTVG3VG2VOR1NF being 1. Hence, the signalCNTVG3VD is insensitive to input signal. Namely, the path{CT0, N5, N8, CNTVCON2, N12, CNTVG3VD} is a false path. In addition, since the timing paths that meet the sensitivity condi tions are discarded in the viability analysis algorithm, the path search space reduces, and further the runtime decreases. It can be inferred from Table 3 that for s298, s344, s832, s1238 and s13207, the viability analysis algorithm is 1.04X, 1.01X, 2.77X, 1.62X and 4.48X faster than full path search, respectively.</p>
+  <p>3.3. Path timing verification</p>
+  <p>Fig. 5. The delay error between MC and our method.</p>
+  <p>Table 3 The comparison results between the true critical path and false path.</p>
+  <p>Designs Paths search algorithm Viability analysis algorithm</p>
+  <p>num CPU(s) num CPU(s)</p>
+  <p>s27 18 0.001004 18 0.001004 s298 222 12.309910 178 11.821490 s344 229 24.185671 225 23.890386 s832 471 3587.720329 155 1293.441059 s1238 3493 5719.119778 1260 3519.461155 s13207 20567 148435.878754 3960 33130.040169</p>
+  <p>Here, we give the timing comparison results between the Monte Carlo simulation and our proposed algorithm. In our experiments, the operation voltage is 1.1 V, and the temperature is 25 ◦C. The delay comparison results are reported in Table 4. From Table 4, for all tested designs, the maximum error of the mean is 2%, and the maximum error of the variance is 3.64%, which indicates that our method can effectively predict the circuit timing under PVT effects. To further verify the effectiveness of our proposed algorithm, we compare the error with NN-based linear SSTA in Ref. [8]. The error is the difference between the mean or variance of the path delay obtained by the proposed method and those evaluated by SPICE MC. In the experi ments, the operation voltage is 1.1 V, and the temperature is 25 ◦C. The comparison results are listed in Table 5. It can be inferred from Table 5 that compared with NN-based linear SSTA, the results obtained by our proposed method are relatively close to those evaluated by SPICE MC. The average error of the delay mean is 0.38% and 0.8375% for our proposed method and NN-based linear</p>
+  <p>4</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 5</div>
+  <p>Y. Liu et al.</p>
+  <p>Microelectronics Journal 125 (2022) 105480</p>
+  <p>Fig. 6. Example of a false path in s344.</p>
+  <p>Supervision, Funding acquisition.</p>
+  <p>Table 4 The comparison results between MC and our method.</p>
+  <p>Declaration of competing interest</p>
+  <p>Designs μ (ps) σ (ps)</p>
+  <p>MC Ours Error (%) MC Ours Error (%)</p>
+  <p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.</p>
+  <p>Acknowledgment</p>
+  <p>s27 525.31 527.6612 0. 45 23.78 23.3062 1.99 s298 589.622 596.44 1.16 21.844 22.63946 3.64 s344 636.365 640.306 0.62 35.43 36.26148 2.35 s832 514.408 504.153 2.00 32.49 32.9571 1.44 s1238 2441 2400.411 1.66 25.3 24.8516 1.77 s13207 2319 2283.399 1.54 18.58 18.16465 2.24</p>
+  <p>Table 5 The comparison results between NN-based linear SSTA and our method.</p>
+  <p>This work was supported by CEPREI(No. JSZL3017610B001), Na tional Natural Science Foundation of China(Nos. 11975066), National Key Research and Development Program of China(No. 2019YFB2204101).</p>
+  <p>Designs μ σ</p>
+  <p>References</p>
+  <p>Error (%) Error (%)</p>
+  <p>NN-based linear SSTA [8] Ours NN-based linear SSTA [8] Ours</p>
+  <p>c1908 0.92 0.58 3.71 2.43 c3540 0.62 0.08 4.60 1.09 c5315 1.12 0.50 1.70 0.42 c7552 0.69 0.36 4.02 5.21</p>
+  <p>SSTA, respectively. The average error of the delay variance is 2.2875% and 3.5075% for our proposed method and NN-based linear SSTA, respectively.</p>
+  <p>4. Conclusion</p>
+  <p>To address the PVT effects and the false paths problem, a timing analysis algorithm is proposed to evaluate circuit timing. We first construct a BPNN to model the mean or standard deviation of the logic gate delay. Then, the viability analysis is introduced to find the true critical path. The simulation results indicate that our algorithm can effectively predict the circuit timing when considering PVT effects and the false paths.</p>
+  <p>Author statement</p>
+  <p>[1] Champac Victor, Gervacio Jose Garcia, Timing Performance of Nanometer Digital Circuits under Process Variations, Springer International Publising AG, 2018. [2] Maike Taddiken, Theodor Hillebrand, Dagmar Peters-Drolshagen, Steffen Paul, Stochastic Behavioral Models for System Level Reliability Analysis Including Nonnormal and Correlated Process Variation, Microelectronics Reliability, 2021. [3] Bing Li, Masanori Hashimoto, Schlichtmann Ulf, From process variations to reliability: a survey of timing of digital circuits in the nanometer era, IPSJ Trans. Syst. LSI Design Methodol. 11 (2018) 2–15, 0. [4] mingzhi Gao, zuochang Ye, yan Wang, Zhiping Yu, On modeling the digital gate delay under process variation, J. Semiconduct. (2011) 122–130. [5] Vineeth Veetil, Kaviraj Chopra, David Blaauw, Fast Statistical Static Timing Analysis Using Smart Monte Carlo Techniques, IEEE Transactions on Computer- Aided Design of Integrated Circuits and Systems, June 2011. [6] Saman Kia Mehr, Amir Reza Ahmadi Mehr, Seyed Nima Mozaffari, Ali Afzali- Kusha, A new block-based SSTA method considering within-die variation, in: 2nd Asia Symposium on Quality Electronic Design (ASQED), August 2010, pp. 260–263. [7] Maike Taddiken, Theodor Hillebrand, Steffen Paul, Dagmar Peters-Drolshagen, LUT-based stochastic modeling for non-normal performance distributions, in: 15th International Conference on Synthesis, Modeling, Analysis and Simulation Methods and Applications to Circuit Design(SMACD), 2018. [8] B.P. Das, B. Amrutur, H.S. Jamadagni, N.V. Arvind, V. Visvanathan, Voltage and temperature-aware SSTA using neural network delay model, IEEE Trans. Semicond. Manuf. (2011) 533–544. [9] R. Patil Siddhasen, D.K. Gautam, Statistical modeling of combinational circuits using path based delay analysis, Silicon 10 (2018) 2063–2069. [10] P. McGeer, R. Brayton, Efficient algorithms for computing the longest viable path in a combinational network, in: 26th ACM/IEEE Design Automation Conference, 1989, pp. 561–567. [11] Jongyoon Jung, Taewhan Kim, Statistical Viability Analysis for Detecting False Paths under Delay Variation, IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, 2013, pp. 111–123. [12] International Technology Roadmap for Semiconductor 2004, 2004 [online] Available: https://www.itrs.net/common/2004update/2004update.htm.</p>
+  <p>Yan Liu: Conceptualization, Methodology, Investigation, Software, Writing – original draft, Data curation, Visualization. Yan-Hua Ma: Conceptualization, Methodology, Writing – review &amp; editing, Funding acquisition. Yu-Chun Chang: Conceptualization, Validation,</p>
+  <p>5</p>
+</section>
+</article>
+</main>
+</body>
+</html>

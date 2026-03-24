@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slack in static timing analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: light; --ink: #1b1c1d; --muted: #5a6470; --paper: #ffffff; --edge: #dfe4ea; --accent: #194a8d; --wash: #f5f8fc; }
+    body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: linear-gradient(180deg, #eef3f9 0%, #f8fafc 100%); }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+    article { background: var(--paper); border: 1px solid var(--edge); border-radius: 18px; box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08); overflow: hidden; }
+    header { padding: 32px; background: linear-gradient(135deg, #f7fbff 0%, #eef4fb 100%); border-bottom: 1px solid var(--edge); }
+    h1 { margin: 0 0 12px; font-size: 2rem; line-height: 1.15; }
+    h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    h3 { margin: 24px 0 10px; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); }
+    p, li, dd { line-height: 1.65; font-size: 1rem; }
+    section { padding: 28px 32px; border-top: 1px solid var(--edge); }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 20px; }
+    .meta dt { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta dd { margin: 0; }
+    .note { margin-top: 16px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--wash); }
+    .page { background: #fff; }
+    .page-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    ul { margin: 0; padding-left: 20px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+<article>
+<header>
+  <h1>Slack in static timing analysis</h1>
+  <p>J. Vygen</p>
+  <div class="note"><strong>Abstract.</strong> The notion of slack is central in static timing analysis and very large scale integration (VLSI) design in general. Negative slack means that a timing constraint is violated, while a positive slack of x ps is intended to mean that an extra delay of x ps (or a smaller delay by x ps in early mode) could be tolerated. However, this property does not hold with the standard static timing analysis model. The paper defines slack properly, shows how to compute it efficiently, and proves that it has the intended properties. The proposed idea is based on enhanced slew propagation.</div>
+</header>
+<section><h2>Paper Metadata</h2>
+<dl class="meta">
+  <div><dt>Source PDF</dt><dd><a href="../papers50/50.pdf">50.pdf</a></dd></div>
+  <div><dt>Pages</dt><dd>10</dd></div>
+  <div><dt>Year</dt><dd>2006</dd></div>
+  <div><dt>Journal</dt><dd>IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems</dd></div>
+  <div><dt>DOI</dt><dd>10.1109/TCAD.2005.858348</dd></div>
+  <div><dt>Citation</dt><dd>J. Vygen (2006). Slack in static timing analysis. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2005.858348</dd></div>
+</dl>
+</section>
+<section>
+<h2>Detected Section Headings</h2>
+<ul>
+  <li>I. INTRODUCTION</li>
+  <li>II. STATIC TIMING ANALYSIS</li>
+  <li>III. SLACK</li>
+  <li>IV. CONCLUSION</li>
+</ul>
+</section>
+<section>
+<h2>Detected Figure Captions</h2>
+<ul>
+  <li>Fig. 1. Arrival times and slews.</li>
+  <li>Fig. 2. Small netlist.</li>
+  <li>Fig. 3. Timing graph with delay and slew functions.</li>
+  <li>Fig. 4. Enhanced slew propagation.</li>
+  <li>Fig. 5. Illustration of Theorem 3.3.</li>
+</ul>
+</section>
+<section>
+<h2>Image Insertion Note</h2>
+<p>This HTML is prepared for later figure insertion. Citation data for Wiley-style image credits is stored in the <code>images</code> folder.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 1</div>
+  <p>1876 IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006</p>
+  <p>Ω Set of origin labels. S Set of all signal types. S = Ω× {early, late} × {rise, fall}. σe Maps a signal type to another one when propagated along arc e ∈E(G). δ−(q), δ+(q) Set of arcs entering and leaving q, respectively. ν, νx Parameter in enhanced slew propagation (at x). ˆλe, ˆθe Lipschitz constants for λe, θe. T Set of tests. B Balance graph.</p>
+  <h3>I. INTRODUCTION</h3>
+  <p>Classical static timing analysis, though simple and efficient, has several severe drawbacks.</p>
+  <p>1) It can be overly pessimistic due to a simplified model. 2) It can also be overly optimistic: a chip might fail although static timing analysis detects no problem. 3) It works only for acyclic timing graphs. Only heuristics are known for timing graphs with directed cycles. 4) Arrival times and slacks are not continuous functions of the input. Changing an asserted arrival time slightly at some input may change a computed arrival time at some output drastically. 5) Slacks are often too optimistic. A positive slack of x ps does not mean (as one would expect) that an additional delay of x ps at this place could be tolerated without creating timing violations.</p>
+  <p>[9] T. Tugbawa, T. Park, D. Boning, T. Pan, P. Li, and S. Hymes, “A mathematical model of pattern dependencies in Cu CMP process,” in Proc. Electrochemical Society CMP Symp., Honolulu, HI, 1999, pp. 605–615. [10] W.-C. D. Lam and C.-K. Koh, “Process variation robust clock tree routing,” in Proc. Asia and South Pacific Design Automation Conf., Shanghai, China, 2005, pp. 606–611. [11] J. P. Fishburn and C. A. Schevon, “Shaping a distributed RC line to minimize Elmore delay,” IEEE Trans. Circuits Syst. I, Fundam. Theory Appl., vol. 42, no. 12, pp. 1020–1022, Dec. 1995. [12] C.-P. Chen and D. F. Wong, “Optimal wire-sizing function with fringing capacitance consideration,” Dept. Comput. Sci., Univ. Texas, Austin, Tech. Rep. TR96-28, Nov. 1996. [13] C.-P. Chen, H. Zhou, and D. F. Wong, “Optimal non-uniform wire-sizing under the Elmore delay model,” in Proc. IEEE/ACM Int. Conf. Computer- Aided Design, San Jose, CA, 1996, pp. 38–43. [14] R. Chaturvedi and J. Hu, “A simple yet effective merging scheme for prescribed-skew clock routing,” in Proc. IEEE Int. Conf. Computer Design, San Jose, CA, 2003, pp. 282–287. [15] R.-S. Tsay, “Exact zero skew,” in Proc. IEEE/ACM Int. Conf. Computer- Aided Design, Santa Clara, CA, 1991, pp. 336–339. [16] J. Cong, A. B. Kahng, C.-K. Koh, and C.-W. A. Tsao, “Bounded-skew clock and Steiner routing,” ACM Trans. Des. Autom. Electron. Syst., vol. 3, no. 3, pp. 341–388, Jul. 1998. [17] E. M. Sentovich, K. J. Singh, L. Lavagno, C. Moon, R. Murgai, A. Saldanha, H. Savoj, P. R. Stephan, R. K. Brayton, and A. L. Sangiovanni-Vincentelli, “SIS: A system for sequential circuit synthesis,” ERL, Univ. California, Berkeley, Memorandum no. M92/41, May 1992. [18] CPMO-Constrained Placement by Multilevel Optimization. Comput. Sci. Dept., UCLA. [Online]. Available: http://ballade.cs.ucla.edu/cpmo/ [19] H. Chang and S. S. Sapatnekar, “Statistical timing analysis considering spatial correlations using a single PERT-like traversal,” in Proc. IEEE/ACM Int. Conf. Computer-Aided Design, San Jose, CA, 2003, pp. 621–625.</p>
+  <p>Slack in Static Timing Analysis</p>
+  <p>Jens Vygen</p>
+  <p>Abstract—The notion of slack is central in static timing analysis and very large scale integration (VLSI) design in general. Negative slack means that a timing constraint is violated, while a positive slack of x ps is intended to mean that an extra delay of x ps (or a smaller delay by x ps in early mode) could be tolerated. However, this property does not hold with the standard static timing analysis model. The paper defines slack properly, shows how to compute it efficiently, and proves that it has the intended properties. The proposed idea is based on enhanced slew propagation.</p>
+  <p>Index Terms—Delay budgeting, physical design, slack, slack distribution, static timing analysis, VLSI design.</p>
+  <p>We argue that the last four mentioned drawbacks will become more and more important as extensive minimization of power consumption is done because this leads to large parts of the chip with very small slack. The first point also becomes more important and has to be addressed by statistical methods and/or transistor-level timing; however, it is not yet clear how to make this effective for large designs. In this paper, we will show how to extend the theory of static timing analysis using enhanced slew propagation to resolve the other four problems. We propose a safe model that is as pessimistic as necessary, but not more. It probably works for general timing graphs, is continuous, and computes reliable slacks. This is a key basis for timing optimization. Moreover, computing the information is almost as simple and fast as classical propagation. In the final part of the paper, we briefly review slack distribution (with many applications in physical design) and show how our enhanced timing model extends to optimum slack distributions in a natural and well-defined sense studied before. This is a theoretical paper. The impact in practice will have to be determined by future work.</p>
+  <h3>NOTATION INDEX</h3>
+  <h3>II. STATIC TIMING ANALYSIS</h3>
+  <p>We briefly describe the classical static gate-level timing analysis framework essentially introduced by Hitchcock et al. [9], Agrawal [1], Jouppi [10], and Ousterhout [15]. We point out several weaknesses and generalize the model by enhanced slew propagation in order to remove these drawbacks. Based on the generalized model, a new theory of static timing analysis is developed.</p>
+  <p>S(x) Set of signals at x. σ, σ′ Signals. at(x, σ) Arrival time of signal σ ∈S(x) at x. slew(x, σ) Slew of signal σ ∈S(x) at x. Λ Range of possible slews. G Timing graph. θe Delay function of arc e ∈E(G). λe Slew function of arc e ∈E(G).</p>
+  <p>A. Classical Propagation</p>
+  <p>Manuscript received August 29, 2003; revised March 4, 2004 and June 7, 2005. This paper was recommended by Associate Editor M. Sarrafzadeh. The author is with the Research Institute for Discrete Mathematics, University of Bonn, Bonn 53113, Germany. Digital Object Identifier 10.1109/TCAD.2005.858348</p>
+  <p>In timing analysis, we check that all signals arrive at certain points within a prescribed time interval. To do this, we propagate information through the netlist.</p>
+  <h3>0278-0070/$20.00 © 2006 IEEE</h3>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 2</div>
+  <p>IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006 1877</p>
+  <p>Fig. 1. Arrival times and slews.</p>
+  <p>δ−(v) and δ+(v) denote the sets of arcs entering and leaving vertex v, respectively. Let q ∈V (G) be a vertex with nonzero in-degree whose predecessors, if any, have all been processed already [i.e., we have defined a set S(p) of signals for each p with (p, q) ∈δ−(q)]. Then, we define a set of signals S(e) for each e = (p, q) ∈δ−(q) as follows. For each signal σ ∈S(p), we add σ′ := σe(σ) to S(e) and set</p>
+  <p>at(e, σ′) := at(p, σ) + θe (slew(p, σ))</p>
+  <p>slew(e, σ′) := λe (slew(p, σ)) . (1)</p>
+  <p>In full path propagation, we set S(q) to be the disjoint union of all S(e), e ∈δ−(q), and at(q, σ′) := at(e, σ′) and slew(q, σ′) := slew(e, σ′). This recursively defines multisets of signals, each associated with arrival time and slew, at all vertices. However, eventually we are interested only in the earliest or latest signal from each origin. If a signal is dominated by another one of the same type (i.e., earlier arrival time and better slew for late signals, or later arrival time and worse slew for early signals), we can safely exclude this signal from further propagation. But, if we have two signals from the same origin, say on two arcs entering the same vertex, and one of the signals has an earlier arrival time but a higher slew value than the other, it is not clear which of the two signals will arrive earlier at some remote vertex (endpoint); indeed, this can depend on the endpoint considered. Fig. 1 shows such an example of two rising signals, and their arrival time and slew according to the standard interpretations. Since full path propagation (even when removing dominated signals) can lead to a huge number of signals, a simpler (but less accurate) way of propagation is used in practice. For each vertex p, each origin r, each η ∈{early, late}, and each ζ ∈{rise, fall}, we consider at most one signal (r, η, ζ) ∈S(p). Several signals differing only in arrival time or slew are united to one as follows. We set S(q) := </p>
+  <p>e∈δ−(q) S(e), and for σ ∈S(q)</p>
+  <p>at(q, σ) := max  at(e, σ)|e ∈δ−(q), σ ∈S(e)</p>
+  <p>slew(q, σ) := max  slew(e)|e ∈δ−(q), σ ∈S(e),</p>
+  <p>If all bits at registers and primary inputs remain constant from one clock cycle to the next, then the voltage remains constant everywhere on the chip. But if at least one bit changes, this information must be propagated through the network. The information that we propagate is called a signal. A signal consists of: 1) the information whether the voltage is rising (the bit changes from 0 to 1) or falling (the bit changes from 1 to 0); 2) the time when the voltage change occurs with respect to clock cycle 0; 3) a measure of how fast the voltage changes; and 4) information on the origin of the signal (a primary input or register). The reason for 1) is the significantly different propagation delays. This partially makes up for ignoring the logical functions. As both rising and falling voltages can occur, we usually have pairs of signals. In fact, we normally have four signals at each point as we have to consider the earliest and latest possible voltage changes in each direction (rising or falling). 2) and 3) are the standard information in static timing analysis: the characteristics of a voltage change over time are encoded by two numbers: the arrival time (usually the 50% transition time) and the slew (usually the difference of 10% and 90% transition times). In the following, we will not restrict ourselves to this specific definition of arrival time and slew. However, we require that delays depend monotonely on slew. This is always the case if the point in time considered as arrival time is early enough in the voltage transition. All arrival times of signals refer to a specific clock cycle. Since we want to check the timing conditions for the complete chip and for all cycles simultaneously, we need information 4) on the origin of the signal, in particular its local frequency. Since the propagation delay of a signal depends on its slew (more precisely, on the voltage function over time), we have to propagate forward. So for each primary input x and each output pin x of a register, we consider a set S(x) := {(x, early, rise), (x, early, fall), (x, late, rise), (x, late, fall)} of four possible signals. With each signal σ ∈S(x) in point x, we associate its arrival time at(x, σ) ∈R and some information slew(x, σ) ∈Λ on the shape of the voltage function. We assume that Λ (the slew range) is a finite closed interval of R. Smaller values correspond to “stronger” signals, where the voltage goes faster from 0 to 1 (or vice versa). Propagation is carried out in the so-called timing graph G, a directed graph whose vertex set V (G) contains all pins. As usual, the elements of the arc set E(G) represent connections within the gates as well as wire connections. Each arc e = (p, q) ∈E(G) (also called a propagation segment) is associated with two monotonely increasing Lipschitz continuous functions θe : Λ →R and λe : Λ →Λ. (A function f : Λ →R is called Lipschitz continuous if there is an α ≥0, the Lipschitz constant, such that |f(x) −f(y)| ≤α|x −y| for all x, y ∈Λ.) θe and λe describe the delay and slew at the endpoint of the propagation segment as a function of the input slew. In most cases, but not necessarily always, the value of θe will be positive; it is called the delay of the signal along e. To allow different delays for different transitions, we use parallel arcs and introduce a mapping σe : S →S ∪{∅} for each arc e, where S := Ω× {early, late} × {rise, fall} and Ωis the set of origin labels. Usually, σe(r, η, ζ) = ∅for all r ∈Ωand all (η, ζ) ̸= (η′, ζ′), for some η′ ∈{early, late}, ζ′ ∈{rise, fall} (meaning that the arc is used only for (η′, ζ′) signals), and σe(r, η′, ζ′) = (r, η′, ζ′′) for some ζ′′ ∈ {rise, fall} and all r ∈Ω. For each net with source p and each sink q of this net, we then have four parallel arcs (p, q), one for each element of {early, late} × {rise, fall}. Moreover, for each gate, we have an internal timing subgraph defined in the timing rule. For a start, we omit internal arcs of registers; then, the timing graph G is acyclic. So we can propagate in topological order. Let</p>
+  <p>at(e, σ) = at(q, σ)} (2)</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 3</div>
+  <p>1878 IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006</p>
+  <h3>TABLE I OLD AND NEW SLACKS</h3>
+  <p>Fig. 2. Small netlist.</p>
+  <p>Fig. 3. Timing graph with delay and slew functions.</p>
+  <p>if σ is a late signal and</p>
+  <p>at(q, σ) := min  at(e, σ)|e ∈δ−(q), σ ∈S(e)</p>
+  <p>slew(q, σ) := min  slew(e)|e ∈δ−(q), σ ∈S(e),</p>
+  <p>at(e, σ) = at(q, σ)} (3)</p>
+  <p>Fig. 4. Enhanced slew propagation.</p>
+  <p>B. Enhanced Slew Propagation</p>
+  <p>The following new model was proposed by Lee et al. [13] and Vygen [17] (independently). We set S(q) := </p>
+  <p>e∈δ−(q) S(e), and for σ ∈S(q)</p>
+  <p>at(q, σ) := max  at(e, σ)|e ∈δ−(q), σ ∈S(e)</p>
+  <p>slew(q, σ) := max {slew(e, σ) + ν (at(e, σ) −at(q, σ)) |</p>
+  <p>e ∈δ−(q), σ ∈S(e) (4)</p>
+  <p>if σ is a late signal and</p>
+  <p>at(q, σ) := min  at(e, σ)|e ∈δ−(q), σ ∈S(e)</p>
+  <p>slew(q, σ) := min {slew(e, σ) + ν (at(e, σ) −at(q, σ)) |</p>
+  <p>e ∈δ−(q), σ ∈S(e) (5)</p>
+  <p>if σ is an early signal. However, ignoring all signals except the latest (earliest) one is not feasible. To illustrate this, Fig. 2 shows a simple network with three primary inputs (black), two primary outputs (grey), two ANDs, and one inverter. Fig. 3 shows the corresponding timing graph (we show only one out of four parallel arcs). Source nodes are represented by black circles, sink nodes by grey circles. The mappings θe and λe are indicated above and below each arc e, respectively, as functions of s ∈Λ. Moreover, we show arrival times and slews at the three primary inputs a, b, c. The required arrival time is 70 at both primary outputs l and m. Classical static timing analysis would say that this chip works, the arrival time at the critical output l is 70, just as required. But the path from c to l takes longer—a signal propagated along this path arrives at the output at time 75. Note that although delay and slew functions are nonlinear in practice, the situation is quite realistic and appears similarly many times on real chips whenever two signals arrive almost simultaneously at some point and the slightly earlier one has worse slew. Classical static timing analysis may thus conclude that timing constraints are met although the chip will not work. Moreover, it has further disadvantages. It works only in acyclic timing graphs, arrival times are not continuous functions of design changes, and slacks are often too optimistic. Indeed, the output l in Fig. 2 has slack zero and the input c has a positive slack of 4. But if the signal at c arrived 2 units later, we would see a negative slack of −6.6 at the output l! This is in contrast to the intuitive meaning that the slack is a “safe margin”: an additional delay up to this amount should not harm. See also Table I and Section III-B, where we shall return to this example and explain it in more detail. In the following, we show how to enhance the static timing model such that all these drawbacks are resolved.</p>
+  <p>if σ is an early signal. Here, ν is some nonnegative parameter. Fig. 4 illustrates the above formulas for late signals and ν = 3. Here, the three signals are replaced by one, whose arrival time is that of the blue signal (at3) and whose</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 4</div>
+  <p>IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006 1879</p>
+  <p>adjust(x, y, late) is one clock cycle and adjust(x, y, early) is zero. Different frequencies and more complicated timing models, transparent latches, false paths, and multicycle paths lead to different adjusts. An important implementation detail is that we do not need two different origin labels for the signals starting in x1 and x2 if adjust(x1, y, η) = adjust(x2, y, η) for η = early, late and all y that are reachable from both x1 and x2. This leads to a substantial reduction in memory and runtime consumption. In a more general timing model, arrival times and required arrival times at registers are not fixed in advance. The timing graph is then a general directed graph, not necessarily acyclic. We still have arrival times and slews for signals S(x) for all vertices x with zero in-degree and required arrival times (and slews) at vertices of zero out-degree. For other vertices, we may or may not have required arrival times. Other timing constraints can be modeled using so-called tests: a test is an ordered pair e = ((x, σ), (y, σ′)) that represents the constraint that at(x, σ) ≤at(y, σ′). For example, each register has at least two tests, a setup test and a hold test. After having computed all arrival times, the inequalities defined by tests can be checked easily. In the following, we ignore adjusts for the sake of a simpler notation. Note, however, that they can be included easily without any complication. General timing graphs with test arcs allow us to encode that an arbitrary signal must arrive before another one. Thus, one can include clock signals in timing analysis without having to fix their arrival times a priori. Moreover, circuits with complex internal structures, dynamic logic, and asynchronous signals can be handled by introducing appropriate tests.</p>
+  <p>D. General Static Timing Analysis</p>
+  <p>The above considerations lead to the following formulation, which is general enough to capture all situations arising in common industrial design practice.</p>
+  <p>General Static Timing Analysis Problem INSTANCE:</p>
+  <p>slew is the slew of the green signal minus three times the difference of arrival times of the blue and green signal: slew2 −3(at3 −at2). Traditional static timing analysis is equivalent to the case ν = ∞ (interpreting ∞· 0 = 0). However, as shown above, this can be too optimistic. A safe (but usually much too pessimistic) choice is ν = 0; this is sometimes called worst slew propagation and is sometimes used in practice. The following result, which has been obtained independently by Lee et al. [13] and Vygen [17], proposes another safe (and less pessimistic) choice. Theorem 2.1: Let ˆλ and ˆθ be global Lipschitz constants of λe and θe over all e ∈E(G) and over the whole range of Λ, i.e., |λe(s1) − λe(s2)| ≤ˆλ|s1 −s2| and |θe(s1) −θe(s2)| ≤ˆθ|s1 −s2| for all e ∈E(G) and all s1, s2 ∈Λ. Suppose that ˆλ &lt; 1. Then, using ν = (1 −ˆλ)/ˆθ in (4) and (5) leads to values at(p, σ) for each p and each late signal (early signal) σ ∈S(p) that are at least (at most) those of any signal σ propagated to p in full path propagation. If G is bipartite, i.e., the source and sink pins alternate on every path, we can strengthen the above result (see Theorem 2.3). Since it is desirable to choose ν as large as possible (while remaining pessimistic in comparison with full-path propagation), it might be better to have an individual number νp for each vertex p; these numbers should satisfy (1/νp) ≥ˆθe + (ˆλe/νq) for every arc e = (p, q) (see Theorem 2.2). For acyclic timing graphs, such values can be computed easily by backward propagation. It is even questionable whether the maximum has to be taken over the whole range of Λ. Note that the above result can also be used to improve full path propagation. Given two late signals σ and σ′ of the same type in some vertex q, we can eliminate σ (it is dominated by σ′) if at(σ) + (1/νq) max{0, slew(σ) −slew(σ′)} ≤at(σ′). This may reduce the number of signals to be propagated significantly. For example, in Fig. 4 (for ν = 3), the green signal (number 2) dominates the red one (number 1). We shall discuss this again in Section II-D. Besides the fact that classical static timing analysis (ν = ∞) is too optimistic, our model has more advantages. We can handle nonacyclic graphs in a satisfactory way (cf. Theorem 2.5), and we can determine the critical parts of a chip more accurately (cf. Theorems 3.1 and 3.2). Indeed, the more paths are critical (e.g., after minimizing power consumption), the more mistaken is the traditional model. Moreover, we have a continuous behavior (small changes in the input lead to small changes of arrival times), a fact that reflects real behavior and will prove useful for optimization. Note that for ramp functions, ν = 2 in (4) and (5) corresponds to the latest (respectively, earliest) 90% transition time (for falling signals: 10% transition time). This is essentially the pruning scheme of Blaauw et al. [4]. They argued that ν can be chosen to be at least 2 (see also [13]). Of course, Theorem 2.1 (and its strengthening, Theorem 2.3) allows an even better choice.</p>
+  <h3>C. Required Arrival Times and Tests</h3>
+  <p>1) A finite set Ω(of origin labels). Define S := Ω× {early, late} × {rise, fall}. 2) A directed graph G, whose arcs are called propagation segments. 3) A binary relation T ⊆(V (G) × S)2, whose elements are called tests. 4) A compact interval Λ ⊆R. For each e ∈E(G), two Lipschitz continuous and monotonely increasing functions θe : Λ →R and λe : Λ →Λ. 5) For each e ∈E(G), a mapping σe : S →S ∪{∅}, such that σe(r, η, ζ) ∈(Ω×{η} ×{rise, fall}) ∪{∅} for all (r, η, ζ) ∈S. 6) For each vertex x ∈V (G) with zero in-degree: a set S(x) of elements of S and numbers at(x, σ) ∈R, slew(x, σ) ∈Λ for each σ ∈S(x). 7) For each vertex x ∈V (G) with zero out-degree numbers rat(x, σ) ∈R for all σ ∈S. 8) A number νx ∈R+ ∪{∞} for each x ∈V (G).</p>
+  <p>After having computed arrival times (and slew), we can compare them with required arrival times at primary outputs and input pins of registers. These are the vertices of the timing graph with zero outdegree. So for each pair (x, y) such that y (a primary output or an input pin of a register) receives a signal from x (a primary input or an output pin of a register), and each σ ∈S(x), we have to check</p>
+  <p>at (y, (x, late, ζ)) ≤rat(y, late, ζ) + adjust(x, y, late)</p>
+  <p>TASK: Find sets S(x) ⊆S and numbers at(x, σ) ∈R and slew(x, σ) ∈ Λ (σ ∈S(x)) for each vertex x ∈V (G) with nonzero in-degree, such that the following conditions hold, or decide that they do not exist. 1) For each e = (p, q) ∈E(G) and σ ∈S(p) with σ′ := σe(σ) ∈ S, we have σ′ ∈S(q) and</p>
+  <p>at (y, (x, early, ζ)) ≥rat(y, early, ζ) + adjust(x, y, early). (6)</p>
+  <h3>1 νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</h3>
+  <p>We do not go into detail how the adjusts are computed. In the simplest case, when x and y belong to the same clock domain,</p>
+  <p>+ at(p, σ) + θe (slew(p, σ)) ≤at(q, σ′) (7)</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 5</div>
+  <p>1880 IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006</p>
+  <p>if σ is a late signal and</p>
+  <h3>1 νq min {0, λe (slew(p, σ)) −slew(q, σ′)}</h3>
+  <p>+ at(p, σ) + θe (slew(p, σ)) ≥at(q, σ′) (8)</p>
+  <p>if σ is an early signal. 2) For each t = ((p, σ), (q, σ′)) ∈T with σ ∈S(p) and σ′ ∈S(q) we have</p>
+  <p>at(p, σ) ≤at(q, σ′). (9)</p>
+  <p>3) For each vertex x with zero out-degree and σ ∈S(x) we have</p>
+  <p>ai,j + θej(si,j), si,j+1 = λej(si,j)(i = 1, 2, j = 1, . . . , k −1), and a1,1 ≥a2,1 + (1/νx1) max{0, s2,1 −s1,1} we have a1,k ≥a2,k. In particular, choosing νx = 0 for all x ∈V (G) is always safe due to the monotonicity of the functions θe and λe (e ∈E(G)). As long as the numbers νx (x ∈V (G)) are safe, elimination of dominated signals cannot hurt. Of course we want the numbers νx (x ∈V (G)) to be as large as possible as long as they are safe. A possible choice was proposed by Theorem 2.1. This result can be generalized as follows. Theorem 2.2: Let an instance of the general static timing analysis problem be given. For e ∈E(G), let ˆλe and ˆθe be Lipschitz constants, i.e., |λe(s1) −λe(s2)| ≤ˆλe|s1 −s2| and |θe(s1) − θe(s2)| ≤ˆθe|s1 −s2| for all s1, s2 ∈Λ. Suppose that for all e = (x, y) ∈E(G)</p>
+  <p>at(x, σ) ≤rat(x, σ) (10)</p>
+  <h3>1 νx ≥ˆθe + ˆλe νy . (14)</h3>
+  <p>if σ is a late signal and</p>
+  <p>at(x, σ) ≥rat(x, σ) (11)</p>
+  <p>if σ is an early signal.</p>
+  <p>Then, the numbers νx x ∈V (G), are safe. Proof: Let e = (x, y) ∈E(G), and take any numbers a1, a2 ∈ R, s1, s2 ∈Λ with a1 ≥a2 + (1/νx) max{0, s2 −s1}. Then</p>
+  <p>a1 + θe(s1) ≥a2 + 1</p>
+  <p>νx max{0, s2 −s1} + θe(s1)</p>
+  <p>≥a2 + 1</p>
+  <p>νx max{0, s2 −s1} + θe(s2)</p>
+  <p>−ˆθe max{0, s2 −s1}</p>
+  <p>≥a2 + θe(s2) + ˆλe νy max{0, s2 −s1}</p>
+  <p>≥a2 + θe(s2) + 1</p>
+  <p>νy max {0, λe(s2) −λe(s1)} . (15)</p>
+  <p>If νq = 0 or νq = ∞, (7) and (8)—and similar inequalities in the following—are to be interpreted in the sense that they must hold for every positive νq or for sufficiently large νq, respectively. In practice, some delays are often associated with the tests (e.g., setup and hold time). This gives an additional number on one side of each inequality (9); this number may depend on the slews of both signals involved. However, this situation can easily be transformed into the above model by introducing auxiliary propagation segments adjacent to each test arc. We did not include required slews at vertices of zero out-degree in our model. These could either be included by strengthening conditions (10) and (11), or again, without changing the model, by auxiliary propagation segments. Moreover, noninverting loop-back paths and common clocktree path pessimism removal can be dealt with within the presented model with the usual techniques. Definition 2.1: Let σ = (r, η, ζ) and σ′ = (r′, η′, ζ′) be two signals at some vertex x. We say that σ′ dominates σ if r = r′, η = η′, ζ = ζ′, and the following holds:</p>
+  <p>at(x, σ) + 1</p>
+  <p>νx max {0, slew(x, σ) −slew(x, σ′)} ≤at(x, σ′) (12)</p>
+  <p>and η = late, or</p>
+  <p>This directly implies safeness. ■ This result (in a similar form) can be found in [13] and [17], and implicitly in [4]. We call numbers νx, x ∈V (G), strongly safe if they satisfy (14). Now the following strengthening of Theorem 2.1 follows easily. Theorem 2.3: Given an instance of the general static timing analysis problem and partitions V (G) = V1 ̇∪V2 and E(G) = E1 ̇∪E2 such that Ei is the set of arcs with tail in V3−i and head in Vi (i = 1, 2). Using the notation of Theorem 2.2, let ˆλ(i) ≥max{ˆλe|e ∈Ei} and ˆθ(i) ≥max{ˆθe|e ∈Ei} be global Lipschitz constants. Then, the numbers</p>
+  <p></p>
+  <p>at(x, σ) + 1</p>
+  <p>νx min {0, slew(x, σ) −slew(x, σ′)} ≥at(x, σ′) (13)</p>
+  <p>(16)</p>
+  <p>νx = max </p>
+  <p>0, 1 −ˆλ(1)ˆλ(2) ˆθ(3−i) + ˆλ(3−i) ˆθ(i)</p>
+  <p>for x ∈Vi (i = 1, 2) are strongly safe. Proof: For e = (x, y) ∈Ei, we have (1/νx) = ˆθ(i) + (ˆλ(i)/νy), implying (14). Now apply Theorem 2.2. ■ Note that with Elmore delay, we have ˆλ(1) = 1 and ˆθ(1) = 0 (where E1 are the net arcs); thus, ν = (1 −ˆλ(2))/ˆθ(2). An analysis of a recent CMOS library [13] suggested that ˆλ(2) ≈0.37 and ˆθ(2) ≈0.22, yielding ν ≈2.86. It would cause no difficulty to introduce two numbers νx for each vertex x, one for early signals and one for late signals. However, this would not gain much as the optimal Lipschitz constants for late and early arcs are similar for practical instances. Therefore, we prefer the simpler notation. We will apply iterative propagation. But let us first give a simpler problem formulation, without required arrival times and tests. We need the following notation.</p>
+  <p>and η = early. The justification of this domination rule, which evidently defines a partial order on R × Λ, lies in the safe choice of νx. Definition 2.2: Given an instance of the general static timing analysis problem, let ̃S(x), x ∈V (G), be the minimal signal sets that can be part of a feasible solution. We define the propagation graph as the graph with vertices (x, σ), x ∈V (G), σ ∈ ̃S(x), and an arc ((p, σ), (q, σ′)) for each (p, q) ∈ E(G), σ ∈ ̃S(p), and σ′ = σe(σ) ∈ ̃S(q). The induced subgraph on the vertices corresponding to η signals is called the η propagation graph (η = early, late). For η ∈{early, late}, an η propagation sequence is a path in the η propagation graph. If the first and last vertices coincide, the propagation sequence is called cyclic. The numbers νx and x ∈V (G) are safe if for every propagation sequence ((x1, σ1), e1, (x2, σ2), e2, . . . , ek−1, (xk, σk)) (late or early) and for any number ai,j, si,j (i = 1, 2, j = 1, . . . , k) with ai,j+1 =</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 6</div>
+  <p>IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006 1881</p>
+  <p>if σ′ is a late signal, and</p>
+  <p>at(q, σ′) := min {at(e, σ)|(e, σ) ∈Ξ(q, σ′)}</p>
+  <p>slew(q, σ′) := min {slew(e, σ) + νq (at(e, σ) −at(q, σ′)) |</p>
+  <p>(e, σ) ∈Ξ(q, σ′)} (20)</p>
+  <p>Definition 2.3: Let S(x), S′(x) be sets of elements of S, and let at(x, σ) ∈R, slew(x, σ) ∈Λ(σ ∈S(x)), at(x, σ′) ∈R, and slew(x, σ′) ∈Λ(σ′ ∈S′(x)) be given for each vertex x ∈V (G). We say that S(x), at(x, σ), slew(x, σ) (x ∈V (G), σ ∈S(x)) is dominated by S′(x), at(x, σ′), slew(x, σ′) (x ∈V (G), σ′ ∈S′(x)) if for each x ∈V (G) and each σ ∈S(x) we have a σ′ ∈S′(x) dominating σ. Evidently, this defines a partial order. We look for solutions that are minimal with respect to this partial order.</p>
+  <p>if σ′ is an early signal. It is clear that this satisfies constraints (17) and (18) for arcs entering q. The claim that none of at(q, σ′) and at(q, σ′) + (1/νq)slew(q, σ′) can be chosen smaller (greater) for any late signal (early signal) σ′ ∈ S(q) follows easily by induction (again in topological order of the propagation graph). The running time is easy to check. ■ The situation is more difficult for nonacyclic graphs. We proceed in the most natural way and iterate the propagation.</p>
+  <p>Iterative Propagation INPUT: An instance of the general static timing analysis problem. OUTPUT: A feasible solution or the decision that none exists.</p>
+  <p>Arrival Time Problem INSTANCE: An instance of the general static timing analysis problem, where the numbers νx, x ∈V (G) are strongly safe. TASK: Find sets S(x) ⊆S and numbers at(x, σ) ∈R and slew(x, σ) ∈ Λ(σ ∈S(x)) for each vertex x ∈V (G) with nonzero in-degree such that the following conditions hold (or decide that none exists). For each e = (p, q) ∈E(G) and σ ∈S(p) with σ′ = σe(σ) ∈S, we have σ′ ∈S(q) and</p>
+  <h3>1 νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</h3>
+  <p>+ at(p, σ) + θe (slew(p, σ)) ≤at(q, σ′) (17)</p>
+  <p>1) Choose a minimal set X ⊆V (G) such that G −X is acyclic. 2) Set S(x) := ∅for x ∈X. 3) Propagate in G −δ−(X), i.e., solve the resulting instance of the arrival time problem according to Theorem 2.4. 4) Propagate on δ−(X) and update S(x) and at(x, σ), slew(x, σ) (σ ∈S(x)) for x ∈X. If at least one of these values changes, go to 3).</p>
+  <p>if σ is a late signal and</p>
+  <h3>1 νq min {0, λe (slew(p, σ)) −slew(q, σ′)}</h3>
+  <p>+ at(p, σ) + θe (slew(p, σ)) ≥at(q, σ′) (18)</p>
+  <p>if σ is an early signal. Moreover, the solution must be dominated by any other such solution.</p>
+  <p>We shall prove that if there is a solution satisfying (17) and (18), then there is also one that is dominated by any other such solution. Moreover, we shall show how to solve this problem. It is clear that solving the arrival time problem is sufficient. Either such a solution meets all further constraints (tests and required arrival times) specified in the instance of the general static timing analysis problem, or the instance is infeasible.</p>
+  <p>E. Solving the Arrival Time Problem</p>
+  <p>In this section, we discuss how to solve the arrival time problem. Let us start with the acyclic case. The following notation will prove useful. For q ∈V (G) and σ′ ∈ ̃S(q), let Ξ(q, σ′) be the set of pairs (e, σ) ∈δ− G(q) × S with e = (p, q), σ ∈S(p), and σe(σ) = σ′. Theorem 2.4: The arrival time problem can be solved in O(|Ω||E(G)|) time if the propagation graph is acyclic. Proof: We proceed as indicated in (1), (4), and (5). For each pair (e, σ) ∈Ξ(q, σ′), we set at(e, σ) := at(p, σ) + θe(slew(p, σ)) and slew(e, σ) := λe(slew(p, σ)). Then we add only one copy of σ′</p>
+  <p>This gives a sequence of vectors of sets of signals. For general values of νx (in particular in the classical case νx = ∞for all x), this sequence has no monotonicity properties, and it is not clear whether it converges. However, if the numbers νx, x ∈V (G), are strongly safe, we have some monotonicity, in the sense of Definition 2.3. Theorem 2.5: Let I1 and I2 be two instances of the arrival time problem on an acyclic graph, differing only in the information on the vertices with zero in-degree. Suppose that I1 dominates I2 with respect to the information S(x), at(x, σ), slew(x, σ) (σ ∈S(x)) for vertices x of zero in-degree. Then the solution to I1 dominates the solution to I2. Proof: Straightforward induction using (15). ■ Consider the sequence of vectors with entries at(x, σ) indexed by the pairs (x, σ) for x ∈X and σ ∈ ̃S(x). By Theorem 2.5, this sequence is monotone. Hence, it is either unbounded (in which case the instance of the general static timing analysis problem is infeasible), or it converges. (It is a well-known theorem that every bounded monotone sequence converges.) If the above sequence converges, the sequence of the slews is convergent too. We summarize: Theorem 2.6: A feasible instance of the arrival time problem has a unique solution. The sequence of signals, arrival times, and slews computed by iterative propagation converges to this solution. For an infeasible instance of the arrival time problem, it is even impossible to satisfy only (17) and (18). Either this solution constitutes a feasible solution to the general static timing analysis problem, or there is no feasible solution. It is easy to construct (artificial) examples where no feasible solution is found after any finite number of iterations, although one exists. However, this is very unlikely in practice. The author’s experience with iterative propagation in classical timing analysis on industrial chips suggests that solutions of excellent accuracy can be obtained after a very small number of iterations.</p>
+  <p>to S(q) and set</p>
+  <h3>III. SLACK</h3>
+  <p>at(q, σ′) := max {at(e, σ)|(e, σ) ∈Ξ(q, σ′)}</p>
+  <p>slew(q, σ′) := max {slew(e, σ) + νq (at(e, σ) −at(q, σ′)) |</p>
+  <p>In the design process, it is often useful to know which are the critical parts of a chip. In particular, we ask how much additional delay we</p>
+  <p>(e, σ) ∈Ξ(q, σ′)} (19)</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 7</div>
+  <p>1882 IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006</p>
+  <p>could spend at a certain point without violating any constraint; in other words, how much slack a constraint has. We shall now make this notion precise and prove important properties.</p>
+  <p>A. New Definition</p>
+  <p>Indeed, the above definitions extend to general timing graphs without any change as long as a feasible solution to the arrival time problem exists. Required arrival times satisfying (22)–(25) can be computed easily by a shortest path computation. We need two prerequisites. First, a primary output or a test must be reachable from every vertex. This holds unless the vertex is trivially redundant. Second, the sum of rat(ei, σi) −rat(vi+1, σi+1), i = 1, . . . , k −1, as defined by (22), must be nonnegative on every cyclic late propagation sequence</p>
+  <p>Assume an instance of the general static timing analysis problem. For a vertex x of the timing graph, we define the early slack and late slack of x by</p>
+  <p>((v1, σ1), e1, (v2, σ2), e2, . . . , ek−1, (vk, σk)) (26)</p>
+  <p>slack(x, early) := min {at(x, σ) −rat(x, σ)|σ ∈S(x) early signal}</p>
+  <p>(and, analogously, nonpositive on every cyclic early propagation sequence). However, note that we have for i = 1, . . . , k −1</p>
+  <p>slack(x, late) := min {rat(x, σ) −at(x, σ)|σ ∈S(x) late signal} .</p>
+  <p>rat(ei, σi) −rat(vi+1, σi+1) ≥at(vi, σi) −at(vi+1, σi+1) (27)</p>
+  <p>(21)</p>
+  <p>We assume that the arrival times are chosen minimal (maximal) for all late (early) signals, as this implies maximal slacks. In other words, we assume a solution to the arrival time problem. But definition, (21) also involves the required arrival times; these are computed by a kind of backward propagation using the following recursion formulas. For a propagation segment e = (p, q), σ ∈S(p) and σ′ = σe(σ) ∈ S(q), we set</p>
+  <p>[due to (22) and (17)], and the sum of the latter values on a cyclic propagation sequence is zero. For early propagation sequences, the same argument applies with reversed inequality sign. With the Moore–Bellman–Ford shortest path algorithm (see, for example, [11]), we get the following. Proposition 3.1: Required arrival times, and thus slacks, can be computed in O(|V (G)||E(G)| + |T|) time provided that a feasible solution to the arrival time problem is given.</p>
+  <p>rat(e, σ) := rat(q, σ′) −θe (slew(p, σ))</p>
+  <p>B. Example</p>
+  <p>−1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)} (22)</p>
+  <p>if σ is a late signal, and</p>
+  <p>rat(e, σ) := rat(q, σ′) −θe (slew(p, σ))</p>
+  <p>−1</p>
+  <p>νq min {0, λe (slew(p, σ)) −slew(q, σ′)} (23)</p>
+  <p>if σ is an early signal. For a vertex p with nonzero out-degree in G and a late signal σ ∈ S(p), we set</p>
+  <p>rat(p, σ) := min  min  rat(e, σ)|e ∈δ+ G(p), σe(σ) ̸= ∅ ,</p>
+  <p>min {at(q, σ′)| ((p, σ), (q, σ′)) ∈T,</p>
+  <p>σ′ ∈S(q)}} . (24)</p>
+  <p>Let us consider the example in Fig. 2 again. Table I shows arrival times, slews, required arrival times, and late slacks for the 13 pins a–m with classical propagation (ν = ∞, columns 2–5) and with enhanced slew propagation and the required arrival definition of Section III-A with νx = ν = 3 for all x (columns 6–9). All classical slack values are too optimistic in this example. For example, increasing the arrival time at input c by 3 units (4 instead of 1) and applying classical timing analysis yields the surprising result that all slacks, except those at a and g, become suddenly negative! Such awkward results cannot occur with the new slacks as proposed here, as the model is continuous. Moreover, positive slacks guarantee a safe margin within which delay changes cause no harm. This will be proved in the next section. Note that the notion of critical path does not make sense anymore: the subgraph induced by pins with smallest slack value is, in general, not a path.</p>
+  <p>For a vertex p with nonzero out-degree in G and an early signal σ ∈ S(p), we set</p>
+  <h3>C. Main Properties</h3>
+  <p>rat(p, σ) := max  max  rat(e, σ)|e ∈δ+ G(p), σe(σ) ̸= ∅ ,</p>
+  <p>max {at(q, σ′)| ((q, σ′), (p, σ)) ∈T,</p>
+  <p>σ′ ∈S(q)}} . (25)</p>
+  <p>Now we prove the essential properties of the so-defined slacks. Lemma 3.1: Let q ∈V (G) be a vertex with nonzero in-degree and σ′ ∈S(q). For each (e, σ) ∈Ξ(q, σ′), we have rat(e, σ) −at(p, σ) ≥ rat(q, σ′) −at(q, σ′) if e is a late arc, and rat(e, σ) −at(p, σ) ≤ rat(q, σ′) −at(q, σ′) if e is an early arc. Moreover, there exists an (e, σ) ∈Ξ(q, σ′) with rat(e, σ) −at(p, σ) = rat(q, σ′) −at(q, σ′). Proof: If e is a late arc, we have</p>
+  <p>rat(e, σ) −at(p, σ) = rat(q, σ′) −at(p, σ) −θe (slew(p, σ))</p>
+  <p>−1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p>≥rat(q, σ′) −at(q, σ′). (28)</p>
+  <p>If e is an early arc, we have</p>
+  <p>rat(e, σ) −at(p, σ) = rat(q, σ′) −at(p, σ) −θe (slew(p, σ))</p>
+  <p>−1</p>
+  <p>νq min {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p>For a vertex p with zero out-degree in G, the numbers rat(p, σ) are given as input. If there are tests incident to such a vertex, we take the minimum of (24) and the given rat(p, σ), or the maximum of (25) and the given rat(p, σ), respectively. If the timing graph is acyclic, this recursively defines required arrival times (and thus slacks) everywhere, and they can be computed in linear time. Again, for νx = ∞(x ∈V (G)), this coincides with the classical slack computation. But, as noted in Section II-A, these slacks do not have the intended property. Fortunately, if the numbers νx (x ∈V (G)) are strongly safe, then the slacks as defined above have the intended property. We can add as much delay as slack(p, late) in a pin p without making any path containing p too slow. Before proving this essential property, we show that our concept of slacks also works for nonacyclic timing graphs.</p>
+  <p>≤rat(q, σ′) −at(q, σ′). (29)</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 8</div>
+  <p>IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006 1883</p>
+  <p>Initially, we have to check (33) for vertices p of zero indegree and σ ∈S(p). If p ̸∈X, there is nothing to prove. If p ∈ X, we have at′(p, σ) = at(p, σ) + d(p) ≤rat(p, σ) = rat(p, σ) − (1/νp)(slew′(p, σ) −slew(p, σ)). In either case, the claim holds. Suppose now that the claim holds at some stage of iterative propagation, and we now update at(q, σ′) and slew(q, σ′) for some vertex q and σ′ ∈S(q) as in (17). We have to show that the claim continues to hold for q and σ′. We consider three cases.</p>
+  <p>We have equality for some (e, σ) ∈Ξ(q, σ′) because of the minimum/maximum possible choice of at(q, σ′) and at(q, σ′) + (1/νq)slew(q, σ′) in a solution to the arrival time problem. ■ Proposition 3.2: The η slack at a vertex of nonzero out-degree in G, if not determined by a test incident to this vertex, is at least the minimum η slack of its successors (η ∈{early, late}). Proof: Let p ∈V (G). Let σ ∈S(p) be a late signal with slack(p, late) = rat(p, σ) −at(p, σ), and let e = (p, q) ∈δ+ G(p) with rat(p, σ) = rat(e, σ). Then (using Lemma 3.1)</p>
+  <p>slack(p, late) = rat(p, σ) −at(p, σ)</p>
+  <p>= rat(e, σ) −at(p, σ)</p>
+  <p>≥rat(q, σ′) −at(q, σ′)</p>
+  <p>≥slack(q, late) (30)</p>
+  <p>Case 1) q is not reachable from X. Then, (32) holds for each predecessor of q, and thus it continues to hold also for q. Case 2) q ∈X. Then, (32) holds for each predecessor and thus we get at′(q, σ) = at(q, σ) + d(q) ≤rat(q, σ) = rat(q, σ) − (1/νq)(slew′(q, σ) −slew(q, σ)), i.e., (33) holds. Case 3) q ̸∈X, but q is reachable from X. Let (e, σ) ∈Ξ(q, σ′), e = (p, q). If p is not reachable from X [and thus satisfies (32)], we have</p>
+  <p>at′(e, σ) = at′(p, σ) + θe (slew′(p, σ)) = at(p, σ) + θe (slew(p, σ))</p>
+  <p>≤at(q, σ′) −1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p>where σ′ := σe(σ). Similar for early signals. ■ Proposition 3.3: The η slack at a vertex of nonzero in-degree in G is at least the minimum η slack of its predecessors (η ∈{early, late}). Proof: Let q be a vertex of nonzero in-degree. Let σ′ ∈S(q) be a late signal with slack(q, late) = rat(q, σ′) −at(q, σ′). Let (e = (p, q), σ) ∈Ξ(q, σ′) such that rat(e, σ) −at(p, σ) = rat(q, σ′) − at(q, σ′) (cf. Lemma 3.1). Then</p>
+  <p>≤rat(q, σ′) −1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p>= rat(q, σ′) −1</p>
+  <p>νq max {0, λe (slew′(p, σ)) −slew(q, σ′)}</p>
+  <p>slack(q, late) = rat(q, σ′) −at(q, σ′) = rat(e, σ) −at(p, σ) ≥rat(p, σ) −at(p, σ) ≥slack(p, late). (31)</p>
+  <p>= rat(q, σ′) −1</p>
+  <p>νq max {0, slew′(e, σ) −slew(q, σ′)} . (34)</p>
+  <p>If p be reachable from X [and thus satisfies (33)], we have (abbreviating M := max{0, slew′(p) −slew(p)})</p>
+  <p>at′(e, σ) = at′(p, σ) + θe (slew′(p, σ))</p>
+  <p>≤rat(p, σ) −1</p>
+  <p>νp M + θe (slew′(p, σ))</p>
+  <p>≤rat(e, σ′) −1</p>
+  <p>Similar for early signals. ■ We now prove our main result on slacks. Theorem 3.1: Consider a timing graph where all late slacks are nonnegative. Let X be a set of vertices such that no propagation sequence contains more than one of them (an antichain). Suppose we add a delay of d(x) ≤slack(x, late) at each vertex x ∈X. Then all late slacks with respect to the solution to the modified instance of the arrival time problem remain nonnegative. Proof: The modified instance of the arrival time problem remains feasible. For instance, we obtain a solution satisfying (17) by adding </p>
+  <p>νp M + θe (slew(p, σ)) + ˆθeM</p>
+  <p>= rat(q, σ′) −1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p></p>
+  <h3>M</h3>
+  <p>+  ˆθe −1</p>
+  <p>x∈X d(x) to each late arrival time at all vertices that are reachable from X along a propagation sequence; hence, Theorem 2.6 implies feasibility. Denote by at′ and slew′ the new arrival times and slews (the solution to the modified instance of the arrival time problem). We claim that</p>
+  <p>νp</p>
+  <p>at′(p, σ) = at(p, σ) and slew′(p, σ) = slew(p, σ) (32)</p>
+  <p>≤rat(q, σ′) −1</p>
+  <p>νq max {0, λe (slew′(p, σ)) −slew(q, σ′)}</p>
+  <p></p>
+  <p>for all vertices p that are not reachable from X and σ ∈S(p), and</p>
+  <h3>M</h3>
+  <p>+ ˆλe νq M +  ˆθe −1</p>
+  <p>νp</p>
+  <p>at′(p, σ) ≤rat(p, σ) −1</p>
+  <p>νp max {0, slew′(p, σ) −slew(p, σ)} (33)</p>
+  <p>= rat(q, σ′) −1</p>
+  <p>νq max {0, slew′(e, σ) −slew(q, σ′)}</p>
+  <p></p>
+  <h3>M</h3>
+  <p>+  ˆθe + ˆλe νq −1</p>
+  <p>νp</p>
+  <p>≤rat(q, σ′) −1</p>
+  <p>νq max {0, slew′(e, σ) −slew(q, σ′)} (35)</p>
+  <p>as νx (x ∈V (G)) are strongly safe. In either case, we conclude that at′(e, σ) ≤rat(q, σ′) −(1/νq) max{0, slew′(e, σ) −slew(q, σ′)}. By (17), this implies</p>
+  <p>at′(q, σ′) = max {at′(e, σ)|(e, σ) ∈Ξ(q, σ′)} ≤rat(q, σ′) (36)</p>
+  <p>for all vertices p that are reachable from X and all σ ∈S(p). (Note that rat denotes the original required arrival times, i.e., with respect to the original values at and slew.) The above inequalities imply at′(p, σ) ≤rat(p, σ) everywhere, in particular at vertices with zero out-degree and wherever rat(p, σ) is determined by a test. Since these required arrival times remain unchanged, Proposition 3.2 then implies the theorem. We prove (32) and (33) by induction on the steps of iterative propagation. We show that the claim holds at any stage. Since the arrival times in iterative propagation converge to the unique solution of the modified instance of the arrival time problem by Theorem 2.6, this will conclude the proof.</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 9</div>
+  <p>1884 IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006</p>
+  <p>and</p>
+  <p>at′(q, σ′) = max </p>
+  <p>at′(e, σ) + 1</p>
+  <p>νq (slew′(e, σ) −slew′(q, σ′))|</p>
+  <p>(e, σ) ∈Ξ(q, σ′) </p>
+  <p>Fig. 5. Illustration of Theorem 3.3.</p>
+  <p>≤max </p>
+  <p>rat(q, σ′) −1</p>
+  <p>νq (slew′(e, σ) −slew(q, σ′))</p>
+  <p>+ 1</p>
+  <p>νq (slew′(e, σ) −slew′(q, σ′)) |</p>
+  <p>(e, σ) ∈Ξ(q, σ′) </p>
+  <p>= rat(q, σ′) −1</p>
+  <p>νq (slew′(q, σ′) −slew(q, σ′)) (37)</p>
+  <p>3) An arc e′ = ((x, σ), 0) for each vertex x ∈V (G) with zero in-degree and each late signal σ ∈S(x). We set c(e′):= −at(x, σ). 4) An arc e′ = (0, (x, σ)) for each vertex x ∈V (G) with zero in-degree and each early signal σ ∈S(x). We set c(e′) := at(x, σ). 5) An arc e′ = (0, (x, σ)) for each vertex x ∈V (G) with zero out-degree and each late signal σ ∈S(x). We set c(e′) := rat(x, σ). 6) An arc e′ = ((x, σ), 0) for each vertex x ∈V (G) with zero out-degree and each early signal σ ∈S(x). We set c(e′) := −rat(x, σ). 7) An arc e′ = ((x, σ), (x′, σ′)) for each test. We set c(e′) := 0.</p>
+  <p>as required. ■ An analogous proof yields the corresponding statement for early slacks (we omit the details). Theorem 3.2: Consider a timing graph where all early slacks are nonnegative. Let X be a set of vertices such that no propagation sequence contains more than one of them. Suppose we subtract a delay of d(x) ≤slack(x, early) at each vertex x ∈X. Then all early slacks with respect to the solution to the modified instance of the arrival time problem remain nonnegative. ■ Of course, these theorems are not applicable to any vertex that lies on a cyclic propagation sequence. The slack of these vertices may overestimate the delay that one can safely add at this vertex. To correct this, one could replace the late slack by the minimum of the above-defined slack and the minimum weight of cyclic late propagation sequence containing this vertex, where the weight of an arc ((p, σ), (q, σ′)) of the late propagation graph is</p>
+  <p>−θe (slew(p, σ)) −1</p>
+  <p>νq max {0, λe (slew(p, σ)) −slew(q, σ′)}</p>
+  <p>(38)</p>
+  <p>where e = (p, q), similar for early slacks.</p>
+  <p>The motivation is the following easy observation. Proposition 3.4: Let (B, c) be the balance graph and π : V (B) → R with π(0) = 0. Then, π is a feasible potential of (B, c), i.e., cπ(e):= c(e) + π(x) −π(y) ≥0 for e = (x, y) ∈E(B), if and only if after replacing arrival times by π((x, σ)), x ∈V (G), σ ∈S(x), in the solution to the arrival time problem it is (still) a feasible solution to the given instance of the general static timing analysis problem. ■ We call cπ(e) the independent slack of e = (x, y) ∈E(B) with respect to π. However, several arcs of the balance graph stem from the same propagation segment, and there is no point in having different slacks on one and the same arc of G. In general, we have a partition of the arc set into bunches and ask for a common slack for each bunch. Moreover, we often need independent slacks on a subset of the arcs only. Among these, the slacks should be “distributed as equally as possible,” possibly proportional to their sensitivity. More precisely, we consider the following quite general combinatorial optimization problem.</p>
+  <p>D. Slack Distribution</p>
+  <p>General Balance Potential Problem</p>
+  <p>INSTANCE: A directed graph B with arc lengths c : E(B) →R. A family F of disjoint subsets of E(B). Weights w :  F →R+ \ {0}. TASK: Find numbers π : V (B) →R with</p>
+  <p>cπ(e) ≥0 for e ∈E(B) \ F (39)</p>
+  <p>such that the vector</p>
+  <p></p>
+  <p>Often, we need independent slacks on gate arcs only or on net arcs only. This means that additional delays up to such late slacks should be acceptable simultaneously at all vertices. Of course, these slacks should be “distributed as equally as possible,” possibly proportionally to their sensitivity. Such a slack distribution has many applications in physical design, in particular at later stages (detailed placement, routing). See the references at the end of this section. Consider an instance of the general static timing analysis problem, where the numbers νx (x ∈V (G)) are strongly safe, and a solution to the corresponding instance of the arrival time problem. We construct the following weighted directed graph. Definition 3.1: The balance graph consists of the vertices of the propagation graph plus an extra vertex 0 and the following arcs.</p>
+  <p>min  cπ(e)</p>
+  <p>e ∈F </p>
+  <p>w(e)</p>
+  <h3>F ∈F (40)</h3>
+  <p>where the entries are to be sorted in nondecreasing order, is lexicographically maximum.</p>
+  <p>1) An arc e′ = ((x′, σ′), (x, σ)) for each late arc ((x, σ), (x′, σ′)) of the propagation graph. We set c(e′) := −θe(slew(x, σ)) −(1/νx′) max{0, λe(slew(x, σ)) −slew(x′, σ′)}, where e = (x, x′). 2) Each early arc e′ = ((x, σ), (x′, σ′)) of the propagation graph. We set c(e′) := θe(slew(x, σ)) + (1/νx′) min{0, λe (slew(x, σ)) −slew(x′, σ′)}, where e = (x, x′).</p>
+  <p>For the special case of unit weights, Albrecht et al. [3] have described an O(mn + n2 log n) algorithm, extending the parametric</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+<section class="page">
+  <div class="page-label">Page 10</div>
+  <p>IEEE TRANSACTIONS ON COMPUTER-AIDED DESIGN OF INTEGRATED CIRCUITS AND SYSTEMS, VOL. 25, NO. 9, SEPTEMBER 2006 1885</p>
+  <h3>IV. CONCLUSION</h3>
+  <p>shortest path algorithm of Young et al. [19]. For the generalization to arbitrary weights, see [8]. Other works considered mostly the trivial partition of all singletons. If w ≡1, this special case reduces to the so-called minimum balance problem, which has been considered by Schneider and Schneider [16] and Young et al. [19]. The lexicographic order is the appropriate balance measure, as is demonstrated by the following equivalent formulation. Theorem 3.3: Let (B, c, F, w) be an instance of the general balance potential problem. For π : V (B) →R, let</p>
+  <p>. (41)</p>
+  <p>Eπ := </p>
+  <p>f ∈F ∈F cπ(f)</p>
+  <p>e ∈F </p>
+  <p>w(f) = min  cπ(e)</p>
+  <p>w(e)</p>
+  <p>Classical static timing analysis is simple and efficient but has several major drawbacks: it may conclude that a chip works although it does not, results are not continuous functions of the input (in contrast to reality), convergence in nonacyclic timing graphs cannot be proved, and slacks are often too optimistic. We proposed a modification, based on enhanced slew propagation, that is just as efficient but has none of these drawbacks. In particular, we redefined the notion of slack, which is central in very large scale integration (VLSI) design, properly. We also addressed how the popular method of distributing slack is affected. A thorough experimental study with an industrial timing engine and a combination with statistical timing is left for future work.</p>
+  <h3>REFERENCES</h3>
+  <p>Let π : V (B) →R with (39). Then, π is an optimum solution for which Eπ is minimal among all optimal solutions if and only if for each X ⊆V (B)</p>
+  <p>min e=(x,y)∈δ+ B(X)\∪F cπ(e) = 0</p>
+  <p>or</p>
+  <p>cπ(e)</p>
+  <p>cπ(e)</p>
+  <p>w(e) (42)</p>
+  <p>w(e) ≥ min e∈Eπ∩δ+ B(X)</p>
+  <p>min e∈Eπ∩δ− B (X)</p>
+  <p>[1] V. D. Agrawal, “Synchronous path delay analysis in MOS circuit simulator,” in Proc. DAC, Las Vegas, NV, 1982, pp. 629–635. [2] C. Albrecht, “Zwei kombinatorische Optimierungsprobleme in VLSI- Design: Optimierung der Zykluszeit und der Slackverteilung und globale Verdrahtung,” Ph.D. dissertation, Res. Inst. Discrete Math., Univ. Bonn, Bonn, Germany, 2001. [3] C. Albrecht, B. Korte, J. Schietke, and J. Vygen, “Maximum mean weight cycle in a digraph and minimizing cycle time of a logic chip,” Discrete Appl. Math., vol. 123, no. 1–3, pp. 103–127, Nov. 2002. [4] D. Blaauw, V. Zolotov, S. Sundareswaran, C. Oh, and R. Panda, “Slope propagation in static timing analysis,” in Proc. ICCAD, San Jose, CA, 2000, pp. 338–343. [5] E. Bozorgzadeh, S. Ghiasi, A. Takahashi, and M. Sarrafzadeh, “Optimal integer delay budgeting on directed acyclic graphs,” in Proc. DAC, Anaheim, CA, 2003, pp. 920–925. [6] C. Chen, E. Bozorgzadeh, A. Srivastava, and M. Sarrafzadeh, “Budget management with applications,” Algorithmica, vol. 34, no. 3, pp. 261–275, Jul. 2002. [7] C. Chen, X. Yang, and M. Sarrafzadeh, “Predicting potential performance for digital circuits,” IEEE Trans. Comput.-Aided Des. Integr. Circuit Syst., vol. 21, no. 3, pp. 253–262, Mar. 2002. [8] S. Held, “Algorithmen für Potential-Balancierungs-Probleme und Anwendungen im VLSI-Design,” Diploma thesis, Res. Inst. Discrete Math., Univ. Bonn, Bonn, Germany, 2001. [9] R. B. Hitchcock, G. L. Smith, and D. D. Cheng, “Timing analysis of computer hardware,” IBM J. Res. Develop., vol. 26, no. 1, pp. 100–105, Jan. 1982. [10] N. P. Jouppi, “Timing analysis for nMOS VLSI,” in Proc. DAC, Miami Beach, FL, 1983, pp. 411–418. [11] B. Korte and J. Vygen, Combinatorial Optimization: Theory and Algorithms, 3rd ed. Berlin: Springer-Verlag, 2006. [12] I. S. Kourtev and E. G. Friedman, Timing Optimization Through Clock Skew Scheduling. Boston, MA: Kluwer, 2000. [13] J.-F. Lee, D. L. Ostapko, J. Soreff, and C. K. Wong, “On the signal bounding problem in timing analysis,” in Proc. ICCAD, San Jose, CA, 2001, pp. 507–514. [14] R. Nair, C. L. Berman, P. S. Hauge, and E. J. Yoffa, “Generation of performance constraints for layout,” IEEE Trans. Comput.-Aided Des. Integr. Circuit Syst., vol. 8, no. 8, pp. 860–874, Aug. 1989. [15] K. Ousterhout, “A switch-level timing verifier for digital MOS VLSI,” IEEE Trans. Comput.-Aided Des. Integr. Circuit Syst., vol. CAD-4, no. 3, pp. 336–349, Jul. 1985. [16] H. Schneider and M. H. Schneider, “Max-balancing weighted directed graphs and matrix scaling,” Math. Oper. Res., vol. 16, no. 1, pp. 208–222, 1991. [17] J. Vygen, “Theory of VLSI layout,” Habilitation thesis, Res. Inst. Discrete Math., Univ. Bonn, Bonn, Germany, 2001. [18] C.-Y. Yeh and M. Marek-Sadowska, “Delay budgeting in sequential circuit with application on FPGA placement,” in Proc. DAC, Anaheim, CA, 2003, pp. 202–207. [19] N. E. Young, R. E. Tarjan, and J. B. Orlin, “Faster parametric shortest path and minimum balance algorithms,” Networks, vol. 21, no. 2, pp. 205–221, 1991. [20] H. Youssef, R.-B. Lin, and E. Shragowitz, “Bounds on net delays for VLSI circuits,” IEEE Trans. Circuits Syst. II, Analog Digit. Signal Process., vol. 39, no. 11, pp. 815–824, Nov. 1992.</p>
+  <p>whereas usually min ∅= ∞. Moreover, the set Eπ and the vector (cπ(e))e∈Eπ are identical for all optimum solutions π. Note that (42) can be interpreted as a local optimality criterion: reducing π on any set X [and thus decreasing cπ(e) for e ∈δ+ B(X) and increasing cπ(e) for e ∈δ− B(X)] makes the situation worse (cf. Fig. 5). Proof: Any optimal solution with minimal Eπ satisfies (42); otherwise, we could decrease π(x) (x ∈X) by a sufficiently small ε &gt; 0 and thereby increase the sorted vector (40) lexicographically (disproving optimality), or keep this vector identical (maintaining optimality) but remove at least one arc from Eπ. Let now π, π′ : V (B) →R be two vectors with (39) and (42), and suppose that there exists an f = (p, q) ∈Eπ ∪Eπ′ with π(p) − π(q) ̸= π′(p) −π′(q), and choose f such that min{cπ(f), cπ′(f)}/w(f) is minimum. Without loss of generality, π(p) − π(q) &lt; π′(p) −π′(q). Then, f ∈Eπ: the contrary assumption would imply that there exist f ′ ∈E(B) and F ∈F with f, f ′ ∈F and cπ(f ′)/w(f ′) &lt; cπ(f)/w(f). Then, cπ′(f ′)/w(f ′) = cπ(f ′)/w(f ′) &lt; cπ(f)/w(f) &lt; cπ′(f)/w(f) and thus f ̸∈Eπ′, a contradiction. Let Q be the set of all vertices reachable from q via arcs e ∈ E(B) \  F with cπ(e) = 0 or arcs e ∈Eπ with cπ(e)/w(e) ≤ cπ(f)/w(f). Then, by (42), we have p ∈Q. Hence, there is a q–p path P that consists of arcs e = (x, y) with c(e) + π(x) −π(y) ≤c(e) + π′(x) −π′(y). Summation yields π(q) −π(p) ≤π′(q) −π′(p), a contradiction. ■ Special cases of this theorem have been proved by Schneider and Schneider [16] and Albrecht [2]. Other approaches to slack balancing known from the literature are the so-called zero-slack algorithm [14], the extensions by Youssef et al. [20], and the algorithm by Chen et al. [7] (see also [6]) that distributes slacks in order to maximize the sum of all independent slacks. They all work for acyclic timing graphs only. See also [12]. There are many other papers on slack balancing, or, almost equivalently, delay budgeting, with slightly different objectives, new applications, and combinations with other design tasks, in particular placement or retiming. See [5] and [18] for examples.</p>
+  <p>Authorized licensed use limited to: Thapar Institute of Engineering &amp; Technology. Downloaded on March 23,2026 at 17:07:31 UTC from IEEE Xplore. Restrictions apply.</p>
+</section>
+</article>
+</main>
+</body>
+</html>

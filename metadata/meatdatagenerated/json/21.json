@@ -1,0 +1,64 @@
+{
+  "source_filename": "21.pdf",
+  "source_path": "papers50/21.pdf",
+  "title": "A GPU-Accelerated Framework for Path-Based Timing Analysis",
+  "authors": "Guannan Guo , Tsung-Wei Huang , Member, IEEE, Yibo Lin , Member, IEEE, Zizheng Guo , Sushma Yellapragada, and Martin D. F. Wong, Fellow, IEEE",
+  "authors_guess": "Guannan Guo , Tsung-Wei Huang , Member, IEEE, Yibo Lin , Member, IEEE, Zizheng Guo , Sushma Yellapragada, and Martin D. F. Wong, Fellow, IEEE",
+  "journal": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+  "year": "2023",
+  "doi": "10.1109/TCAD.2023.3272274",
+  "page_count": 14,
+  "word_count": 11070,
+  "abstract": "As a key routine in static timing analysis (STA), path-based analysis (PBA) plays a very important role in refining the critical path report by reducing excessive slack pessimism. PBA is also well known for its long execution time, which makes it a hot topic for parallel computing in the STA community. However, nearly all of the parallel PBA algorithms are restricted to CPU architectures, which greatly limits their scalability. To achieve a new performance milestone on PBA, we must leverage the high throughput computing in the graphics processing unit (GPU). Therefore, in this work, we propose a new GPU-accelerated PBA framework which contains compact data structures and highly efficient kernels. By integrating with GPU-accelerated preprocessing steps, our framework can also effectively handle extensive critical path constraints. Besides, we highlight many optimization techniques that can overcome the execution bottleneck and further boost the performance. In experiments, we demonstrate 543× speed-up compared to the state-of-the-art PBA algorithm on the design with 1.6 million gates, which outperforms 25×–45× over the state-of-the-art parallel PBA algorithm on 40 CPU cores. A fully optimized framework can achieve 3×–5× speed-up on top of that.",
+  "keywords": [
+    "Graphics processing unit (GPU) acceleration",
+    "static timing analysis (STA)"
+  ],
+  "section_headings": [
+    "III. RELATED WORKS",
+    "II. PATH-BASED TIMING ANALYSIS",
+    "IV. PROPOSED GPU-ACCELERATED PBA",
+    "V. EXTENSIVE PATH CONSTRAINTS HANDLING",
+    "VI. FINE-GRAINED OPTIMIZATIONS",
+    "VII. EXPERIMENTAL RESULTS",
+    "VIII. CONCLUSION"
+  ],
+  "figure_captions": [
+    "Fig. 1. Computational tradeoff between runtime and pessimism reduction on path-based timing analysis.",
+    "Fig. 2. Example of pessimism reduction on critical paths [4].",
+    "Fig. 3. Overview of core GPU-accelerated PBA algorithm.",
+    "Fig. 4. Shortest path forest generation on GPU. (a) STA graph. (b) Shortest path forest.",
+    "Fig. 5. GPU expansion of the first level.",
+    "Fig. 6. Overview of preprocessing steps for path constraints handling.",
+    "Fig. 7. Global ranking on GPU. (a) STA graph example. (b) Global ranking results.",
+    "Fig. 8. Subgraph scanning results.",
+    "Fig. 9. Assume two additional edges exist which do not affect the ranking and scanning results. Apply the filtering rules.",
+    "Fig. 10. Example of new GPU-accelerated PBA framework with four thread blocks.",
+    "Fig. 11. Maximum absolute error between timing reports from our algorithm and OpenTimer.",
+    "Fig. 12. Speed-up values of our algorithm over the baseline at different numbers of CPU cores.",
+    "Fig. 13. Runtime comparison between OpenTimer [15] and our algorithm on different sizes of constrained subgraphs.",
+    "Fig. 14. CUDA runtime and API breakdown comparison. (a) CUDA runtime and API breakdown of framework prior to optimizations. (b) CUDA runtime and API breakdown of framework after optimizations."
+  ],
+  "table_captions": [],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "A GPU-Accelerated Framework for Path-Based Timing Analysis",
+    "author": "",
+    "subject": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems;2023;42;11;10.1109/TCAD.2023.3272274",
+    "keywords": "",
+    "creator": "LaTeX with hyperref package",
+    "producer": "Acrobat Distiller 23.0 (Windows); modified using iText® Core 7.2.4 (AGPL version) ©2000-2022 iText Group NV",
+    "creationDate": "D:20231006151610+05'30'",
+    "modDate": "D:20231018162655-04'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2023-10-06",
+    "modified_date": "2023-10-18"
+  },
+  "text_path": "metadata/meatdatagenerated/text/21.txt",
+  "json_path": "metadata/meatdatagenerated/json/21.json",
+  "html_path": "html/21.html",
+  "citation": "Guannan Guo , Tsung-Wei Huang , Member, IEEE, Yibo Lin , Member, IEEE, Zizheng Guo , Sushma Yellapragada, and Martin D. F. Wong, Fellow, IEEE (2023). A GPU-Accelerated Framework for Path-Based Timing Analysis. IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems. https://doi.org/10.1109/TCAD.2023.3272274"
+}

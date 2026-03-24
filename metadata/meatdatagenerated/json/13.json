@@ -1,0 +1,80 @@
+{
+  "source_filename": "13.pdf",
+  "source_path": "papers50/13.pdf",
+  "title": "Enhancing cell delay accuracy in post-placed netlists using ensemble tree-based algorithms",
+  "authors": "Yassine Attaoui",
+  "authors_guess": "Yassine Attaoui",
+  "journal": "Integration",
+  "year": "2024",
+  "doi": "10.1016/j.vlsi.2024.102193",
+  "page_count": 10,
+  "word_count": 7632,
+  "abstract": "Nowadays, the ASIC design is increasing in complexity, and PPA targets are pushed to the limit. The lack of physical information at the early design stages hinders precise timing predictions and may lead to design re-spins. In previous work, we successfully improved timing prediction at the post-placement stage using the Random Forest model, achieving 91.25% cell delay accuracy. Building upon this, we further investigate the potential of Ensemble Tree-based algorithms, specifically focusing on ‘‘Extremely Randomized Trees’’ and ‘‘Gradient Boosting’’, to close the gap in cell delay accuracy. In this paper, we enrich the training dataset with new 16 nm industrial designs. The results demonstrate a substantial improvement, with an average cell delay accuracy of 92.01% and 84.26% on unseen data. The average Root-Mean-Square-Error is significantly reduced from 12.11 to 3.23 and 7.76 on unseen data.",
+  "keywords": [
+    "Delay estimation",
+    "Machine learning",
+    "Tree-based algorithms",
+    "Post-placement delay estimation",
+    "Cell delay"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Related work",
+    "3.2. Initial timing discrepancies",
+    "3. Designs characterization and ML algorithms",
+    "3.1. Methodology",
+    "3.3. Data pre-processing",
+    "3.4. ML algorithms",
+    "3.5. Model features",
+    "3.6. Dataset refinement",
+    "4.1. Data analysis",
+    "4. Experimental results",
+    "4.2. Prediction results",
+    "5. Conclusion"
+  ],
+  "figure_captions": [
+    "Fig. 1. Analyzing Oasys delay inaccuracy in comparison to Aprisa cell delays.",
+    "Fig. 2. ML-based Oasys-RTL timing improvement.",
+    "Fig. 3. Oasys Aprisa placement flow.",
+    "Fig. 4. Scatter plots depicting initial Oasys cell delay versus Aprisa cell delay.",
+    "Fig. 5. Initial Oasys cell delay compared to golden Aprisa cell delay with outliers data removed.",
+    "Fig. 6. Scatter plots comparing the predicted versus actual cell delays, employing TC7 testing data.",
+    "Fig. 4 illustrates the initial delay comparison, including outliers, where certain outlier values significantly deviated from the expected data range, consequently impacting delay prediction. Subsequently, Fig. 6 displays refined delays after outlier removal, with noticeable alterations in the axis scales to accommodate these changes. Additionally, we remark a significant decrease in Root Mean Square Error (RMSE) following the removal of outliers as detailed in Tables 3 and 6. This notable reduction in RMSE emphasizes the substantial impact of outlier removal on enhancing the predictive accuracy of the model.",
+    "Fig. 7. Model’s R2 comparison.",
+    "Fig. 8. Model’s RMSE comparison.",
+    "Fig. 9. Features selection for models trained using bunch dataset."
+  ],
+  "table_captions": [
+    "Table 1 Designs characteristics.",
+    "Table 2 Training, validation and testing sets repartitioning per trial.",
+    "Table 3 Design dataframes before outliers removal.",
+    "Table 4 Percentage of outliers per dataframe.",
+    "Table 5 Design dataframes after outliers removal.",
+    "Table 6 Models R2-scores and RMSE per design on testing dataset.",
+    "Table 7 Bunch dataframe after outliers removal.",
+    "Table 8 R2-scores and RMSE for models trained using Bunch dataset.",
+    "Table 6 provides a summary of the accuracy scores achieved by each model and the corresponding RMSE. These scores were obtained after a hyper-parameter tuning process using GridSearch, which required significant computational runtime to identify the best estimator model parameters. Due to space limitations, we intentionally omitted discussing the intricate details of hyperparameter tuning and the validation scores. Instead, the focus was directed towards presenting the achieved scores utilizing the testing data and using best parameters",
+    "Table 9 Training and inference time per model (in seconds)."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Enhancing cell delay accuracy in post-placed netlists using ensemble tree-based algorithms",
+    "author": "Yassine Attaoui",
+    "subject": "Integration, 97 (2024) 102193. doi:10.1016/j.vlsi.2024.102193",
+    "keywords": "Delay estimation,Machine learning,Tree-based algorithms,Post-placement delay estimation,Cell delay",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 8.1.0 (Windows)",
+    "creationDate": "D:20240601110104Z",
+    "modDate": "D:20240601152052Z",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-06-01",
+    "modified_date": "2024-06-01"
+  },
+  "text_path": "metadata/meatdatagenerated/text/13.txt",
+  "json_path": "metadata/meatdatagenerated/json/13.json",
+  "html_path": "html/13.html",
+  "citation": "Yassine Attaoui (2024). Enhancing cell delay accuracy in post-placed netlists using ensemble tree-based algorithms. Integration. https://doi.org/10.1016/j.vlsi.2024.102193"
+}

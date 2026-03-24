@@ -1,0 +1,57 @@
+{
+  "source_filename": "35.pdf",
+  "source_path": "papers50/35.pdf",
+  "title": "Adjacency criticality: a simple yet effective metric for statistical timing yield optimisation of digital integrated circuits",
+  "authors": "ISSN 1751-858X Received on 24th December 2018 Revised 3rd April 2019 Accepted on 7th May 2019 E-First on 22nd October 2019 doi: 10.1049/iet-cds.2018.5616 www.ietdl.org",
+  "authors_guess": "ISSN 1751-858X Received on 24th December 2018 Revised 3rd April 2019 Accepted on 7th May 2019 E-First on 22nd October 2019 doi: 10.1049/iet-cds.2018.5616 www.ietdl.org",
+  "journal": "IET Circuits",
+  "year": "2019",
+  "doi": "10.1049/iet-cds.2018.5616",
+  "page_count": 9,
+  "word_count": 8981,
+  "abstract": "As CMOS devices become smaller, process variations-induced uncertainty imposes a large spread in the circuit timing and therefore, it becomes one of the main issues for circuit yield. To analyse/optimise the timing of the circuit under process variation effects, statistical analysis/optimisation techniques are more suitable than the traditional static analysis/ optimisation counterparts. Statistical gate sizing is an effective technique that is widely used to guide the timing yield improvement of digital circuits. Gate criticality, defined as the probability that a gate lies on a critical path, forms the basis for many of the existing statistical gate sizing techniques. Here, the authors introduce adjacency criticality to address the drawbacks of the conventional definition of gate criticality. It is defined as the probability of manufacturing a chip in which the gate lies on the critical path due to process variation considering the effect of the gates in its fan-out cone. Furthermore, the authors present the levelised Adjacency Criticality metric which provides a trade-off between the runtime of the criticality metric and accuracy of the Adjacency Criticality metric. In order to show the efficacy of the proposed metric, an adjacency criticalitybased statistical gate sizing method is presented for improving timing yield of the circuit.",
+  "keywords": [],
+  "section_headings": [
+    "2.1 Arrival time propagation",
+    "2.2 Merging arrival times",
+    "5.1 Comparison of AC concept with criticality concept",
+    "5.2 Yield optimisation"
+  ],
+  "figure_captions": [
+    "Fig. 1௒ Combinational circuit with associated criticality",
+    "Fig. 2௒ Combinational circuit with associated adjacency criticality",
+    "Fig. 5௒ Algorithm 3. Gate Sizing Algorithm",
+    "Fig. 3௒ Algorithm 1: Adjacency Criticality Computation",
+    "Fig. 4௒ Algorithm 2: Levelised Adjacency Criticality Computation",
+    "Fig. 6௒ Comparison of the delay distribution of the circuit before and after optimisation using AC and criticality for C499, C1908, Arbiter, and Voter circuit",
+    "Fig. 7௒ Delay distribution of C499 benchmark circuit after each iteration of optimisation using criticality",
+    "Fig. 8௒ Comparison of delay distribution of C499 benchmark circuit after each iteration of optimisation using: (a) levelised AC with k = 1, (b) levelised AC with k = 2, (c) levelised AC with k = 3, and (d) AC concept",
+    "Fig. 9௒ Comparison of circuit delay distribution after optimisation with AC, levelised AC, and criticality concept under 10% area overhead constraint",
+    "Fig. 10௒ Comparison of (μ + 3σ) of circuit delay distribution after optimisation with AC, levelised AC, and criticality concept under 20% area overhead constraint Table 2 Comparison of the runtime and delay distribution parameters for the circuit after each round of gate sizing optimisation using AC, levelised AC, and criticality concept Criticality Levelised adjacency criticality Adjacency criticality K = 1 K = 2 K = 3 Bench % μ % σ 2 RTPI % μ % σ 2 RTPI % μ % σ 2 RTPI % μ % σ 2 RTPI % μ % σ 2 RTPI"
+  ],
+  "table_captions": [
+    "Table 1 Comparison of delay distribution parameters for the circuits after optimising with AC, levelised AC, and criticality metrics under 15 iterations constraint Circuit Criticality Levelised adjacency criticality Adjacency criticality K = 1 K = 2 K = 3 Bench #Gates (#PI, #PO) %μ %σ 2 %μ %σ 2 %μ %σ 2 %μ %σ 2 %μ %σ 2",
+    "Table 3 Number of iterations needed for convergence of the algorithm under 97% target yield or 20% area overhead constraint Bench Adjacency criticality Iterations % Yield % Area C499 2 97 7.56 C1908 1 97 5.19 C2670 1 97 6.61 C3540 4 97 10.48 C5315 5 97 12.57 C6288 2 97 8.79 C7552 2 97 9.24 max 3 97 10.73 sin 2 97 11.61 arbiter 4 97 12.76 voter 2 97 8.91 square 5 97 13.59 sqrt 3 97 9.41 multiplier 3 97 12.86 average 2.79 97 10.02"
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "Adjacency criticality: a simple yet effective metric for statistical timing yield optimisation of digital integrated circuits",
+    "author": "",
+    "subject": "IET Circuits, Devices & Syst 2019.13:979-987",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "GPL Ghostscript 9.06; modified using iTextSharp 5.4.1 ©2000-2012 1T3XT BVBA (AGPL-version)",
+    "creationDate": "D:20201022183001+05'30'",
+    "modDate": "D:20260323100126-07'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2020-10-22",
+    "modified_date": "2026-03-23"
+  },
+  "text_path": "metadata/meatdatagenerated/text/35.txt",
+  "json_path": "metadata/meatdatagenerated/json/35.json",
+  "html_path": "html/35.html",
+  "citation": "ISSN 1751-858X Received on 24th December 2018 Revised 3rd April 2019 Accepted on 7th May 2019 E-First on 22nd October 2019 doi: 10.1049/iet-cds.2018.5616 www.ietdl.org (2019). Adjacency criticality: a simple yet effective metric for statistical timing yield optimisation of digital integrated circuits. IET Circuits. https://doi.org/10.1049/iet-cds.2018.5616"
+}

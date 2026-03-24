@@ -1,0 +1,77 @@
+{
+  "source_filename": "30.pdf",
+  "source_path": "papers50/30.pdf",
+  "title": "Timing analysis algorithm using a neural network under PVT variations",
+  "authors": "Yan Liu",
+  "authors_guess": "Yan Liu",
+  "journal": "Microelectronics Journal",
+  "year": "2022",
+  "doi": "10.1016/j.mejo.2022.105480",
+  "page_count": 5,
+  "word_count": 4068,
+  "abstract": "Process-voltage-temperature variations result in an increase in logic gate delays, which further lead to timing violations. Because of the computational complexity of the operators such as max and sum in statistical static timing analysis, this paper proposes a timing analysis algorithm using neural network to evaluate circuit timing under the PVT variations. In the proposed algorithm, a neural network method is applied to model the mean or standard deviation of the gate delay. Then, a viability analysis method is introduced to recognize the true critical path. The simulation results on ISCAS89 benchmarks illustrate that compared with SPICE Monte Carlo simula tion, the error in the mean calculated by the proposed algorithm is less than 2%, and the error in the standard deviation is less than 3.64%. In addition, for s298, s344, s832, s1238 and s13207, the viability analysis algorithm achieves 1.04X, 1.01X, 2.77X, 1.62X and 4.48X speedup over full path search, respectively.",
+  "keywords": [
+    "PVT Neural network Viability analysis Process-voltage-temperature variations result in an increase in logic gate delays",
+    "which further lead to timing violations. Because of the computational complexity of the operators such as max and sum in statistical static timing analysis",
+    "this paper proposes a timing analysis algorithm using neural network to evaluate circuit timing under the PVT variations. In the proposed algorithm",
+    "a neural network method is applied to model the mean or standard deviation of the gate delay. Then",
+    "a viability analysis method is introduced to recognize the true critical path. The simulation results on ISCAS89 benchmarks illustrate that compared with SPICE Monte Carlo simula tion",
+    "the error in the mean calculated by the proposed algorithm is less than 2%",
+    "and the error in the standard deviation is less than 3.64%. In addition",
+    "for s298",
+    "s344",
+    "s832",
+    "s1238 and s13207",
+    "the viability analysis algorithm achieves 1.04X",
+    "1.01X",
+    "2.77X",
+    "1.62X and 4.48X speedup over full path search",
+    "respectively"
+  ],
+  "section_headings": [
+    "1. Introduction",
+    "2. Timing analysis algorithm using a back-propagation neural network",
+    "2.2. Viability analysis",
+    "2.1. Gate delay modeling",
+    "3. Simulation results",
+    "3.1. Gate delay modeling",
+    "3.2. The effectiveness of viability analysis",
+    "3.3. Path timing verification",
+    "4. Conclusion"
+  ],
+  "figure_captions": [
+    "Fig. 1. Example of a false path.",
+    "Fig. 2. The flow of the proposed timing analysis.",
+    "Fig. 4. The example of path sensitivity condition.",
+    "Fig. 5. The delay error between MC and our method.",
+    "Fig. 6. Example of a false path in s344."
+  ],
+  "table_captions": [
+    "Table 1 Sampling of parameters for MC simulation.",
+    "Table 2 The average errors of the logic gate rising propagation delay.",
+    "Table 3 The comparison results between the true critical path and false path.",
+    "Table 4 The comparison results between MC and our method.",
+    "Table 5 The comparison results between NN-based linear SSTA and our method."
+  ],
+  "pdf_metadata": {
+    "format": "PDF 1.7",
+    "title": "Timing analysis algorithm using a neural network under PVT variations",
+    "author": "Yan Liu",
+    "subject": "Microelectronics Journal, (2022) 105480. doi:10.1016/j.mejo.2022.105480",
+    "keywords": "",
+    "creator": "Elsevier",
+    "producer": "Acrobat Distiller 7.0.5 pour Macintosh",
+    "creationDate": "D:20240422081447+05'30'",
+    "modDate": "D:20240702201803+05'30'",
+    "trapped": "",
+    "encryption": null
+  },
+  "pdf_dates": {
+    "creation_date": "2024-04-22",
+    "modified_date": "2024-07-02"
+  },
+  "text_path": "metadata/meatdatagenerated/text/30.txt",
+  "json_path": "metadata/meatdatagenerated/json/30.json",
+  "html_path": "html/30.html",
+  "citation": "Yan Liu (2022). Timing analysis algorithm using a neural network under PVT variations. Microelectronics Journal. https://doi.org/10.1016/j.mejo.2022.105480"
+}
