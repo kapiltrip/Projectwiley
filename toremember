@@ -1,0 +1,29 @@
+Wiley / Overleaf reminder
+
+There are currently 3 manuscript-like TeX files related to the Wiley Overleaf setup:
+
+1. overleaf_bundle/main.tex
+   This looks like the main Overleaf bundle entry file and is the newest/larger bundle copy.
+
+2. drafts/overleaf_bundle/main.tex
+   This is another main.tex copy inside drafts. It is not identical to the root bundle main.tex.
+
+3. drafts/overleaf_bundle/wileyintegration.tex
+   This looks like another manuscript variant or earlier integration file.
+
+Important:
+- There are two different files named main.tex.
+- That is probably why the structure feels confusing.
+- The root overleaf_bundle/ folder also contains Wiley support files such as wiley-article.cls and vancouver-authoryear.bst.
+
+Suggested organization:
+- Keep overleaf_bundle/ as the final upload-ready Wiley bundle.
+- Treat overleaf_bundle/main.tex as the single canonical file for Overleaf compilation.
+- Keep drafts/ only for work-in-progress material.
+- Rename drafts/overleaf_bundle/main.tex to something clearer like main_draft.tex.
+- Rename drafts/overleaf_bundle/wileyintegration.tex to something clearer like manuscript_source.tex or integrated_review.tex.
+- Add a short README in each folder saying which file should be edited and which file is only a copy/export.
+
+Simple rule to follow:
+- Edit one source file only.
+- Export or copy to the final overleaf_bundle/ only when you are ready to upload.
