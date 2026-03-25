@@ -1,428 +1,418 @@
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % A template for Wiley article submissions developed by
-  % Overleaf for the Overleaf-Wiley pilot which ran
-  % during 2017 and 2018.
-  %
-  % This template is no longer supported, but is provided
-  % for historical reference. Last updated January 2019.
-  %
-  % Please note that whilst this template provides a
-  % preview of the typeset manuscript for submission, it
-  % will not necessarily be the final publication layout.
-  %
-  % Document class options:
-  % =======================
-  % blind: Anonymise all author, affiliation, correspondence
-  %        and funding information.
-  %
-  % lineno: Adds line numbers.
-  %
-  % serif: Sets the body font to be serif.
-  %
-  % twocolumn: Sets the body text in two-column layout.
-  %
-  % num-refs: Uses numerical citation and references style
-  %           (Vancouver-authoryear).
-  %
-  % alpha-refs: Uses author-year citation and references style
-  %             (rss).
-  %
-  % Using other bibliography styles:
-  % =======================
-  %
-  % To specify a different bibliography style:
-  % 1) Do not use either num-refs or alpha-refs in documentclass.
-  % 2) Load natbib package with the options set as needed.
-  % 3) Use the \bibliographystyle command to specify the style.
-  %
-  % This file adapts that Wiley template structure to the
-  % integrated review manuscript prepared in this project.
-  \documentclass[num-refs]{wiley-article}
-  \usepackage{siunitx}
-  \usepackage{graphicx}
-  \usepackage{booktabs}
-  \usepackage{tabularx}
-  \usepackage{array}
-  \usepackage{url}
-  \usepackage{hyperref}
-  \usepackage{enumitem}
-  \graphicspath{{./}{images/}{usedImages/}{../../usedImages/}}
-  \raggedbottom
-  \setlength{\emergencystretch}{2em}
-  \setlength{\tabcolsep}{4pt}
-  \setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
-  \setlength{\floatsep}{8pt plus 2pt minus 2pt}
-  \setlength{\intextsep}{8pt plus 2pt minus 2pt}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % A template for Wiley article submissions developed by
+    % Overleaf for the Overleaf-Wiley pilot which ran
+    % during 2017 and 2018.
+    %
+    % This template is no longer supported, but is provided
+    % for historical reference. Last updated January 2019.
+    %
+    % Please note that whilst this template provides a
+    % preview of the typeset manuscript for submission, it
+    % will not necessarily be the final publication layout.
+    %
+    % Document class options:
+    % =======================
+    % blind: Anonymise all author, affiliation, correspondence
+    %        and funding information.
+    %
+    % lineno: Adds line numbers.
+    %
+    % serif: Sets the body font to be serif.
+    %
+    % twocolumn: Sets the body text in two-column layout.
+    %
+    % num-refs: Uses numerical citation and references style
+    %           (Vancouver-authoryear).
+    %
+    % alpha-refs: Uses author-year citation and references style
+    %             (rss).
+    %
+    % Using other bibliography styles:
+    % =======================
+    %
+    % To specify a different bibliography style:
+    % 1) Do not use either num-refs or alpha-refs in documentclass.
+    % 2) Load natbib package with the options set as needed.
+    % 3) Use the \bibliographystyle command to specify the style.
+    %
+    % This file adapts that Wiley template structure to the
+    % integrated review manuscript prepared in this project.
+    \documentclass[num-refs]{wiley-article}
+    \usepackage{siunitx}
+    \usepackage{graphicx}
+    \usepackage{booktabs}
+    \usepackage{tabularx}
+    \usepackage{array}
+    \usepackage{url}
+    \usepackage{hyperref}
+    \usepackage{enumitem}
+    \graphicspath{{./}{usedImages/}}
+    \setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+    \setlength{\floatsep}{8pt plus 2pt minus 2pt}
+    \setlength{\intextsep}{8pt plus 2pt minus 2pt}
 
-  \papertype{Review Article}
-    \title{Machine Learning and GPU-Accelerated Static Timing Analysis for Intent-Robust Timing Closure}
+    \papertype{Review Article}
+      \title{Machine Learning and GPU-Accelerated Static Timing Analysis for Intent-Robust Timing Closure}
 
-  \abbrevs{STA, static timing analysis; SSTA, statistical static timing analysis; ECO, engineering change order; PBA, path-based analysis; WNS, worst negative slack; TNS, total negative slack.}
+    \abbrevs{STA, static timing analysis; SSTA, statistical static timing analysis; ECO, engineering change order; PBA, path-based analysis; WNS, worst negative slack; TNS, total negative slack.}
 
-  \author[1]{Kapil Tripathi}
-  \author[1]{Nishant More}
-  \author[1]{Robin Singla}
-  \affil[1]{Department of Electronics and Communication Engineering, Thapar Institute of Engineering and Technology, Patiala, India}
-  \corraddress{Dr Robin Singla, Department of Electronics and Communication Engineering, Thapar Institute of Engineering and Technology, Patiala, India}
-  \corremail{robin.singla@thapar.edu}
-  \fundinginfo{No external funding was reported for this work.}
-  \runningauthor{}
+    \author[1]{Kapil Tripathi}
+    \author[1]{Nishant More}
+    \author[1]{Robin Singla}
+    \affil[1]{Department of Electronics and Communication Engineering, Thapar Institute of Engineering and Technology, Patiala, India}
+    \corraddress{Robin Singla, Department of Electronics and Communication Engineering, Thapar Institute of Engineering and Technology, Patiala, India}
+    \corremail{robin.singla@thapar.edu}
+    \fundinginfo{No external funding was reported for this work.}
+    \runningauthor{Tripathi et al.}
 
-  \newcommand{\wileyfig}[3][]{%
-    \IfFileExists{#2}{%
-      \includegraphics[
-        width=0.88\linewidth,
-        height=0.32\textheight,
-        keepaspectratio,
-        #1
-      ]{#2}%
-    }{%
-      \fbox{%
-        \parbox[c][0.20\textheight][c]{0.84\linewidth}{%
-          \centering Pending figure asset\\[4pt]
-          \texttt{\detokenize{#2}}\\[6pt]
-          #3%
+    \newcommand{\wileyfig}[3][]{%
+      \IfFileExists{#2}{%
+        \includegraphics[
+          width=0.88\linewidth,
+          height=0.32\textheight,
+          keepaspectratio,
+          #1
+        ]{#2}%
+      }{%
+        \fbox{%
+          \parbox[c][0.20\textheight][c]{0.84\linewidth}{%
+            \centering Pending figure asset\\[4pt]
+            \texttt{\detokenize{#2}}\\[6pt]
+            #3%
+          }%
         }%
       }%
-    }%
-  }
+    }
 
-  \begin{document}
+    \begin{document}
 
-  \begin{frontmatter}
-  \maketitle
+    \begin{frontmatter}
+    \maketitle
 
-  \begin{abstract}
-  Static timing analysis (STA) remains the dominant formal method for timing verification and signoff, but timing closure in advanced digital design is now constrained by several interacting problems: inaccurate early-stage timing estimates, exploding multi-corner and multi-mode scenario counts, costly path-based and incremental signoff analysis, and reliability effects such as aging, dynamic supply noise, and process variation that reshape criticality over time. Recent research responds along two complementary directions. One direction uses machine learning (ML) to predict, correct, rank, or guide timing outcomes earlier in the flow so that expensive iterations are avoided. The other direction accelerates trustworthy analysis through GPU and heterogeneous computing so that high-fidelity timing engines remain usable inside optimization loops. This review integrates fifty papers spanning classical STA semantics, statistical timing, aging- and noise-aware modeling, ML-based timing prediction and optimization, multicorner decision layers, and GPU-accelerated STA and path-based analysis. We use \emph{intent-robust timing closure} as the central lens: a timing methodology is intent-robust if it preserves actionable accuracy and safety under changing design intent, changing operating intent, and changing silicon conditions. Under that lens, the papers that hold up in deployment do not replace signoff outright. They learn correlation bridges between stages, learn decisions rather than final truth, preserve physical structure in their representations, and pair prediction with explicit fallback or acceleration mechanisms. Based on the corpus, this paper contributes three things beyond a conventional survey: a unified taxonomy that connects ML, SSTA, reliability-aware timing, and acceleration; a synthesis of deployment behaviors that survive ECO churn, corner growth, and node migration; and an integrated closure blueprint in which learned models triage and shape optimization while GPU-backed engines preserve signoff trustworthiness. The resulting picture is not "ML versus STA." It is a layered architecture in which ML ranks risky logic, selects methods or corners, and proposes optimization moves; statistical and physical timing models define whether slack, criticality, and yield claims are meaningful; and acceleration keeps trusted feedback available at the cadence required by modern closure loops.
+    \begin{abstract}
+    Static timing analysis (STA) remains the dominant formal method for timing verification and signoff, but timing closure in advanced digital design is now constrained by several interacting problems: inaccurate early-stage timing estimates, exploding multi-corner and multi-mode scenario counts, costly path-based and incremental signoff analysis, and reliability effects such as aging, dynamic supply noise, and process variation that reshape criticality over time. Recent research responds along two complementary directions. One direction uses machine learning (ML) to predict, correct, rank, or guide timing outcomes earlier in the flow so that expensive iterations are avoided. The other direction accelerates trustworthy analysis through GPU and heterogeneous computing so that high-fidelity timing engines remain usable inside optimization loops. This review integrates fifty papers spanning classical STA semantics, statistical timing, aging- and noise-aware modeling, ML-based timing prediction and optimization, multicorner decision layers, and GPU-accelerated STA and path-based analysis. We use \emph{intent-robust timing closure} as the central lens: a timing methodology is intent-robust if it preserves actionable accuracy and safety under changing design intent, changing operating intent, and changing silicon conditions. Under that lens, the papers that hold up in deployment do not replace signoff outright. They learn correlation bridges between stages, learn decisions rather than final truth, preserve physical structure in their representations, and pair prediction with explicit fallback or acceleration mechanisms. Based on the corpus, this paper contributes three things beyond a conventional survey: a unified taxonomy that connects ML, SSTA, reliability-aware timing, and acceleration; a synthesis of deployment behaviors that survive ECO churn, corner growth, and node migration; and an integrated closure blueprint in which learned models triage and shape optimization while GPU-backed engines preserve signoff trustworthiness. The resulting picture is not "ML versus STA." It is a layered architecture in which ML ranks risky logic, selects methods or corners, and proposes optimization moves; statistical and physical timing models define whether slack, criticality, and yield claims are meaningful; and acceleration keeps trusted feedback available at the cadence required by modern closure loops.
 
-  \keywords{static timing analysis, timing closure, machine learning, graph neural networks, multicorner analysis, GPU acceleration, path-based analysis}
-  \end{abstract}
-  \end{frontmatter}
-  \pagestyle{plain}
+    \keywords{static timing analysis, timing closure, machine learning, graph neural networks, multicorner analysis, GPU acceleration, path-based analysis}
+    \end{abstract}
+    \end{frontmatter}
 
-  \section{Introduction}
+    \section{Introduction}
 
-  Timing closure is no longer a narrow signoff task performed at the end of implementation. It is an iterative control loop that repeatedly estimates timing, optimizes the design, and validates the result under increasingly accurate physical assumptions. The multicorner acceleration work in \cite{ref16} is explicit about this loop: timing analysis is repeatedly invoked inside iterative physical design, and the runtime bottleneck is no longer a single final run but the cost of many timing evaluations under many scenarios. The heterogeneous CPU-GPU STA engine in \cite{ref22} makes the same point from the systems side by accelerating levelization, delay computation, propagation, incremental updates, and multicorner analysis because those are precisely the high-frequency workloads designers already pay for in real flows.
+    Timing closure is no longer a narrow signoff task performed at the end of implementation. It is an iterative control loop that repeatedly estimates timing, optimizes the design, and validates the result under increasingly accurate physical assumptions. The multicorner acceleration work in \cite{ref16} is explicit about this loop: timing analysis is repeatedly invoked inside iterative physical design, and the runtime bottleneck is no longer a single final run but the cost of many timing evaluations under many scenarios. The heterogeneous CPU-GPU STA engine in \cite{ref22} makes the same point from the systems side by accelerating levelization, delay computation, propagation, incremental updates, and multicorner analysis because those are precisely the high-frequency workloads designers already pay for in real flows.
 
 
-  The cost of that loop is amplified when early timing surrogates are poorly aligned with post-route signoff. The placement-guidance framework in \cite{ref1} is motivated by the fact that placement decisions strongly shape later routing and timing outcomes. The pre-route optimization framework in \cite{ref17} shows that better delay and slew prediction can materially reduce unnecessary place-and-route iteration. The GR-to-DR correction framework in \cite{ref10} goes further and demonstrates that stage mismatch itself is a first-order problem: optimization based on inaccurate post-global-route timing can steer the flow away from the detailed-route outcome that determines signoff.
+    The cost of that loop is amplified when early timing surrogates are poorly aligned with post-route signoff. The placement-guidance framework in \cite{ref1} is motivated by the fact that placement decisions strongly shape later routing and timing outcomes. The pre-route optimization framework in \cite{ref17} shows that better delay and slew prediction can materially reduce unnecessary place-and-route iteration. The GR-to-DR correction framework in \cite{ref10} goes further and demonstrates that stage mismatch itself is a first-order problem: optimization based on inaccurate post-global-route timing can steer the flow away from the detailed-route outcome that determines signoff.
 
 
-  This pressure has created two active research fronts. The first front uses ML to predict timing, identify criticality, select methods, guide placement or routing changes, or reduce characterization and corner costs. The second front accelerates the timing engines that designers already trust, especially multicorner STA and path-based analysis (PBA), through GPU and heterogeneous parallelism. The first front changes \emph{what} gets evaluated or optimized. The second front changes \emph{how fast} trustworthy evaluation can be delivered. Treating them separately misses their combined value. In practical closure loops the two fronts solve different failure modes. ML can prioritize which paths, corners, or transforms deserve attention, but acceleration is what keeps signoff-quality feedback available once learned correlations weaken under ECO churn, corner growth, or reliability drift.
+    This pressure has created two active research fronts. The first front uses ML to predict timing, identify criticality, select methods, guide placement or routing changes, or reduce characterization and corner costs. The second front accelerates the timing engines that designers already trust, especially multicorner STA and path-based analysis (PBA), through GPU and heterogeneous parallelism. The first front changes \emph{what} gets evaluated or optimized. The second front changes \emph{how fast} trustworthy evaluation can be delivered. Treating them separately misses their combined value.
 
 
-  Several recent works survey only one slice of this landscape at a time. The survey in \cite{ref20} catalogs ML uses across agile-design timing tasks such as prediction and acceleration. The survey in \cite{ref49} organizes SSTA around block-based versus path-based propagation, variation sources, and correlation handling. The review in \cite{ref39} extends timing discussion from manufacturing variation to reliability mechanisms such as aging and adaptive countermeasures. Yet none of these surveys treats ML prediction, statistical timing, reliability-aware modeling, and accelerated timing engines as parts of the same closure problem. The missing piece is composition: current deployment decisions are about how to combine these techniques without losing signoff trustworthiness. That is the perspective adopted here. The practical question is not whether one method family wins in isolation, but how different method families should be positioned across the closure loop so that speed, trust, and physical meaning reinforce each other rather than conflict.
+    Several recent works survey only one slice of this landscape at a time. The survey in \cite{ref20} catalogs ML uses across agile-design timing tasks such as prediction and acceleration. The survey in \cite{ref49} organizes SSTA around block-based versus path-based propagation, variation sources, and correlation handling. The review in \cite{ref39} extends timing discussion from manufacturing variation to reliability mechanisms such as aging and adaptive countermeasures. Yet none of these surveys treats ML prediction, statistical timing, reliability-aware modeling, and accelerated timing engines as parts of the same closure problem. The missing piece is composition: current deployment decisions are about how to combine these techniques without losing signoff trustworthiness.
 
 
-  This paper uses \emph{intent-robust timing closure} as its organizing idea. A timing methodology is intent-robust if it continues to produce correct optimization, screening, or verification decisions when the intent of the flow shifts. Design intent shifts when placement optimization resizes gates or inserts buffers \cite{ref1}, when routing topology is modified to improve signoff \cite{ref7}, or when ECO edits restructure timing paths \cite{ref19}. Operating intent shifts when the relevant corner set changes or when only a subset of scenarios can be afforded in each iteration \cite{ref16}. Silicon intent shifts when aging, BTI, dynamic supply noise, or process variability alter which paths dominate and how delay should be interpreted \cite{ref12}, \cite{ref15}, \cite{ref44}. A robust method therefore must survive distribution shift by construction, not by luck.
+    This paper uses \emph{intent-robust timing closure} as its organizing idea. A timing methodology is intent-robust if it continues to produce correct optimization, screening, or verification decisions when the intent of the flow shifts. Design intent shifts when placement optimization resizes gates or inserts buffers \cite{ref1}, when routing topology is modified to improve signoff \cite{ref7}, or when ECO edits restructure timing paths \cite{ref19}. Operating intent shifts when the relevant corner set changes or when only a subset of scenarios can be afforded in each iteration \cite{ref16}. Silicon intent shifts when aging, BTI, dynamic supply noise, or process variability alter which paths dominate and how delay should be interpreted \cite{ref12}, \cite{ref15}, \cite{ref44}. A robust method therefore must survive distribution shift by construction, not by luck.
 
 
-  The rest of this review is structured around that claim. Section 2 defines the review scope and clarifies what this paper adds beyond existing surveys. Section 3 revisits the timing foundations that current ML and GPU work still inherit, including slack semantics, statistical timing, and lifetime perturbations. Section 4 synthesizes ML work across the RTL-to-GDSII stack. Section 5 examines GPU and heterogeneous acceleration of trusted timing engines. Section 6 distills the practical integration rules, evaluation criteria, and open challenges that emerge across the corpus. Section 7 concludes.
+    The rest of this review is structured around that claim. Section 2 defines the review scope and clarifies what this paper adds beyond existing surveys. Section 3 revisits the timing foundations that current ML and GPU work still inherit, including slack semantics, statistical timing, and lifetime perturbations. Section 4 synthesizes ML work across the RTL-to-GDSII stack. Section 5 examines GPU and heterogeneous acceleration of trusted timing engines. Section 6 distills the practical integration rules, evaluation criteria, and open challenges that emerge across the corpus. Section 7 concludes.
 
 
-  \section{Review Scope and Contribution}
+    \section{Review Scope and Contribution}
 
-  \subsection{Review type, corpus, and classification protocol}
+    \subsection{Review type, corpus, and classification protocol}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{01_overall_ml_timing_closure_process.png}{Timing-closure workflow comparison adapted from Fig. 10 in \cite{ref28}: the commercial multi-corner closure flow versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
-  \caption{Timing-closure workflow comparison adapted from Fig. 10 in \cite{ref28}: the commercial multi-corner closure flow versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
-  \label{fig:wiley-corpus-scope}
-  \end{figure}
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{01_overall_ml_timing_closure_process.png}{Timing-closure workflow comparison adapted from Fig. 10 in \cite{ref28}: the commercial multi-corner closure flow versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
+    \caption{Timing-closure workflow comparison adapted from Fig. 10 in \cite{ref28}: the commercial multi-corner closure flow versus a machine-learning-assisted closure flow that executes dominant corners directly and predicts the remaining corners.}
+    \label{fig:wiley-corpus-scope}
+    \end{figure}
 
 
-  Figure~\ref{fig:wiley-corpus-scope}, adapted from Fig.~10 in \cite{ref28}, should be read as an execution-policy diagram rather than a generic workflow sketch. The paper's key move is to spend exact STA on a small dominant-corner set and infer the remaining corners from that set, which is why \cite{ref28} treats multicorner acceleration as a decision problem about which scenarios deserve direct analysis. This paper should be read as a structured fixed-corpus review with an architectural synthesis, not as an open-ended bibliometric survey. The evidence base is the local fifty-paper corpus assembled for this project and processed into searchable text and HTML. The corpus spans 2006 through 2026 and intentionally mixes recent ML papers with older timing-analysis papers that still define the labels and failure modes used by newer work. That choice is necessary because modern learning papers often optimize quantities whose meaning was formalized much earlier. Slack semantics in \cite{ref50} still shape how WNS, TNS, and endpoint slack should be interpreted. The SSTA survey in \cite{ref49} still defines the main algorithmic language for timing under uncertainty. The coupling-aware framework in \cite{ref48} and the interdependent-constraint work in \cite{ref46} remain relevant because they expose modeling assumptions that many newer predictors still inherit.
+    Figure~\ref{fig:wiley-corpus-scope}, reproduced from \cite{ref28}, gives a concrete example of the review's central integration problem by contrasting full multi-corner execution with a learned dominant-corner workflow. This paper should be read as a structured fixed-corpus review with an architectural synthesis, not as an open-ended bibliometric survey. The evidence base is the local fifty-paper corpus assembled for this project and processed into searchable text and HTML. The corpus spans 2006 through 2026 and intentionally mixes recent ML papers with older timing-analysis papers that still define the labels and failure modes used by newer work. That choice is necessary because modern learning papers often optimize quantities whose meaning was formalized much earlier. Slack semantics in \cite{ref50} still shape how WNS, TNS, and endpoint slack should be interpreted. The SSTA survey in \cite{ref49} still defines the main algorithmic language for timing under uncertainty. The coupling-aware framework in \cite{ref48} and the interdependent-constraint work in \cite{ref46} remain relevant because they expose modeling assumptions that many newer predictors still inherit.
 
 
-  Inclusion was driven by technical relevance to timing analysis or timing closure rather than by ML popularity alone. A paper was kept in the review if timing analysis, timing prediction, timing optimization, timing-criticality interpretation, or timing-engine acceleration was a primary contribution, and if it clearly touched at least one of the review axes: early-stage prediction, stage-alignment correction, statistical timing, multicorner reasoning, reliability-aware timing, or GPU/heterogeneous acceleration. Papers where timing appeared only as a minor downstream metric were not used as primary evidence. Each included paper was then classified along five dimensions: design-flow stage, predicted or accelerated object, trust mechanism, robustness axis, and evaluation mode. That classification is what supports the synthesis in Sections 4 through 6. It also makes unlike papers comparable for review purposes, because a predictor, a statistical model, and an accelerator can then be discussed in terms of where they sit in closure and how they preserve trust.
+    Inclusion was driven by technical relevance to timing analysis or timing closure rather than by ML popularity alone. A paper was kept in the review if timing analysis, timing prediction, timing optimization, timing-criticality interpretation, or timing-engine acceleration was a primary contribution, and if it clearly touched at least one of the review axes: early-stage prediction, stage-alignment correction, statistical timing, multicorner reasoning, reliability-aware timing, or GPU/heterogeneous acceleration. Papers where timing appeared only as a minor downstream metric were not used as primary evidence. Each included paper was then classified along five dimensions: design-flow stage, predicted or accelerated object, trust mechanism, robustness axis, and evaluation mode. That classification is what supports the synthesis in Sections 4 through 6.
 
 
-  \subsection{What this review adds beyond prior surveys}
+    \subsection{What this review adds beyond prior surveys}
 
-  The review also extends beyond narrowly "ML for STA" papers. Survey \cite{ref20} catalogs agile-flow ML uses, but it does not address whether those predictors can coexist with fast fallback to trusted analysis. That is why the GPU PBA framework in \cite{ref21} and the heterogeneous STA engine in \cite{ref22} are central here: \cite{ref21} lowers the cost of pessimism reduction, and \cite{ref22} lowers the cost of multicorner and incremental signoff workloads. Likewise, the reliability survey in \cite{ref39} is included not as background alone but because it reframes timing from a process-variation problem into a reliability problem that includes aging and adaptation. Under that framing, aging-aware cell timing \cite{ref14}, path-level aging prediction \cite{ref15}, aging-aware critical-path ranking \cite{ref23}, BTI-aware temporal timing \cite{ref44}, and dynamic-noise-aware STA \cite{ref12} become part of the timing core rather than side topics.
+    The review also extends beyond narrowly "ML for STA" papers. Survey \cite{ref20} catalogs agile-flow ML uses, but it does not address whether those predictors can coexist with fast fallback to trusted analysis. That is why the GPU PBA framework in \cite{ref21} and the heterogeneous STA engine in \cite{ref22} are central here: \cite{ref21} lowers the cost of pessimism reduction, and \cite{ref22} lowers the cost of multicorner and incremental signoff workloads. Likewise, the reliability survey in \cite{ref39} is included not as background alone but because it reframes timing from a process-variation problem into a reliability problem that includes aging and adaptation. Under that framing, aging-aware cell timing \cite{ref14}, path-level aging prediction \cite{ref15}, aging-aware critical-path ranking \cite{ref23}, BTI-aware temporal timing \cite{ref44}, and dynamic-noise-aware STA \cite{ref12} become part of the timing core rather than side topics.
 
 
-  Table~\ref{tab:wiley-1} makes the novelty claim explicit by comparing this manuscript to the three most relevant surveys in the corpus.
+    Table~\ref{tab:wiley-1} makes the novelty claim explicit by comparing this manuscript to the three most relevant surveys in the corpus.
 
 
-  \begin{table}[!t]
-  \centering
-  \caption{Comparison between this manuscript and the three most relevant surveys in the corpus.}
-  \label{tab:wiley-1}
-  \small
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-  \toprule
-  \textbf{Review} & \textbf{Primary scope} & \textbf{ML timing prediction} & \textbf{SSTA and timing semantics} & \textbf{Aging/noise/reliability} & \textbf{GPU or engine acceleration} & \textbf{Integrated closure blueprint} \\
-  \midrule
-  \cite{ref20} & ML-based STA in agile design & Yes & Limited & Limited & No & No \\
-  \cite{ref49} & SSTA survey & No & Yes & No & No & No \\
-  \cite{ref39} & Timing from process variation to reliability & Limited & Moderate & Yes & No & No \\
-  This paper & Timing closure under intent drift & Yes & Yes & Yes & Yes & Yes \\
-  \bottomrule
-  \end{tabularx}
-  \end{table}
+    \begin{table}[tbp]
+    \centering
+    \caption{Comparison between this manuscript and the three most relevant surveys in the corpus.}
+    \label{tab:wiley-1}
+    \small
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Review} & \textbf{Primary scope} & \textbf{ML timing prediction} & \textbf{SSTA and timing semantics} & \textbf{Aging/noise/reliability} & \textbf{GPU or engine acceleration} & \textbf{Integrated closure blueprint} \\
+    \midrule
+    \cite{ref20} & ML-based STA in agile design & Yes & Limited & Limited & No & No \\
+    \cite{ref49} & SSTA survey & No & Yes & No & No & No \\
+    \cite{ref39} & Timing from process variation to reliability & Limited & Moderate & Yes & No & No \\
+    This paper & Timing closure under intent drift & Yes & Yes & Yes & Yes & Yes \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
 
 
-  Read against the source surveys, Table~\ref{tab:wiley-1} shows that the difference is not just breadth but organizing logic. The agile-design survey in \cite{ref20} is centered on how ML can support a no-human-in-the-loop RTL-to-GDSII flow, and it explicitly frames the open problems around data preparation, problem modeling, practicality, and generality. That framing is useful for learning-based timing prediction, but it does not yet explain how learned predictors should interact with signoff-quality engines once correlation weakens under ECOs or corner growth. The SSTA survey in \cite{ref49} starts from a different pressure point: as the number of independent variation sources grows, naive corner analysis can require up to $2^n$ timing runs, so the real question becomes how to preserve timing meaning while controlling computational cost. Li et al. in \cite{ref39} push the boundary again by arguing that timing uncertainty is no longer exhausted by process variation alone; aging, noise, and adaptive techniques such as clock-skew and voltage tuning become part of the timing problem itself.
+    \subsection{Operational definition of intent-robustness}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{02_sta_illustration.jpg}{Static timing analysis illustration adapted from Fig. 8 in \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
+    \caption{Static timing analysis illustration adapted from Fig. 8 in \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
+    \label{fig:wiley-intent-map}
+    \end{figure}
 
-  The implication for this review is specific. None of the prior surveys is weak; each is strong within its own center of gravity. But the centers of gravity are different. One organizes the field around ML-enabled prediction across the design flow \cite{ref20}. One organizes it around statistical timing formalisms, correlation handling, and the block-based versus path-based algorithmic tradeoff \cite{ref49}. One organizes it around the shift from manufacturing variation to lifetime reliability \cite{ref39}. What is still missing is a closure-level account of how these pieces should be composed when designers need both fast iteration and a trustworthy signoff anchor. That gap is why the discussion now returns to the basic STA graph semantics in Figure~\ref{fig:wiley-intent-map}: before deciding where ML or acceleration belongs, the review has to restate what timing quantities mean and why those meanings are easy to distort.
 
+    Figure~\ref{fig:wiley-intent-map}, reproduced from \cite{ref49}, is included because the timing-graph view is the semantic baseline behind the slack and criticality targets reused throughout the later ML literature. The term \emph{intent-robust timing closure} is only useful if it can be applied consistently. In this review, a method is treated as more intent-robust when it satisfies more of the criteria in Table~\ref{tab:wiley-2} under realistic closure conditions. The point is not to collapse all methods into one score. The point is to prevent "robustness" from meaning only low held-out error on one frozen design snapshot.
 
-  \subsection{Operational definition of intent-robustness}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{02_sta_illustration.jpg}{Static timing analysis illustration adapted from Fig. 8 in \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
-  \caption{Static timing analysis illustration adapted from Fig. 8 in \cite{ref49}. This timing-graph baseline underlies the slack, WNS, and TNS targets reused by later ML work.}
-  \label{fig:wiley-intent-map}
-  \end{figure}
+    \begin{table}[tbp]
+    \centering
+    \caption{Operational rubric used in this review to interpret intent-robust timing closure.}
+    \label{tab:wiley-2}
+    \small
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Axis} & \textbf{Question used in this review} & \textbf{Typical evidence in the literature} \\
+    \midrule
+    Label semantics & Does the target preserve the timing meaning designers actually optimize? & Slack semantics \cite{ref50}, true-path reasoning \cite{ref37}, \cite{ref40} \\
+    Stage robustness & Does the method stay useful as the flow moves from early estimates to routed signoff? & GR-to-DR correction \cite{ref10}, optimization-aware preroute prediction \cite{ref8} \\
+    Transformation robustness & Does the method survive ECOs, sizing, buffering, or topology change? & Placement actions \cite{ref1}, ECO transfer learning \cite{ref19}, derivable placement model \cite{ref3} \\
+    Scenario robustness & Does the method cope with corner growth and method-choice uncertainty? & Bayesian multicorner fallback \cite{ref16}, dominant-corner selection \cite{ref28}, TimeBoost \cite{ref9} \\
+    Lifetime robustness & Does the method account for aging, BTI, or dynamic-noise perturbation? & Aging-aware timing \cite{ref14}, \cite{ref15}, \cite{ref23}; PSN-aware STA \cite{ref12}; BTI-aware timing \cite{ref44} \\
+    Trust mechanism & Is there an explicit signoff anchor, fallback path, or physics-preserving intermediate? & Post-placement correction \cite{ref25}, \cite{ref13}; GPU fallback \cite{ref21}, \cite{ref22}; intermediate surrogates \cite{ref17}, \cite{ref29} \\
+    Iteration viability & Can the method run at the cadence required by closure loops? & GPU STA/PBA \cite{ref21}, \cite{ref22}; reduced characterization cost \cite{ref4}; faster corner execution \cite{ref16}, \cite{ref28} \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
 
 
-  Figure~\ref{fig:wiley-intent-map}, adapted from Fig.~8 in \cite{ref49}, is the semantic contract behind much of the later literature. Arrival times, required times, and slack are defined on this timing-graph abstraction, so when later ML papers predict endpoint slack or path criticality they inherit these semantics even when they report only numerical accuracy. The term \emph{intent-robust timing closure} is only useful if it can be applied consistently. In this review, a method is treated as more intent-robust when it satisfies more of the criteria in Table~\ref{tab:wiley-2} under realistic closure conditions. The rubric is therefore meant to separate semantically reliable methods from methods that are merely accurate on a frozen snapshot.
+    Against that background, this paper makes three linked contributions beyond prior surveys: it builds a single taxonomy connecting ML predictors, SSTA methods, reliability-aware timing, and engine acceleration; it extracts deployment rules that are more operational than a list of model architectures; and it turns those rules into a practical timing-closure blueprint. Throughout, sentence-level citations point to specific methods or results, whereas broader claims are stated explicitly as this review's synthesis across the corpus.
 
 
-  \begin{table}[!t]
-  \centering
-  \caption{Operational rubric used in this review to interpret intent-robust timing closure.}
-  \label{tab:wiley-2}
-  \small
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-  \toprule
-  \textbf{Axis} & \textbf{Question used in this review} & \textbf{Typical evidence in the literature} \\
-  \midrule
-  Label semantics & Does the target preserve the timing meaning designers actually optimize? & Slack semantics \cite{ref50}, true-path reasoning \cite{ref37}, \cite{ref40} \\
-  Stage robustness & Does the method stay useful as the flow moves from early estimates to routed signoff? & GR-to-DR correction \cite{ref10}, optimization-aware preroute prediction \cite{ref8} \\
-  Transformation robustness & Does the method survive ECOs, sizing, buffering, or topology change? & Placement actions \cite{ref1}, ECO transfer learning \cite{ref19}, derivable placement model \cite{ref3} \\
-  Scenario robustness & Does the method cope with corner growth and method-choice uncertainty? & Bayesian multicorner fallback \cite{ref16}, dominant-corner selection \cite{ref28}, TimeBoost \cite{ref9} \\
-  Lifetime robustness & Does the method account for aging, BTI, or dynamic-noise perturbation? & Aging-aware timing \cite{ref14}, \cite{ref15}, \cite{ref23}; PSN-aware STA \cite{ref12}; BTI-aware timing \cite{ref44} \\
-  Trust mechanism & Is there an explicit signoff anchor, fallback path, or physics-preserving intermediate? & Post-placement correction \cite{ref25}, \cite{ref13}; GPU fallback \cite{ref21}, \cite{ref22}; intermediate surrogates \cite{ref17}, \cite{ref29} \\
-  Iteration viability & Can the method run at the cadence required by closure loops? & GPU STA/PBA \cite{ref21}, \cite{ref22}; reduced characterization cost \cite{ref4}; faster corner execution \cite{ref16}, \cite{ref28} \\
-  \bottomrule
-  \end{tabularx}
-  \end{table}
+    \section{Timing Foundations and Robustness Constraints}
 
+    \paragraph{Moving targets, slack, and true criticality.} Timing closure is difficult because the target drifts while the flow is optimizing toward it. Netlists change during sizing and buffering \cite{ref1}, routing topology changes during signoff-driven refinement \cite{ref7}, late ECOs restructure paths \cite{ref19}, and the relevant operating scenarios can shift across corners and modes \cite{ref16}. Aging and dynamic supply noise then change which paths remain critical after nominal closure \cite{ref12}, \cite{ref23}. Slack therefore remains indispensable, but its meaning is more subtle than many ML papers assume: Vygen shows in \cite{ref50} that positive slack in the standard STA model does not automatically imply equal extra delay margin at the same point. Extended STA and viability-based true-path work \cite{ref37}, \cite{ref40} reinforce the same warning by showing that graph-critical paths are not always the statistically or operationally critical ones.
 
-  Against that background, this paper makes three linked contributions beyond prior surveys: it builds a single taxonomy connecting ML predictors, SSTA methods, reliability-aware timing, and engine acceleration; it extracts deployment rules that are more operational than a list of model architectures; and it turns those rules into a practical timing-closure blueprint. These three pieces are meant to work together: the taxonomy organizes the design space, the rules explain which ideas remain stable under deployment pressure, and the blueprint shows how those ideas can be staged inside one closure loop. Throughout, sentence-level citations point to specific methods or results, whereas broader claims are stated explicitly as this review's synthesis across the corpus.
 
+    \paragraph{Statistical timing and primitive delay modeling.} Multi-corner STA dominates practice because it is operationally simple, but the deeper uncertainty problem is statistical. The survey in \cite{ref49}, optimization formulations in \cite{ref18}, hierarchical recorrelation in \cite{ref43}, conditional-moment propagation in \cite{ref45}, and accelerated Monte Carlo in \cite{ref47} all show that correlation and delay-distribution structure are central rather than optional. Robust timing also depends on the primitive delay abstractions beneath the graph: copula-based gate-delay modeling \cite{ref32}, adjacency criticality \cite{ref35}, stochastic logical effort \cite{ref41}, current-fluctuation delay modeling \cite{ref42}, and near-subthreshold analysis \cite{ref36} each improve how delay and yield should be interpreted before any learned surrogate is layered on top.
 
-  \section{Timing Foundations and Robustness Constraints}
 
-  \paragraph{Moving targets, slack, and true criticality.} Timing closure is difficult because the target drifts while the flow is optimizing toward it. Netlists change during sizing and buffering \cite{ref1}, routing topology changes during signoff-driven refinement \cite{ref7}, late ECOs restructure paths \cite{ref19}, and the relevant operating scenarios can shift across corners and modes \cite{ref16}. Aging and dynamic supply noise then change which paths remain critical after nominal closure \cite{ref12}, \cite{ref23}. Slack therefore remains indispensable, but its meaning is more subtle than many ML papers assume: Vygen shows in \cite{ref50} that positive slack in the standard STA model does not automatically imply equal extra delay margin at the same point. Extended STA and viability-based true-path work \cite{ref37}, \cite{ref40} reinforce the same warning by showing that graph-critical paths are not always the statistically or operationally critical ones. For this review, the implication is direct: a model can predict conventional slack accurately and still miss the paths that matter operationally if the label itself carries pessimism or semantic drift.
+    \paragraph{Coupling, constraints, and lifetime effects.} Robust timing is not only about static variation. FA-STAC \cite{ref48} treats crosstalk delay as an iterative coupling problem, Salman \cite{ref46} and Cao et al. \cite{ref31} show that setup, hold, and clock-to-Q constraints interact nonlinearly, and aging-aware work \cite{ref38}, \cite{ref44} shows that lifetime timing behavior is time-varying and correlated. These effects explain why intent-robust closure must remain tied to physical timing semantics rather than to nominal predictions alone.
 
 
-  \paragraph{Statistical timing and primitive delay modeling.} Multi-corner STA dominates practice because it is operationally simple, but the deeper uncertainty problem is statistical. The survey in \cite{ref49}, optimization formulations in \cite{ref18}, hierarchical recorrelation in \cite{ref43}, conditional-moment propagation in \cite{ref45}, and accelerated Monte Carlo in \cite{ref47} all show that correlation and delay-distribution structure are central rather than optional. In other words, corner enumeration is a practical proxy for uncertainty, not the uncertainty model itself. Robust timing also depends on the primitive delay abstractions beneath the graph: copula-based gate-delay modeling \cite{ref32}, adjacency criticality \cite{ref35}, stochastic logical effort \cite{ref41}, current-fluctuation delay modeling \cite{ref42}, and near-subthreshold analysis \cite{ref36} each improve how delay and yield should be interpreted before any learned surrogate is layered on top.
+    \section{Machine Learning Across the RTL-to-GDSII Flow}
 
+    \subsection{Early, placement-stage, and preroute learning}
 
-  \paragraph{Coupling, constraints, and lifetime effects.} Robust timing is not only about static variation. FA-STAC \cite{ref48} treats crosstalk delay as an iterative coupling problem, Salman \cite{ref46} and Cao et al. \cite{ref31} show that setup, hold, and clock-to-Q constraints interact nonlinearly, and aging-aware work \cite{ref38}, \cite{ref44} shows that lifetime timing behavior is time-varying and correlated. These effects do not merely add guardband; they can change which paths deserve engineering attention. That is why intent-robust closure must remain tied to physical timing semantics rather than to nominal predictions alone.
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{03_block_vs_path_traversal.jpg}{Path-based versus block-based timing graph traversal adapted from Fig. 10 in \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
+    \caption{Path-based versus block-based timing graph traversal adapted from Fig. 10 in \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
+    \label{fig:wiley-preplacement}
+    \end{figure}
 
 
-  \section{Machine Learning Across the RTL-to-GDSII Flow}
+    Figure~\ref{fig:wiley-preplacement}, reproduced from \cite{ref49}, is useful here because it visualizes the block-based versus path-based traversal trade-off that later ML surrogates and GPU accelerators are both trying to manage. The earliest ML timing papers in the corpus are careful about scope. The RTL framework in \cite{ref27} predicts pin-to-pin delay and slew for combinational RTL blocks and reports an 8.4x runtime improvement over running the full downstream flow. Its contribution is early ranking of risky logic regions before synthesis, placement, and routing make the correction cost high. It does not attempt to replace physical timing; it screens where later implementation effort should be spent.
 
-  \subsection{Early, placement-stage, and preroute learning}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{03_block_vs_path_traversal.jpg}{Path-based versus block-based timing graph traversal adapted from Fig. 10 in \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
-  \caption{Path-based versus block-based timing graph traversal adapted from Fig. 10 in \cite{ref49}. The trade-off between cheap pessimistic propagation and more expensive accurate path reasoning motivates both ML surrogates and GPU acceleration.}
-  \label{fig:wiley-preplacement}
-  \end{figure}
+    Preplacement estimation is harder because geometry has not yet emerged from placement. The customized GNN approach in \cite{ref29} addresses this by inserting a predicted net-length surrogate between topology and timing. Instead of mapping netlist structure directly to slack with no explicit physical bridge, the model predicts net lengths first and then derives timing estimates from them. The paper reports a fast variant that is over 1000x faster than placement and lower MAE for slack, WNS, and TNS than commercial preplacement timing reports. The methodological lesson is concrete: early-stage ML is more stable when it reconstructs at least one missing physical variable instead of pretending the variable does not matter.
 
 
-  Figure~\ref{fig:wiley-preplacement}, adapted from Fig.~10 in \cite{ref49}, makes the core algorithmic tension explicit: block-based traversal is cheap because it propagates local summaries, while path-based traversal preserves path identity and reduces pessimism at much higher cost. That trade-off explains why later work splits into ML surrogates that avoid some expensive path reasoning and GPU methods that try to make high-fidelity reasoning callable. The earliest ML timing papers in the corpus are careful about scope. The RTL framework in \cite{ref27} predicts pin-to-pin delay and slew for combinational RTL blocks and reports an 8.4x runtime improvement over running the full downstream flow. Its contribution is early ranking of risky logic regions before synthesis, placement, and routing make the correction cost high. It does not attempt to replace physical timing; it screens where later implementation effort should be spent.
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{04_placement_guidance_framework.png}{Placement-optimization guidance framework adapted from Fig. 2 in \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
+    \caption{Placement-optimization guidance framework adapted from Fig. 2 in \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
+    \label{fig:wiley-placement-guidance}
+    \end{figure}
 
 
-  Preplacement estimation is harder because geometry has not yet emerged from placement. The customized GNN approach in \cite{ref29} addresses this by inserting a predicted net-length surrogate between topology and timing. Instead of mapping netlist structure directly to slack with no explicit physical bridge, the model predicts net lengths first and then derives timing estimates from them. The paper reports a fast variant that is over 1000x faster than placement and lower MAE for slack, WNS, and TNS than commercial preplacement timing reports, but the more important implication is structural: net length acts as the missing physical bridge that keeps an early predictor tied to how timing will later be realized.
+    Figure~\ref{fig:wiley-placement-guidance}, reproduced from \cite{ref1}, is included because it shows that the placement model is not just a passive predictor; it is wired directly into sizing, buffering, and path-group decisions. At placement, ML starts to interact directly with optimization. The GNN-based framework in \cite{ref1} does not only predict timing. It predicts candidate gate-sizing and buffer-insertion solutions and identifies path groups likely to violate timing. In reported experiments it improves WNS, TNS, and the number of violating paths while also slightly reducing wirelength. The point of the paper is procedural: the model output is already phrased as the next optimization move.
 
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{04_placement_guidance_framework.png}{Placement-optimization guidance framework adapted from Fig. 2 in \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
-  \caption{Placement-optimization guidance framework adapted from Fig. 2 in \cite{ref1}, showing GNN-driven sizing, buffering, and path grouping integrated into placement.}
-  \label{fig:wiley-placement-guidance}
-  \end{figure}
+    The placement-stage model in \cite{ref3} goes a step further by making the predictor derivable. Instead of using gradient boosting as a black-box regressor, the paper converts it into a function that can provide optimization guidance inside iterative placement. The complex-network approach in \cite{ref2} attacks the same stage from a different angle. It augments standard placement features with timing-path topology descriptors and reports lower MSE for slack and delay, smaller WNS and TNS deviation, and better AUC for critical-path identification. Read together with \cite{ref1}, these papers make two separate requirements visible: the representation must encode signal-propagation structure, and the output must be usable by the optimizer rather than only by an offline evaluator.
 
 
-  Figure~\ref{fig:wiley-placement-guidance}, adapted from Fig.~2 in \cite{ref1}, exposes the control interface between the learned model and the placer. The paper does not stop at predicting timing risk; it routes the model outputs into sizing, buffering, and path-group actions that the implementation flow can consume immediately. That is a stronger deployment claim than simple slack regression, because the model is valuable only if it changes the next legal physical move. At placement, ML starts to interact directly with optimization. The GNN-based framework in \cite{ref1} does not only predict timing. It predicts candidate gate-sizing and buffer-insertion solutions and identifies path groups likely to violate timing. Its reported QoR gains matter mainly because they show that the model is producing optimization-useful actions rather than merely correlating with bad timing.
+    A large share of the ML work that transfers cleanly into deployment does not attempt to replace physics or signoff. It restores correlation between abstractions. The Random-Forest study in \cite{ref25} raises average cell-delay accuracy to about 91.25\% and reduces RMSE from 16.958 to 4.469 by learning the gap between a post-placement estimator and a higher-fidelity reference. The ensemble-tree extension in \cite{ref13} extends that idea to Extremely Randomized Trees and Gradient Boosting on enriched 16 nm industrial data, reporting 92.01\% average accuracy and 84.26\% on unseen data. In both papers, ML is not the final judge of timing; it is a correction layer that moves a cheap stage closer to a higher-fidelity one.
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{05_preroute_timing_prediction_flow.jpg}{Pre-route timing prediction and optimization flow adapted from Fig. 7 in \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
+    \caption{Pre-route timing prediction and optimization flow adapted from Fig. 7 in \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
+    \label{fig:wiley-preroute-hierarchical}
+    \end{figure}
 
-  The placement-stage model in \cite{ref3} goes a step further by making the predictor derivable. Instead of using gradient boosting as a black-box regressor, the paper converts it into a function that can provide optimization guidance inside iterative placement. The complex-network approach in \cite{ref2} attacks the same stage from a different angle. It augments standard placement features with timing-path topology descriptors and reports lower MSE for slack and delay, smaller WNS and TNS deviation, and better AUC for critical-path identification. Read together with \cite{ref1}, these papers make two separate requirements visible: the representation must encode signal-propagation structure, and the output must be usable by the optimizer rather than only by an offline evaluator.
 
+    Figure~\ref{fig:wiley-preroute-hierarchical}, reproduced from \cite{ref17}, makes that hierarchy explicit by showing how the flow predicts intermediate physical quantities before final timing quantities. Pre-route prediction is attractive because routing dominates closure cost, but it is also where naive ML is most exposed. The GAT-based slack predictor in \cite{ref5} follows the timing graph with alternating attention and propagation layers, so its structure mirrors net and cell updates rather than treating the design as a generic graph. The hierarchical GNN+CNN framework in \cite{ref17} is even more explicit about what is missing before routing. Its level-1 models predict net resistance, net capacitance, and arc-length increment; its level-2 models then use those outputs to predict arc delay and arc slew. In the reported flow, that structure improves arc delay and slew accuracy by 42\% and 36\% on average and improves WNS, TNS, and violation count by 77\%, 77\%, and 64\%. The concrete lesson is that pre-route ML becomes more stable when it reconstructs the absent physical quantities instead of trying to jump directly to post-route timing.
 
-  A large share of the ML work that transfers cleanly into deployment does not attempt to replace physics or signoff. It restores correlation between abstractions. The Random-Forest study in \cite{ref25} raises average cell-delay accuracy to about 91.25\% and reduces RMSE from 16.958 to 4.469 by learning the gap between a post-placement estimator and a higher-fidelity reference. The ensemble-tree extension in \cite{ref13} extends that idea to Extremely Randomized Trees and Gradient Boosting on enriched 16 nm industrial data, reporting 92.01\% average accuracy and 84.26\% on unseen data. In both papers, ML is not the final judge of timing; it is a correction layer that moves a cheap stage closer to a higher-fidelity one. That pattern appears repeatedly in the corpus and is one reason correction models often read as more believable than unconstrained end-to-end timing regressors.
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{05_preroute_timing_prediction_flow.jpg}{Pre-route timing prediction and optimization flow adapted from Fig. 7 in \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
-  \caption{Pre-route timing prediction and optimization flow adapted from Fig. 7 in \cite{ref17}, linking P\&R stages, pre-route features, training data generation, and timing prediction.}
-  \label{fig:wiley-preroute-hierarchical}
-  \end{figure}
+    \subsection{Stage alignment, correction, and transfer}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{06_protime_endpoint_embedding.png}{Endpoint-wise multimodal embedding framework adapted from Fig. 2 in \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
+    \caption{Endpoint-wise multimodal embedding framework adapted from Fig. 2 in \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
+    \label{fig:wiley-protime}
+    \end{figure}
 
-  Figure~\ref{fig:wiley-preroute-hierarchical}, adapted from Fig.~7 in \cite{ref17}, shows why the paper uses a hierarchical predictor rather than a one-shot post-route regressor. Chang et al. first reconstruct net R, net C, and arc-length increment, then feed those intermediates into arc delay and slew models, which matches the paper's argument that pre-route error is dominated by missing physical variables. In that sense the figure is the methodological claim: the model works by rebuilding the physics that routing has not produced yet. Pre-route prediction is attractive because routing dominates closure cost, but it is also where naive ML is most exposed. The GAT-based slack predictor in \cite{ref5} follows the timing graph with alternating attention and propagation layers, so its structure mirrors net and cell updates rather than treating the design as a generic graph. The hierarchical GNN+CNN framework in \cite{ref17} predicts net resistance, net capacitance, and arc-length increment in level-1, then uses those outputs to predict arc delay and arc slew in level-2. The reported gains in arc accuracy and downstream WNS/TNS matter because they support a broader lesson for review readers: preroute learning becomes more trustworthy when it reconstructs the quantities that routing will later determine explicitly.
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{07_gr_dr_timing_consistency.jpg}{GR-to-DR timing-alignment comparison adapted from Fig. 7 in \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
+    \caption{GR-to-DR timing-alignment comparison adapted from Fig. 7 in \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
+    \label{fig:wiley-gr-dr}
+    \end{figure}
 
 
-  \subsection{Stage alignment, correction, and transfer}
+    Figures~\ref{fig:wiley-protime} and \ref{fig:wiley-gr-dr}, reproduced from \cite{ref8} and \cite{ref10}, are paired here because they show the two main stage-mismatch problems addressed in this section: optimization-aware preroute embedding and correction from global-route estimates to detailed-route truth. Several of the best recent papers focus on stage mismatch directly. PRO-TIME in \cite{ref8} argues that many prerouting predictors are mis-specified because they are trained on flows that omit timing optimization, even though timing optimization is precisely what reshapes the netlist and the endpoint features that matter in practice. Its multimodal architecture combines a customized GNN for the netlist with a U-net-based layout encoder and an adaptive masking strategy. That is not architectural ornamentation. It is a response to feature mismatch caused by the flow itself.
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{06_protime_endpoint_embedding.png}{Endpoint-wise multimodal embedding framework adapted from Fig. 2 in \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
-  \caption{Endpoint-wise multimodal embedding framework adapted from Fig. 2 in \cite{ref8}, combining netlist and layout information for optimization-aware preroute prediction.}
-  \label{fig:wiley-protime}
-  \end{figure}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{07_gr_dr_timing_consistency.jpg}{GR-to-DR timing-alignment comparison adapted from Fig. 7 in \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
-  \caption{GR-to-DR timing-alignment comparison adapted from Fig. 7 in \cite{ref10}, contrasting traditional parasitic estimation, ground-truth detailed-route extraction, and ML-based prediction.}
-  \label{fig:wiley-gr-dr}
-  \end{figure}
+    The GR-to-DR correction paper in \cite{ref10} addresses a related but more deployment-oriented mismatch: post-global-route wire parasitics derived from route guides and Steiner trees can deviate substantially from post-detailed-route truth, especially in macro-heavy designs. The paper learns corrected post-DR parasitics and timing from post-GR features, adds macro-blockage features, and shows that the corrected estimates improve post-DR slack without increasing congestion. The signoff-oriented routing-topology framework in \cite{ref7} closes the same gap from the optimization side. It uses a learned signoff evaluator to guide Steiner-point adjustment and topology reconstruction, reporting 11.2\% WNS improvement, 7.1\% TNS improvement, and 25.9\% shorter optimization duration in its joint flow. In both cases, the model is only meaningful because it changes the routed signoff result rather than merely fitting a held-out label.
 
 
-  Figures~\ref{fig:wiley-protime} and \ref{fig:wiley-gr-dr}, adapted from Fig.~2 in \cite{ref8} and Fig.~7 in \cite{ref10}, are paired because both papers treat timing mismatch as a flow-induced representation problem. PRO-TIME's figure shows endpoint embeddings built from both netlist and layout so the model tracks the same objects that timing optimization keeps changing. The GR-to-DR figure shows the next mismatch stage: route-guide and Steiner estimates can systematically diverge from detailed-route parasitics, so learning must repair a specific abstraction gap rather than simply fit more data. Several of the best recent papers focus on stage mismatch directly. PRO-TIME in \cite{ref8} argues that many prerouting predictors are mis-specified because they are trained on flows that omit timing optimization, even though timing optimization is precisely what reshapes the netlist and the endpoint features that matter in practice. Its multimodal architecture combines a customized GNN for the netlist with a U-net-based layout encoder and an adaptive masking strategy. That is not architectural ornamentation. It is a response to feature mismatch caused by the flow itself.
+    Timing prediction is expensive largely because labels are expensive. Transfer learning addresses that problem in several places in the corpus. The cell-library characterization framework in \cite{ref4} transfers knowledge across timing arcs by quantifying task similarity and reports error reductions of up to 80\% in 45 nm MOSFET libraries and 67\% in 14 nm FinFET libraries. The cross-node timing predictor in \cite{ref6} transfers from older-node data to 7 nm by disentangling path features and reweighting source data using cell-type distributions, rather than assuming naive fine-tuning will work. The ECO framework in \cite{ref19} applies transfer inside one evolving design: it predicts transition time first, then delay, reuses the first-stage representation, reports average R2 around 0.9952 with MAE around 13.36, and cuts path-delay evaluation time by up to 80x. These are different transfer problems, but each one identifies a concrete piece of timing structure that survives the domain shift.
 
 
-  The GR-to-DR correction paper in \cite{ref10} addresses a related but more deployment-oriented mismatch: post-global-route wire parasitics derived from route guides and Steiner trees can deviate substantially from post-detailed-route truth, especially in macro-heavy designs. The paper learns corrected post-DR parasitics and timing from post-GR features, adds macro-blockage features, and shows that the corrected estimates improve post-DR slack without increasing congestion. The signoff-oriented routing-topology framework in \cite{ref7} closes the same gap from the optimization side. It uses a learned signoff evaluator to guide Steiner-point adjustment and topology reconstruction, reporting 11.2\% WNS improvement, 7.1\% TNS improvement, and 25.9\% shorter optimization duration in its joint flow. The common implication is that correlation restoration is often a better deployment target than free-standing prediction, because it directly improves the abstraction that the optimizer is already using.
+    \subsection{Decision layers and safe integration}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{08_bayesian_multicorner_workflow.png}{Bayesian multicorner timing-prediction workflow adapted from Fig. 1 in \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
+    \caption{Bayesian multicorner timing-prediction workflow adapted from Fig. 1 in \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
+    \label{fig:wiley-bayesian-fallback}
+    \end{figure}
 
-  Timing prediction is expensive largely because labels are expensive. Transfer learning addresses that problem in several places in the corpus. The cell-library characterization framework in \cite{ref4} transfers knowledge across timing arcs by quantifying task similarity and reports error reductions of up to 80\% in 45 nm MOSFET libraries and 67\% in 14 nm FinFET libraries. The cross-node timing predictor in \cite{ref6} transfers from older-node data to 7 nm by disentangling path features and reweighting source data using cell-type distributions, rather than assuming naive fine-tuning will work. The ECO framework in \cite{ref19} applies transfer inside one evolving design: it predicts transition time first, then delay, reuses the first-stage representation, reports average R2 around 0.9952 with MAE around 13.36, and cuts path-delay evaluation time by up to 80x. Taken together, these papers suggest that timing knowledge is reusable only when the reusable object is identified explicitly, whether that object is an arc family, a path representation, or a stage-local feature mapping.
 
+    Figure~\ref{fig:wiley-bayesian-fallback}, reproduced from \cite{ref16}, is important because it makes the review's preferred trust pattern visible: prediction is guarded by posterior estimation and explicit fallback checks rather than treated as unconditional truth. Some of the most convincing deployment papers avoid direct timing prediction as the end goal. The multicorner framework in \cite{ref16} combines latent-feature modeling with a Bayesian decision layer that requests extra STA when prediction confidence is too low; that is how it pushes toward near-100\% reliable prediction rather than just lower average error. The dominant-corner strategy in \cite{ref28} attacks the scenario-selection problem directly and reports more than 2x timing-closure acceleration by predicting non-dominant corners from a small dominant set. TimeBoost in \cite{ref9} moves the learning target one level higher again: it classifies stage complexity and selects among existing timing-analysis methods, reaching up to 3.86x runtime improvement with only 3\%-4\% overhead. These papers all learn when and where timing effort should be spent.
 
-  \subsection{Decision layers and safe integration}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{08_bayesian_multicorner_workflow.png}{Bayesian multicorner timing-prediction workflow adapted from Fig. 1 in \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
-  \caption{Bayesian multicorner timing-prediction workflow adapted from Fig. 1 in \cite{ref16}, where model prediction is guarded by feature engineering, posterior estimation, and double-checking of critical paths.}
-  \label{fig:wiley-bayesian-fallback}
-  \end{figure}
+    \subsection{Primitive, reliability-aware, and statistical ML}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{09_psn_mlp_architecture.png}{MLP timing-arc architecture adapted from Fig. 9 in \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
+    \caption{MLP timing-arc architecture adapted from Fig. 9 in \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
+    \label{fig:wiley-psn}
+    \end{figure}
 
-  Figure~\ref{fig:wiley-bayesian-fallback}, adapted from Fig.~1 in \cite{ref16}, matters because the paper's novelty is not just the generalized linear model; it is the explicit acceptance policy wrapped around the predictor. Low-confidence cases are sent back to extra STA through Bayesian decision theory, so the workflow treats prediction as provisional unless posterior evidence is strong enough. That design choice is what makes \cite{ref16} useful for this review: reliability comes from calibrated abstention, not from pretending the model is universally accurate. Some of the most convincing deployment papers avoid direct timing prediction as the end goal. The multicorner framework in \cite{ref16} combines latent-feature modeling with a Bayesian decision layer that requests extra STA when prediction confidence is too low; that is how it pushes toward near-100\% reliable prediction rather than just lower average error. The dominant-corner strategy in \cite{ref28} attacks the scenario-selection problem directly and reports more than 2x timing-closure acceleration by predicting non-dominant corners from a small dominant set. TimeBoost in \cite{ref9} moves the learning target one level higher again: it classifies stage complexity and selects among existing timing-analysis methods, reaching up to 3.86x runtime improvement with only 3\%-4\% overhead. Across these papers, the deeper pattern is that learning is used to allocate timing effort, not to declare final truth unconditionally.
 
+    Figure~\ref{fig:wiley-psn}, reproduced from \cite{ref12}, is included because it shows that ML is now being embedded directly inside the timing-arc kernel, not only at the full-chip predictor level. ML is also being applied below the graph level. Deep-learning cell-delay modeling in \cite{ref24} revisits the conventional NLDM abstraction and shows that waveform-aware learned models can beat a standard 7x7 NLDM-LUT in average percentage error while also improving maximum error relative to a much larger 100x100 LUT. The interpolation framework in \cite{ref11} attacks a narrower but pervasive bottleneck: it uses an R-CNN plus VAE to interpolate timing tables, cuts timing-parameter error by 19.7\%, reduces path-delay error by 3.4\%, and limits runtime cost to a reported 13\% overhead through GPU parallelism. The PSN-aware timing engine in \cite{ref12} trains MLP models on noise-aware arc data and integrates them through JIT compilation; its reported average relative error is 4.89\% for single-cell timing and 6.27\% for path delay. These papers focus on primitive timing kernels rather than full-chip prediction.
 
-  \subsection{Primitive, reliability-aware, and statistical ML}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{09_psn_mlp_architecture.png}{MLP timing-arc architecture adapted from Fig. 9 in \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
-  \caption{MLP timing-arc architecture adapted from Fig. 9 in \cite{ref12} for dynamic supply-noise-aware timing analysis inside STA.}
-  \label{fig:wiley-psn}
-  \end{figure}
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{10_aging_critical_cell_pipeline.png}{GAT-based critical-cell detection framework adapted from Fig. 6 in \cite{ref23}, using structure and attribute encoders plus a classifier to identify cells that become critical after aging.}
+    \caption{GAT-based critical-cell detection framework adapted from Fig. 6 in \cite{ref23}, using structure and attribute encoders plus a classifier to identify cells that become critical after aging.}
+    \label{fig:wiley-aging-composite}
+    \end{figure}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig{11_aging_path_shift_example.png}{Aging can reorder critical paths, adapted from Fig. 1 in \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
+    \caption{Aging can reorder critical paths, adapted from Fig. 1 in \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
+    \label{fig:wiley-aging-shift}
+    \end{figure}
 
-  Figure~\ref{fig:wiley-psn}, adapted from Fig.~9 in \cite{ref12}, shows that the paper embeds learning at the timing-arc primitive rather than at the reporting layer. The MLP is fed PSN-aware parameters in addition to conventional timing inputs, reflecting the paper's main argument that dynamic supply noise must be modeled as a waveform-conditioned delay problem, not collapsed into a fixed voltage derate. The architectural significance is that the outer STA engine remains recognizable while the arc model becomes noise-aware through JIT-compiled learned kernels. That is why this line of work is persuasive in a signoff setting: it changes the local delay primitive without discarding STA semantics. Deep-learning cell-delay modeling in \cite{ref24} revisits the conventional NLDM abstraction and shows that waveform-aware learned models can beat a standard 7x7 NLDM-LUT in average percentage error while also improving maximum error relative to a much larger 100x100 LUT. The interpolation framework in \cite{ref11} attacks a narrower but pervasive bottleneck: it uses an R-CNN plus VAE to interpolate timing tables, cuts timing-parameter error by 19.7\%, reduces path-delay error by 3.4\%, and limits runtime cost to a reported 13\% overhead through GPU parallelism. The PSN-aware timing engine in \cite{ref12} trains MLP models on noise-aware arc data and integrates them through JIT compilation; its reported average relative error is 4.89\% for single-cell timing and 6.27\% for path delay.
 
+    Figures~\ref{fig:wiley-aging-composite} and \ref{fig:wiley-aging-shift}, adapted from Figs. 6 and 1 in \cite{ref23}, are discussed together because they anchor the ranking-oriented aging story in that paper: one shows the GAT-based critical-cell detection framework and the other shows why that ranking problem matters once aging can reorder which paths are actually critical. Complementary work on cell-level aging prediction \cite{ref14} and path-level aging prediction \cite{ref15} extends the same lifetime-robustness argument to different modeling granularities, while AVATAR \cite{ref26} broadens it further to dynamic timing under aging and variation.
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{10_aging_critical_cell_pipeline.png}{GAT-based critical-cell detection framework adapted from Fig. 6 in \cite{ref23}, using structure and attribute encoders plus a classifier to identify cells that become critical after aging.}
-  \caption{GAT-based critical-cell detection framework adapted from Fig. 6 in \cite{ref23}, using structure and attribute encoders plus a classifier to identify cells that become critical after aging.}
-  \label{fig:wiley-aging-composite}
-  \end{figure}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig{11_aging_path_shift_example.png}{Aging can reorder critical paths, adapted from Fig. 1 in \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
-  \caption{Aging can reorder critical paths, adapted from Fig. 1 in \cite{ref23}. Paths that are uncritical at nominal conditions may become critical after aging and workload stress.}
-  \label{fig:wiley-aging-shift}
-  \end{figure}
+    A related direction embeds ML into timing uncertainty itself rather than only into nominal delay prediction. The neural timing-analysis algorithm in \cite{ref30} learns the mean and standard deviation of gate delay under PVT variation, keeps mean error below 2\% and standard-deviation error below 3.64\% relative to SPICE Monte Carlo, and combines that with viability analysis for true-path reasoning. The path-delay-variation framework in \cite{ref33} learns cross-corner variation directly to reduce characterization effort for multi-corner prediction. NN-SSTA in \cite{ref34} does not predict path delay at all; it approximates the statistical max and convolution operators inside discrete SSTA and reports about 20.7x average speedup over the conventional discrete flow. The common thread is precise: ML is being used to approximate the expensive operators of statistical timing, not only the final labels.
 
 
-  Figures~\ref{fig:wiley-aging-composite} and \ref{fig:wiley-aging-shift}, adapted from Figs.~6 and 1 in \cite{ref23}, make a two-step argument. Fig.~1 shows that nominal criticality is not stable under aging, while Fig.~6 shows the response the authors choose: detect critical cells with GAT, then compute path criticality on top of that screened set. That decomposition is the paper's real contribution, because it converts a hard lifetime ranking problem into a learned cell-screening stage plus a physics-aware ranking stage. Complementary work on cell-level aging prediction \cite{ref14} and path-level aging prediction \cite{ref15} extends the same lifetime-robustness argument to different modeling granularities, while AVATAR \cite{ref26} broadens it further to dynamic timing under aging and variation. For the larger review argument, these papers matter because they show that lifetime robustness is mostly a ranking problem before it becomes a final-delay problem.
+    \section{GPU-Accelerated Timing Analysis and Hybrid ML-GPU Systems}
 
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig[height=0.27\textheight]{12_gpu_sta_taskflow.png}{CPU--GPU heterogeneous multicorner STA taskflow adapted from Fig. 4 in \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
+    \caption{CPU--GPU heterogeneous multicorner STA taskflow adapted from Fig. 4 in \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
+    \label{fig:wiley-gpu-sta}
+    \end{figure}
 
-  A related direction embeds ML into timing uncertainty itself rather than only into nominal delay prediction. The neural timing-analysis algorithm in \cite{ref30} learns the mean and standard deviation of gate delay under PVT variation, keeps mean error below 2\% and standard-deviation error below 3.64\% relative to SPICE Monte Carlo, and combines that with viability analysis for true-path reasoning. The path-delay-variation framework in \cite{ref33} learns cross-corner variation directly to reduce characterization effort for multi-corner prediction. NN-SSTA in \cite{ref34} does not predict path delay at all; it approximates the statistical max and convolution operators inside discrete SSTA and reports about 20.7x average speedup over the conventional discrete flow. The underlying implication is that ML is most defensible here when it accelerates the expensive operators inside SSTA, rather than replacing statistical timing with a black-box endpoint regressor.
+    \begin{figure}[tbp]
+    \centering
+    \wileyfig[trim=0 0 0 28,clip,height=0.27\textheight]{13_gpu_pba_preprocess.png}{GPU-accelerated path-based-analysis preprocessing adapted from Fig. 6 in \cite{ref21}, illustrating the preprocessing steps used for path-constraint handling before parallel PBA kernels.}
+    \caption{GPU-accelerated path-based-analysis preprocessing adapted from Fig. 6 in \cite{ref21}, illustrating the preprocessing steps used for path-constraint handling before parallel PBA kernels.}
+    \label{fig:wiley-gpu-pba}
+    \end{figure}
 
 
-  \section{GPU-Accelerated Timing Analysis and Hybrid ML-GPU Systems}
+    Figures~\ref{fig:wiley-gpu-sta} and \ref{fig:wiley-gpu-pba}, adapted from Fig. 4 in \cite{ref22} and Fig. 6 in \cite{ref21}, are included because they show the two complementary acceleration targets in this review: broad heterogeneous STA taskflow and specialized GPU preprocessing for path-based analysis. The rise of ML in timing does not reduce the need for acceleration. It raises the premium on being able to call trusted reference analysis more often. The GPU PBA framework in \cite{ref21} addresses the most expensive exact-analysis step by redesigning data structures, preprocessing, and kernels for GPU execution. Because PBA reduces graph-based pessimism but is often too expensive to call repeatedly, the reported speedups on million-gate designs change how frequently pessimism reduction can participate in closure rather than being reserved for the very end.
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig[height=0.27\textheight]{12_gpu_sta_taskflow.png}{CPU--GPU heterogeneous multicorner STA taskflow adapted from Fig. 4 in \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
-  \caption{CPU--GPU heterogeneous multicorner STA taskflow adapted from Fig. 4 in \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
-  \label{fig:wiley-gpu-sta}
-  \end{figure}
 
-  \begin{figure}[tbp]
-  \centering
-  \wileyfig[trim=0 0 0 28,clip,height=0.27\textheight]{13_gpu_pba_preprocess.png}{GPU-accelerated path-based-analysis preprocessing adapted from Fig. 6 in \cite{ref21}, illustrating the preprocessing steps used for path-constraint handling before parallel PBA kernels.}
-  \caption{GPU-accelerated path-based-analysis preprocessing adapted from Fig. 6 in \cite{ref21}, illustrating the preprocessing steps used for path-constraint handling before parallel PBA kernels.}
-  \label{fig:wiley-gpu-pba}
-  \end{figure}
+    The CPU-GPU heterogeneous STA engine in \cite{ref22} covers more of the engine workload. It accelerates levelization, delay computation, graph propagation, incremental updates, and multicorner analysis, all while preserving a realistic execution model with CPU-GPU concurrency and managed dependencies. Its multicorner acceleration is not an incidental benchmark result; it directly targets the scenario explosion that dominates timing-closure runtime in modern flows.
 
 
-  Figures~\ref{fig:wiley-gpu-sta} and \ref{fig:wiley-gpu-pba}, adapted from Fig.~4 in \cite{ref22} and Fig.~6 in \cite{ref21}, should be read as reformulation diagrams rather than hardware cartoons. In \cite{ref22}, the heterogeneous STA taskflow shows that the authors do not offload the timer indiscriminately: RC-tree flattening, RC delay computation, levelization, and forward propagation are pushed to GPU, while backward propagation stays on CPU because its workload is comparatively small. The green batch loop in that figure is the real multicorner insight, since it exposes corner-level parallelism instead of treating corners as isolated serial jobs. That is why the paper is important beyond raw speed-up: it identifies which timer workloads are throughput-dominated and which remain latency- or dependency-dominated.
+    GPU acceleration and ML should not be seen as two alternative answers to the same question. TimeBoost in \cite{ref9} trims analysis cost by choosing among timing methods from stage-complexity features. The interpolation framework in \cite{ref11} trims the overhead of a better timing primitive by parallelizing large batches of table queries. The multicorner system in \cite{ref16} trims wasted STA runs by gating predictions with a Bayesian decision layer. The dominant-corner system in \cite{ref28} trims the scenario set by selecting a small corner subset to execute directly. The split is concrete: ML reduces how much exact analysis is needed, and GPU acceleration reduces the cost of the exact analysis that still remains.
 
 
-  Figure~\ref{fig:wiley-gpu-pba} makes an analogous point for PBA. The preprocessing in \cite{ref21} is not auxiliary bookkeeping; it converts user path constraints into ranking, scanning, and constrained-subgraph labels so that the later path-generation kernels operate on a GPU-friendly search space. That reformulation is why the paper can support industrial path constraints and still keep exact path reporting scalable, including the reported 543$\times$ speed-up on a 1.6-million-gate design. The broader implication is that acceleration succeeds here by restructuring exact analysis around data throughput, not by relaxing the analysis target.
+    \section{Practical Integration, Evaluation, and Open Challenges}
 
+    The main architectural message of the corpus is that ML and GPU acceleration work best as complements. The safest systems learn bounded decisions rather than unconstrained final truth, preserve a signoff anchor, model the flow transformations that break correlation, and use intermediate physical quantities when direct timing prediction would be too brittle \cite{ref1}, \cite{ref3}, \cite{ref8}, \cite{ref9}, \cite{ref10}, \cite{ref16}, \cite{ref17}, \cite{ref25}, \cite{ref28}, \cite{ref29}. They also optimize for ranking and critical-set capture, not only scalar regression error, and they make fallback cheaper instead of pretending fallback is unnecessary \cite{ref21}, \cite{ref22}, \cite{ref23}, \cite{ref37}, \cite{ref40}. Table~\ref{tab:wiley-3} summarizes the major method families, their trust anchors, and the failure modes that appear when those safeguards are missing.
 
-  Read together, the two papers show the deeper role of GPU acceleration in this review. The main gain is not merely faster kernels; it is faster access to trusted analysis after the hard parts have been recast into data layouts the GPU can sustain. That is why GPU acceleration complements ML instead of competing with it: ML reduces how often exact analysis must run, while GPU methods reduce the cost when multicorner STA, PBA, or accurate timing primitives still have to run.
 
+    \begin{table}[tbp]
+    \centering
+    \caption{Cross-paper comparison of major method families, trust anchors, and failure modes.}
+    \label{tab:wiley-3}
+    \small
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Family} & \textbf{Representative papers} & \textbf{What is learned or accelerated} & \textbf{Trust anchor} & \textbf{Main failure mode if used naively} \\
+    \midrule
+    Early screening & \cite{ref27}, \cite{ref29} & RTL delay or preplacement timing ranking & Ranking utility rather than signoff replacement & Over-trusting estimates before physical variables exist \\
+    Placement-stage action models & \cite{ref1}, \cite{ref2}, \cite{ref3} & Sizing, buffering, or optimization-compatible surrogates & Direct coupling to placement decisions & Feature drift as optimization changes topology \\
+    Correlation-restoration models & \cite{ref25}, \cite{ref13}, \cite{ref10}, \cite{ref7} & Post-placement or GR-to-DR correction toward stronger truth & Stronger downstream reference or signoff metric & Toolflow-specific correction that may not transfer \\
+    Transfer and ECO models & \cite{ref4}, \cite{ref6}, \cite{ref19} & Reusable arc, node, or stage representations & Explicit transfer structure & Domain shift when the reusable structure is misidentified \\
+    Scenario and method decision layers & \cite{ref16}, \cite{ref28}, \cite{ref9} & Corner selection, fallback gating, or method selection & Bayesian gating or bounded method choice & Missed violations if uncertainty control is weak \\
+    Primitive timing models & \cite{ref24}, \cite{ref11}, \cite{ref12}, \cite{ref30}, \cite{ref34} & Cell-delay kernels, interpolation, PSN arcs, or statistical operators & Physics-preserving primitive inside STA/SSTA & Better local error without guaranteed closure benefit \\
+    Engine acceleration & \cite{ref21}, \cite{ref22} & PBA or multicorner STA kernels & Trusted timing engine remains in the loop & Runtime gains reduced by irregularity or integration overhead \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
 
-  \section{Practical Integration, Evaluation, and Open Challenges}
 
-  The main architectural message of the corpus is that ML and GPU acceleration work best as complements. The safest systems learn bounded decisions rather than unconstrained final truth, preserve a signoff anchor, model the flow transformations that break correlation, and use intermediate physical quantities when direct timing prediction would be too brittle \cite{ref1}, \cite{ref3}, \cite{ref8}, \cite{ref9}, \cite{ref10}, \cite{ref16}, \cite{ref17}, \cite{ref25}, \cite{ref28}, \cite{ref29}. They also optimize for ranking and critical-set capture, not only scalar regression error, and they make fallback cheaper instead of pretending fallback is unnecessary \cite{ref21}, \cite{ref22}, \cite{ref23}, \cite{ref37}, \cite{ref40}. The review-level point is that a robust closure architecture is layered by responsibility: learning triages and guides, while trusted timing engines arbitrate the final meaning of slack and violation risk. Table~\ref{tab:wiley-3} summarizes the major method families, their trust anchors, and the failure modes that appear when those safeguards are missing.
+    \paragraph{Integrated closure flow.} Read as one closure loop, the literature suggests a consistent execution order. Start with cheap models that triage risky logic and propose early placement actions \cite{ref27}, \cite{ref29}, \cite{ref1}, \cite{ref3}. As routing detail emerges, use correction and multimodal alignment models to restore correlation to stronger downstream truth \cite{ref25}, \cite{ref13}, \cite{ref17}, \cite{ref8}, \cite{ref10}. When corner count or runtime becomes prohibitive, shift from free-running prediction to uncertainty-aware decisions about which corners or methods should actually be executed \cite{ref28}, \cite{ref16}, \cite{ref9}. Then call GPU-accelerated STA, PBA, or timing-kernel primitives for the exact analyses that still matter in the loop \cite{ref21}, \cite{ref22}, \cite{ref11}, \cite{ref12}. Finally, re-check closure under aging, BTI, workload drift, and dynamic operating conditions before treating nominal signoff as final \cite{ref14}, \cite{ref15}, \cite{ref23}, \cite{ref26}, \cite{ref38}, \cite{ref44}. The point is not to replace signoff with one universal predictor; it is to stage prediction and exact analysis so that each is used where it is trustworthy.
 
 
-  \begin{table}[!t]
-  \centering
-  \caption{Cross-paper comparison of major method families, trust anchors, and failure modes.}
-  \label{tab:wiley-3}
-  \small
-  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-  \toprule
-  \textbf{Family} & \textbf{Representative papers} & \textbf{What is learned or accelerated} & \textbf{Trust anchor} & \textbf{Main failure mode if used naively} \\
-  \midrule
-  Early screening & \cite{ref27}, \cite{ref29} & RTL delay or preplacement timing ranking & Ranking utility rather than signoff replacement & Over-trusting estimates before physical variables exist \\
-  Placement-stage action models & \cite{ref1}, \cite{ref2}, \cite{ref3} & Sizing, buffering, or optimization-compatible surrogates & Direct coupling to placement decisions & Feature drift as optimization changes topology \\
-  Correlation-restoration models & \cite{ref25}, \cite{ref13}, \cite{ref10}, \cite{ref7} & Post-placement or GR-to-DR correction toward stronger truth & Stronger downstream reference or signoff metric & Toolflow-specific correction that may not transfer \\
-  Transfer and ECO models & \cite{ref4}, \cite{ref6}, \cite{ref19} & Reusable arc, node, or stage representations & Explicit transfer structure & Domain shift when the reusable structure is misidentified \\
-  Scenario and method decision layers & \cite{ref16}, \cite{ref28}, \cite{ref9} & Corner selection, fallback gating, or method selection & Bayesian gating or bounded method choice & Missed violations if uncertainty control is weak \\
-  Primitive timing models & \cite{ref24}, \cite{ref11}, \cite{ref12}, \cite{ref30}, \cite{ref34} & Cell-delay kernels, interpolation, PSN arcs, or statistical operators & Physics-preserving primitive inside STA/SSTA & Better local error without guaranteed closure benefit \\
-  Engine acceleration & \cite{ref21}, \cite{ref22} & PBA or multicorner STA kernels & Trusted timing engine remains in the loop & Runtime gains reduced by irregularity or integration overhead \\
-  \bottomrule
-  \end{tabularx}
-  \end{table}
+    \paragraph{Evaluation beyond prediction error.} The corpus uses MAE, MSE, $R^2$, MAPE, correlation, and classification AUC extensively, but those metrics alone do not show whether a method improves closure. The papers that come closest to deployment report closure-facing outcomes such as WNS, TNS, violating-path count, congestion side effects, runtime reduction, or end-to-end turnaround \cite{ref1}, \cite{ref7}, \cite{ref10}, \cite{ref16}, \cite{ref17}, \cite{ref19}, \cite{ref22}. An integrated methodology should therefore be judged on four questions at once: whether early models preserve ranking and decision signal, whether alignment models improve final signoff QoR, whether uncertainty gating avoids silent misses, and whether the overall loop remains stable under ECOs, changing corner sets, node migration, and lifetime drift.
 
 
-  \paragraph{Integrated closure flow.} Read as one closure loop, the literature suggests a consistent execution order. Start with cheap models that triage risky logic and propose early placement actions \cite{ref27}, \cite{ref29}, \cite{ref1}, \cite{ref3}. As routing detail emerges, use correction and multimodal alignment models to restore correlation to stronger downstream truth \cite{ref25}, \cite{ref13}, \cite{ref17}, \cite{ref8}, \cite{ref10}. When corner count or runtime becomes prohibitive, shift from free-running prediction to uncertainty-aware decisions about which corners or methods should actually be executed \cite{ref28}, \cite{ref16}, \cite{ref9}. Then call GPU-accelerated STA, PBA, or timing-kernel primitives for the exact analyses that still matter in the loop \cite{ref21}, \cite{ref22}, \cite{ref11}, \cite{ref12}. Finally, re-check closure under aging, BTI, workload drift, and dynamic operating conditions before treating nominal signoff as final \cite{ref14}, \cite{ref15}, \cite{ref23}, \cite{ref26}, \cite{ref38}, \cite{ref44}. The value of this ordering is not stylistic; it keeps each method in the part of the flow where its assumptions are strongest and its failures are easiest to contain. It also imposes a governance principle on the flow: learned models accelerate selection and prioritization, while trusted timing engines remain the final arbiters whenever the cost of being wrong is high.
+    \paragraph{Remaining challenges and threats to validity.} Several bottlenecks remain structural. Labels are expensive because they depend on signoff tools, parasitic extraction, or SPICE characterization, so data generation strategy is part of the method rather than mere preprocessing \cite{ref4}, \cite{ref6}, \cite{ref8}, \cite{ref10}, \cite{ref13}, \cite{ref25}. Large timing graphs remain difficult to scale, especially when expressive graph models must preserve long-range physical structure \cite{ref5}, \cite{ref17}, \cite{ref43}. Multi-physics closure is still fragmented across PSN, BTI, aging, crosstalk, and statistical variation \cite{ref12}, \cite{ref14}, \cite{ref15}, \cite{ref44}, \cite{ref48}, \cite{ref49}, and uncertainty calibration is still more mature in corner gating than in endpoint-level risk estimation \cite{ref16}, \cite{ref9}. This review also synthesizes a fixed fifty-paper corpus with heterogeneous nodes, datasets, and disclosure practices, so it should be read as an interpretive architecture rather than a universal leaderboard. That is why the rubric in Table~\ref{tab:wiley-2} matters: it helps compare methods across papers even when their raw metrics are not directly commensurate.
 
 
-  \paragraph{Evaluation beyond prediction error.} The corpus uses MAE, MSE, $R^2$, MAPE, correlation, and classification AUC extensively, but those metrics alone do not show whether a method improves closure. The papers that come closest to deployment report closure-facing outcomes such as WNS, TNS, violating-path count, congestion side effects, runtime reduction, or end-to-end turnaround \cite{ref1}, \cite{ref7}, \cite{ref10}, \cite{ref16}, \cite{ref17}, \cite{ref19}, \cite{ref22}. An integrated methodology should therefore be judged on four questions at once: whether early models preserve ranking and decision signal, whether alignment models improve final signoff QoR, whether uncertainty gating avoids silent misses, and whether the overall loop remains stable under ECOs, changing corner sets, node migration, and lifetime drift. For review purposes, this means a strong paper is not merely the one with the lowest regression error; it is the one that makes better closure decisions under realistic flow constraints.
+    \section{Conclusion}
 
+    The fifty-paper corpus does not point to one replacement for STA. It points to a division of labor across four developments: sharper treatment of timing semantics, ML models that screen or guide decisions earlier, accelerated engines that keep trusted analysis callable, and timing models that include variation, aging, and noise. The papers that remain convincing are the ones that respect the structure of timing analysis, preserve a signoff anchor, expose uncertainty, and reduce the cost of restoring truth when prediction is not enough.
 
-  \paragraph{Remaining challenges and threats to validity.} Several bottlenecks remain structural. Labels are expensive because they depend on signoff tools, parasitic extraction, or SPICE characterization, so data generation strategy is part of the method rather than mere preprocessing \cite{ref4}, \cite{ref6}, \cite{ref8}, \cite{ref10}, \cite{ref13}, \cite{ref25}. Large timing graphs remain difficult to scale, especially when expressive graph models must preserve long-range physical structure \cite{ref5}, \cite{ref17}, \cite{ref43}. Multi-physics closure is still fragmented across PSN, BTI, aging, crosstalk, and statistical variation \cite{ref12}, \cite{ref14}, \cite{ref15}, \cite{ref44}, \cite{ref48}, \cite{ref49}, and uncertainty calibration is still more mature in corner gating than in endpoint-level risk estimation \cite{ref16}, \cite{ref9}. This review also synthesizes a fixed fifty-paper corpus with heterogeneous nodes, datasets, and disclosure practices, so it should be read as an interpretive architecture rather than a universal leaderboard. That is why the rubric in Table~\ref{tab:wiley-2} matters: it helps compare methods across papers even when their raw metrics are not directly commensurate. The tradeoff is deliberate: the manuscript aims to clarify how these methods compose, not to flatten them into a single leaderboard across incomparable tasks.
 
+    The main conclusion of this review is therefore architectural. Intent-robust timing closure should be built as a layered system. Early-stage models should triage and rank. Mid-stage models should restore correlation to higher-fidelity downstream truth. Decision layers should determine where prediction is safe. GPU-backed engines should keep high-fidelity analysis inside the loop. Reliability-aware and statistical models should define what "safe timing" means beyond nominal signoff. That combination is the most defensible way to bring ML and acceleration together in a conference-quality timing-closure paper.
 
-  \section{Conclusion}
 
-  The fifty-paper corpus does not point to one replacement for STA. It points to a division of labor across four developments: sharper treatment of timing semantics, ML models that screen or guide decisions earlier, accelerated engines that keep trusted analysis callable, and timing models that include variation, aging, and noise. The papers that remain convincing are the ones that respect the structure of timing analysis, preserve a signoff anchor, expose uncertainty, and reduce the cost of restoring truth when prediction is not enough. Read that way, the literature is less a contest between methods than a gradual refinement of where approximation is acceptable and where explicit timing semantics must be preserved.
+    \section*{acknowledgements}
 
+    Kapil Tripathi and Nishant More are master's students in the Department of Electronics and Communication Engineering at Thapar Institute of Engineering and Technology, Patiala, India. Robin Singla supervised and guided this work.
 
-  The main conclusion of this review is therefore architectural. Intent-robust timing closure should be built as a layered system. Early-stage models should triage and rank. Mid-stage models should restore correlation to higher-fidelity downstream truth. Decision layers should determine where prediction is safe. GPU-backed engines should keep high-fidelity analysis inside the loop. Reliability-aware and statistical models should define what "safe timing" means beyond nominal signoff. That combination is the most defensible way to bring ML and acceleration together in a conference-quality timing-closure paper. It is also the clearest lesson from the corpus for future work: the strongest results are likely to come not from replacing STA wholesale, but from designing cleaner interfaces between learned guidance, physical timing semantics, and fast exact analysis.
 
+    \section*{conflict of interest}
 
-  \section*{acknowledgements}
+    The authors declare no conflict of interest.
 
-  Kapil Tripathi and Nishant More are master's students in the Department of Electronics and Communication Engineering at Thapar Institute of Engineering and Technology, Patiala, India. Dr Robin Singla supervised and guided this work.
 
+    \section*{Supporting Information}
 
-  \section*{conflict of interest}
+    The current manuscript package includes the bibliography file and figure assets used for manuscript preparation. No additional online supplementary material is currently provided.
 
-  The authors declare no conflict of interest.
 
+    \printendnotes
 
-  \section*{Supporting Information}
 
-  The current manuscript package includes the bibliography file and figure assets used for manuscript preparation. No additional online supplementary material is currently provided.
+    \bibliography{sample}
 
-
-  \printendnotes
-
-
-  \bibliography{references}
-
-  \end{document}
+    \end{document}
