@@ -23,7 +23,7 @@ The LaTeX files now use `usedImages/...` paths, so this is the folder to upload 
 | `10_aging_critical_cell_pipeline.png` | `[23]` | `papers50/23.pdf` | `images/5-Figure6-1.png` |
 | `11_aging_path_shift_example.png` | `[23]` | `papers50/23.pdf` | `images/1-Figure1-1.png` |
 | `12_gpu_sta_taskflow.png` | `[22]` | `papers50/22.pdf` | `images/guo4-3286261-large.gif` |
-| `13_gpu_pba_preprocess.png` | `[21]` | `papers50/21.pdf` | `images/6-Figure7-1.png` |
+| `13_gpu_pba_preprocess.png` | `[21]` | `papers50/21.pdf` | `images/6-Figure7-1.png` (extracted asset verified against Fig. 6 caption: path-constraint preprocessing) |
 
 ## Notes
 

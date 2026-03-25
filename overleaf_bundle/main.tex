@@ -46,6 +46,9 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
 
 \papertype{Review Article}
 \paperfield{Review}
@@ -61,15 +64,20 @@
 \fundinginfo{Funding details pending.}
 \runningauthor{Author details pending}
 
-\newcommand{\wileyfig}[2]{%
-  \IfFileExists{#1}{%
-    \includegraphics[width=0.95\linewidth]{#1}%
+\newcommand{\wileyfig}[3][]{%
+  \IfFileExists{#2}{%
+    \includegraphics[
+      width=0.88\linewidth,
+      height=0.32\textheight,
+      keepaspectratio,
+      #1
+    ]{#2}%
   }{%
     \fbox{%
-      \parbox[c][0.24\textheight][c]{0.9\linewidth}{%
+      \parbox[c][0.20\textheight][c]{0.84\linewidth}{%
         \centering Pending figure asset\\[4pt]
-        \texttt{\detokenize{#1}}\\[6pt]
-        #2%
+        \texttt{\detokenize{#2}}\\[6pt]
+        #3%
       }%
     }%
   }%
@@ -368,14 +376,14 @@ Several papers embed ML into timing uncertainty itself rather than only into nom
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{12_gpu_sta_taskflow.png}{CPU--GPU heterogeneous multicorner STA taskflow from \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
+\wileyfig[height=0.27\textheight]{12_gpu_sta_taskflow.png}{CPU--GPU heterogeneous multicorner STA taskflow from \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
 \caption{CPU--GPU heterogeneous multicorner STA taskflow from \cite{ref22}, showing partitioned edge-copy, table-copy, arc-copy, delay computation, and propagation.}
 \label{fig:wiley-gpu-sta}
 \end{figure}
 
 \begin{figure}[tbp]
 \centering
-\wileyfig{13_gpu_pba_preprocess.png}{GPU-accelerated path-based-analysis preprocessing from \cite{ref21}, illustrating path-constraint handling and rank-based graph preparation before parallel PBA kernels.}
+\wileyfig[trim=0 0 0 28,clip,height=0.27\textheight]{13_gpu_pba_preprocess.png}{GPU-accelerated path-based-analysis preprocessing from \cite{ref21}, illustrating path-constraint handling and rank-based graph preparation before parallel PBA kernels.}
 \caption{GPU-accelerated path-based-analysis preprocessing from \cite{ref21}, illustrating path-constraint handling and rank-based graph preparation before parallel PBA kernels.}
 \label{fig:wiley-gpu-pba}
 \end{figure}
